@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kingrest · The 2026 Home Collection</title>
+<meta name="description" content="Kingrest home textiles: throws, quilts, sheet sets and the label layer, shown as a walkable collection.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f2f1ee'/%3E%3Cpath d='M7 23 L9 11 L15 17 L16 8 L17 17 L23 11 L25 23 Z' fill='%23d9a441'/%3E%3C/svg%3E">
+<script>document.documentElement.dataset.theme = localStorage.getItem("kingrest-theme") || "light";</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+  :root {
+    --sc-canvas:     #f2f1ee;
+    --sc-surface:    #ffffff;
+    --sc-ink:        #101014;
+    --sc-ink-soft:   rgba(16, 16, 20, .62);
+    --sc-accent:     #d9a441;
+    --sc-accent-ink: #171207;
+    --sc-font-display: "Playfair Display", Georgia, serif;
+    --sc-font-text:    "Outfit", system-ui, sans-serif;
+    --font-archivo:  "Archivo", system-ui, sans-serif;
+    --font-mono:     "Geist Mono", ui-monospace, "SF Mono", monospace;
+    --font-serifit:  "Instrument Serif", Georgia, serif;
+    --edge: rgba(16, 16, 20, .3);
+    --hair: rgba(16, 16, 20, .14);
+    --shadow: rgba(20, 22, 34, .16);
+    --ruler-blue: #4d7cff;
+  }
+  html[data-theme="dark"] {
+    --sc-canvas:     #0e1219;
+    --sc-surface:    #161c26;
+    --sc-ink:        #f2ede3;
+    --sc-ink-soft:   #9aa3b0;
+    --edge: rgba(242, 237, 227, .28);
+    --hair: rgba(242, 237, 227, .13);
+    --shadow: rgba(0, 0, 0, .55);
+  }
+
+  html, body { overflow-x: clip; }
+  ::selection { background: var(--sc-accent); color: var(--sc-accent-ink); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* brand mark + chapter links + theme */
+  .site-head {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: stretch; height: 48px;
+    background: color-mix(in oklab, var(--sc-canvas) 95%, transparent);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hair);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    padding-inline: 16px 18px; border-right: 1px solid var(--hair);
+    text-decoration: none;
+  }
+  .brand .brand-kingrest { height: 24px; width: auto; display: block; }
+  .brand .brand-gogreen { height: 12px; width: auto; display: block; }
+  .brand-sep { width: 1px; height: 18px; background: var(--hair); }
+  .brand:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: -2px; }
+  .tabs { display: flex; align-items: stretch; }
+  .tabs button {
+    background: none; border: 0; cursor: pointer; padding: 0 11px;
+    display: flex; align-items: center; margin-block: 6px;
+    font: 500 11px/1 var(--font-mono); letter-spacing: .12em;
+    text-transform: uppercase; color: var(--sc-ink-soft);
+    transition: background .16s var(--sc-ease-out), color .16s var(--sc-ease-out);
+  }
+  .tabs button:hover, .tabs button.active { background: var(--sc-ink); color: var(--sc-canvas); }
+  .tabs button:focus-visible { outline: 1px solid var(--sc-accent); outline-offset: -2px; }
+  .head-right { margin-left: auto; display: flex; align-items: stretch; }
+  .theme-btn {
+    width: 48px; display: grid; place-items: center; cursor: pointer;
+    background: none; border: 0; border-left: 1px solid var(--hair); color: var(--sc-ink);
+    transition: color .16s var(--sc-ease-out);
+  }
+  .theme-btn:hover { color: var(--sc-accent); }
+  .theme-btn:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: -2px; }
+  .theme-btn svg { width: 16px; height: 16px; }
+  .theme-btn .i-sun { display: block; }
+  .theme-btn .i-moon { display: none; }
+  html[data-theme="dark"] .theme-btn .i-sun { display: none; }
+  html[data-theme="dark"] .theme-btn .i-moon { display: block; }
+  @media (max-width: 899px) { .tabs { display: none; } }
+
+  /* theme-aware logos: JS swaps src on toggle (syncThemeImgs) */
+
+  /* the ruler: percent scale. Blue line, blue readout, mono numbers. */
+  .ruler {
+    position: fixed; right: max(12px, env(safe-area-inset-right)); top: 50%;
+    height: min(72vh, 620px); width: 30px; z-index: 30;
+    transform: translateY(-50%) translateX(14px); opacity: 0;
+    transition: opacity .5s var(--sc-ease-out), transform .5s var(--sc-ease-out);
+    pointer-events: none;
+  }
+  .ruler.on { opacity: 1; transform: translateY(-50%); }
+  .ruler .tick {
+    position: absolute; right: 0; width: 7px; height: 1px;
+    background: var(--sc-ink-soft); opacity: .5;
+  }
+  .ruler .tick.major { width: 12px; opacity: .85; }
+  .ruler .num {
+    position: absolute; right: 20px; translate: 0 -50%;
+    font: 400 9px/1 var(--font-mono); letter-spacing: .08em;
+    font-variant-numeric: tabular-nums; color: var(--sc-ink-soft);
+  }
+  .ruler .ind { position: absolute; right: 0; width: 22px; height: 2px; background: var(--ruler-blue); }
+  .ruler .pct {
+    position: absolute; right: 28px; translate: 0 -50%;
+    font: 500 10px/1 var(--font-mono); letter-spacing: .12em;
+    font-variant-numeric: tabular-nums; color: var(--ruler-blue);
+  }
+  @media (max-width: 700px) { .ruler .num { display: none; } }
+
+  /* the word rail: rest = vertical at the ruler edge, flight = scrubbed with
+     the chapter, active = horizontal top-right, past = weakened high stack.
+     The bg-coloured text stroke keeps words readable over photos. */
+  .wordrail { position: fixed; inset: 0; z-index: 35; pointer-events: none; }
+  .rail-word {
+    position: absolute; top: 34vh; right: 4px; pointer-events: auto; cursor: pointer;
+    background: none; border: 0; padding: 4px 2px; white-space: nowrap;
+    font-family: var(--font-archivo); font-weight: 700; text-transform: uppercase;
+    line-height: 1; color: var(--sc-ink);
+    -webkit-text-stroke: 4px var(--sc-canvas); paint-order: stroke fill;
+    transition: color .4s var(--sc-ease-out);
+  }
+  .rail-word .sp-ch { display: inline-block; will-change: transform, opacity; }
+  .rail-word:focus-visible { outline: 1px solid var(--sc-accent); outline-offset: 4px; }
+  @media (max-width: 899px) { .wordrail { display: none; } }
+
+  /* chapter titles (mobile / in-flow): sentence case display, serif-italic
+     tail, one distinct claim per chapter */
+  .sec-title {
+    margin: 0; font-family: var(--font-archivo); font-weight: 600;
+    font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.04;
+    letter-spacing: -.02em; color: var(--sc-ink);
+  }
+  .sec-title em { font-family: var(--font-serifit); font-style: italic; font-weight: 400; color: var(--sc-ink-soft); }
+  .sec-title .sp-ch { display: inline-block; will-change: transform, opacity; }
+  .sec-head { display: flex; flex-direction: column; gap: 16px; margin-bottom: 26px; }
+  @media (min-width: 900px) { .sec-head { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
+
+  .meta-strip {
+    display: flex; justify-content: space-between; gap: 16px;
+    border: 1px solid var(--hair); padding: 10px 14px;
+    font: 400 .7rem/1.4 var(--font-mono); letter-spacing: .18em;
+    text-transform: uppercase; color: var(--sc-ink-soft);
+  }
+  .meta-strip em { font-family: var(--font-serifit); font-style: italic; font-size: 1.15em; letter-spacing: .02em; }
+  .plate {
+    display: inline-block; margin: 0; padding: 10px 14px; border-radius: 9px;
+    background: var(--sc-surface); border: 1px solid var(--hair); border-top-color: var(--edge);
+    font: 500 .84rem/1.5 var(--sc-font-text); letter-spacing: .08em;
+    text-transform: uppercase; color: var(--sc-ink);
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .acc { font-family: var(--font-serifit); font-style: italic; font-weight: 400; }
+
+  /* ACT 1 · hero: the galaxy. Six Archimedean arms; cards are born at the
+     wordmark pocket and ride the conveyor outward. Scroll advances the
+     conveyor (0.2 journeys / 1000px) and reverses it on the way back up. */
+  .hero { position: relative; min-height: calc(100svh - 48px); overflow: clip; display: grid; place-items: center; }
+  :root { --armline: rgba(16, 16, 20, .16); --comet: rgba(16, 16, 20, .5); }
+  html[data-theme="dark"] { --armline: rgba(242, 237, 227, .14); --comet: #4d7cff; }
+  .galaxy-bg { position: absolute; inset: 0; }
+  .galaxy-bg svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .arm { fill: none; stroke: var(--armline); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .circ { fill: none; stroke: var(--armline); stroke-dasharray: 1 13; }
+  /* comets: dashes riding outward along each arm; pathLength normalises
+     the cycle, per-arm negative delays dephase them (never in lockstep) */
+  .comet {
+    fill: none; stroke: var(--comet); stroke-width: 2.5; stroke-linecap: round;
+    stroke-dasharray: 6 27.333; animation: cometflow 15.8s linear infinite;
+  }
+  @keyframes cometflow { to { stroke-dashoffset: -100; } }
+  @media (prefers-reduced-motion: reduce) { .comet { animation: none; stroke-dasharray: none; opacity: 0; } }
+
+  .orbit { position: absolute; inset: 0; }
+  .oc {
+    position: absolute; left: 0; top: 0; width: 200px; height: 200px;
+    padding: 0; background: none; border: 0; cursor: zoom-in; display: block;
+    will-change: transform, filter;
+  }
+  .oc-in {
+    display: block; width: 100%; height: 100%; border-radius: 10px; overflow: hidden;
+    box-shadow: inset 0 0 0 1px var(--hair);
+  }
+  .oc-in img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* centre stack: wordmark on a frosted plate, h1, copy, two CTAs, hud row.
+     Whole layer is pointer-transparent except the buttons. */
+  .hero-center {
+    position: relative; z-index: 30; width: min(672px, 90vw);
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    pointer-events: none;
+  }
+  .wm-row { position: relative; width: 100%; }
+  .wm-scrim {
+    position: absolute; inset: -46% -14%;
+    background: radial-gradient(closest-side, color-mix(in oklab, var(--sc-canvas) 88%, transparent), transparent);
+  }
+  .wordmark {
+    position: relative; display: flex; flex-direction: column; align-items: center;
+    gap: clamp(4px, 0.9vw, 10px); font-family: var(--font-archivo); font-weight: 700;
+    font-size: clamp(2.1rem, 5vw, 4.5rem); line-height: 0.96; letter-spacing: -.015em;
+    text-transform: uppercase; color: var(--sc-ink); white-space: nowrap;
+  }
+  .hero-h1 {
+    position: relative; margin: 24px 0 0; font-family: var(--font-archivo); font-weight: 600;
+    font-size: clamp(1.25rem, 2.1vw, 1.6rem); letter-spacing: -.02em; color: var(--sc-ink);
+  }
+  .hero-h1 em { font-family: var(--font-serifit); font-style: italic; font-weight: 400; color: var(--sc-ink-soft); }
+  .hero-copy {
+    position: relative; margin: 14px 0 0; max-width: 26rem;
+    font-size: 1.02rem; line-height: 1.6; color: var(--sc-ink-soft);
+  }
+  .ctas { display: flex; gap: 12px; margin-top: 26px; pointer-events: auto; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 20px;
+    font: 700 .68rem/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase;
+    cursor: pointer; transition: transform .15s var(--sc-ease-out), border-color .15s var(--sc-ease-out);
+  }
+  .cta:active { transform: scale(.97); }
+  .cta svg { width: 13px; height: 13px; transition: translate .15s var(--sc-ease-out); }
+  .cta-a { background: var(--sc-ink); color: var(--sc-canvas); border: 0; }
+  .cta-a:hover svg { translate: 0 2px; }
+  .cta-b { background: none; color: var(--sc-ink); border: 1px solid var(--edge); }
+  .cta-b:hover { border-color: var(--sc-ink); }
+  .cta:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 2px; }
+  .hud-row {
+    display: flex; align-items: center; gap: 18px; margin: 24px 0 0;
+    font: 500 .62rem/1 var(--font-mono); letter-spacing: .18em; text-transform: uppercase;
+    color: var(--sc-ink-soft);
+  }
+  .hud-row .d { color: var(--ruler-blue); font-size: .45rem; }
+
+  /* the ticker: product conveyor */
+  .ticker { border-block: 1px solid var(--hair); padding: 16px 0; overflow: clip; }
+  .ticker-track { display: flex; align-items: center; width: max-content; animation: tick 32s linear infinite; }
+  .ticker-track .t {
+    font: 400 .78rem/1 var(--font-mono); letter-spacing: .26em;
+    text-transform: uppercase; color: var(--sc-ink-soft); white-space: nowrap;
+    margin-right: 56px;
+  }
+  .ticker-track .d { color: var(--ruler-blue); margin-right: 56px; font-size: .6rem; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
+
+  /* chapters: plain flow, hairline grid */
+  .chap { padding: clamp(90px, 14vh, 170px) 0; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
+  .cell { background: var(--sc-canvas); }
+  .gcell {
+    grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; background: var(--sc-canvas);
+    font: 400 .68rem/1 var(--font-mono); letter-spacing: .26em;
+    text-transform: uppercase; color: var(--sc-ink-soft);
+  }
+  .cell .ph { padding: clamp(14px, 2vw, 26px); }
+  .cell .ph img { width: 100%; height: auto; display: block; }
+  .cell .lab {
+    display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
+    padding: 13px 16px; border-top: 1px solid var(--hair);
+    font: 400 .72rem/1.5 var(--font-mono); letter-spacing: .06em; color: var(--sc-ink-soft);
+  }
+  .cell .lab b { font: 600 .95rem/1.4 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
+  .cell .lab > span { text-align: right; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+  /* craft on kraft */
+  #craft {
+    background: #b3906b url("assets/texture-kraft.webp") center / 620px repeat;
+    background-blend-mode: multiply;
+    --sc-canvas: #bb9772; --sc-ink: #241a10; --sc-ink-soft: #55432e;
+    --sc-surface: #faf4ea; --hair: rgba(36, 26, 16, .22); --edge: rgba(36, 26, 16, .32);
+    color: var(--sc-ink);
+  }
+  .cell.wide { grid-column: span 2; }
+  @media (max-width: 760px) { .cell.wide { grid-column: span 1; } }
+  .cell .ph.contain { display: grid; place-items: center; min-height: clamp(140px, 24vh, 240px); }
+  .cell .ph.contain img { max-width: min(92%, 980px); }
+
+  /* film */
+  .reel { display: flex; gap: clamp(18px, 2.4vw, 30px); align-items: flex-start; }
+  .frame { flex: 0 0 auto; margin: 0; width: min(300px, 72vw); }
+  .frame:nth-child(2) { width: min(340px, 80vw); margin-top: 44px; }
+  .frame:nth-child(3) { margin-top: 18px; }
+  .frame video {
+    width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block;
+    border-radius: 16px; background: var(--sc-surface);
+    border: 1px solid var(--hair); border-top-color: var(--edge);
+    box-shadow: 0 22px 44px -20px var(--shadow);
+  }
+  .frame figcaption {
+    margin: 10px 2px 0; font: 400 .74rem/1.5 var(--font-mono);
+    letter-spacing: .08em; color: var(--sc-ink-soft);
+  }
+  @media (max-width: 700px) {
+    .reel { overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 8px; }
+    .frame { scroll-snap-align: center; }
+    .frame:nth-child(2) { margin-top: 24px; }
+  }
+
+  /* close */
+  .close-sec { min-height: 92svh; display: grid; place-items: center; position: relative; }
+  .close-plate { text-align: center; }
+  .close-plate img.logo-kingrest { height: clamp(40px, 6vw, 60px); width: auto; margin: 0 auto 16px; display: block; }
+  .close-line { margin: 0 0 26px; font-family: var(--font-serifit); font-style: italic; font-size: 1.3rem; color: var(--sc-ink-soft); }
+  .close-fine { margin: 0; font: 400 .7rem/1.6 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--sc-ink-soft); }
+  .foot {
+    position: absolute; left: 0; right: 0; bottom: 22px;
+    display: flex; justify-content: space-between; padding: 0 clamp(20px, 4vw, 56px);
+    font: 400 .68rem/1.6 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft);
+  }
+  @media (max-width: 700px) {
+    .foot { flex-direction: column; gap: 4px; align-items: center; text-align: center; }
+    .plate { font-size: .66rem; padding: 8px 10px; }
+    .meta-strip { font-size: .6rem; }
+    .cta { height: 42px; padding: 0 16px; }
+    .hud-row { gap: 12px; }
+    .cell .ph img { max-height: min(105vw, 520px); object-fit: contain; margin: 0 auto; }
+  }
+</style>
+<noscript><style>[data-sc-in] > *{opacity:1 !important;transform:none !important}.orbit{display:none !important}</style></noscript>
+</head>
+<body id="top">
+
+<div class="sc-grain" aria-hidden="true"></div>
+
+<header class="site-head">
+  <a class="brand" href="#top" aria-label="gogreen and Kingrest, back to top">
+    <img class="brand-gogreen" src="assets/logo-gogreen-on-dark.png" data-light="assets/logo-gogreen-on-light.png" alt="gogreen">
+    <span class="brand-sep" aria-hidden="true"></span>
+    <img class="brand-kingrest" src="assets/logo-kingrest-on-dark.webp" data-light="assets/logo-kingrest-on-light.webp" alt="Kingrest">
+  </a>
+  <nav class="tabs" aria-label="Chapters">
+    <button type="button" data-goto="collection">Collection</button>
+    <button type="button" data-goto="craft">Craft</button>
+    <button type="button" data-goto="film">Film</button>
+  </nav>
+  <div class="head-right">
+    <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch color theme">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="ruler" aria-label="Page progress"><div class="ind"></div><span class="pct" aria-hidden="true">000%</span></nav>
+
+<nav class="wordrail" aria-label="Chapters">
+  <button class="rail-word" type="button" data-chapter="collection">Collection</button>
+  <button class="rail-word" type="button" data-chapter="craft">Craft</button>
+  <button class="rail-word" type="button" data-chapter="film">Film</button>
+  <button class="rail-word" type="button" data-chapter="end">Fin</button>
+</nav>
+
+<main>
+
+  <!-- 1 · hero: the galaxy -->
+  <section class="hero" id="hero">
+    <div class="galaxy-bg" aria-hidden="true">
+      <svg id="galaxySvg">
+        <g id="galaxyRoot">
+          <circle id="gCircle" class="circ" r="0" cx="0" cy="0"></circle>
+          <g id="gArms"></g>
+          <g id="gComets"></g>
+        </g>
+      </svg>
+    </div>
+    <div class="orbit" id="orbit"></div>
+    <div class="hero-center">
+      <div class="wm-row">
+        <div class="wm-scrim" aria-hidden="true"></div>
+        <p class="wordmark"><span>GOGREEN</span><span>&amp;KINGREST</span></p>
+      </div>
+      <h1 class="hero-h1">Warmth, <em>woven in.</em></h1>
+      <p class="hero-copy">Real throws, quilts and sheet sets, shot as sold and labelled as shipped.</p>
+      <div class="ctas">
+        <button class="cta cta-a" type="button" data-goto="collection">View the collection
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 4v14M6 12l6 6 6-6"/></svg>
+        </button>
+        <button class="cta cta-b" type="button" data-goto="film">Watch the films</button>
+      </div>
+      <p class="hud-row" aria-hidden="true"><span>Real products</span><span class="d">◆</span><span>2026 range</span><span class="d">◆</span><span>gogreen</span></p>
+    </div>
+  </section>
+
+  <!-- ticker: product conveyor -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="t">Throws</span><span class="d">◆</span><span class="t">Towels</span><span class="d">◆</span><span class="t">Quilts</span><span class="d">◆</span><span class="t">Sheet sets</span><span class="d">◆</span><span class="t">Heated blankets</span><span class="d">◆</span><span class="t">Bedding</span><span class="d">◆</span><span class="t">Kingrest 2026</span><span class="d">◆</span><span class="t">Throws</span><span class="d">◆</span><span class="t">Towels</span><span class="d">◆</span><span class="t">Quilts</span><span class="d">◆</span><span class="t">Sheet sets</span><span class="d">◆</span><span class="t">Heated blankets</span><span class="d">◆</span><span class="t">Bedding</span><span class="d">◆</span><span class="t">Kingrest 2026</span><span class="d">◆</span>
+    </div>
+  </div>
+
+  <!-- 2 · collection -->
+  <section class="chap" id="collection">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" data-spine>The range, <em>room by room.</em></h2>
+        <div class="meta-strip"><span>01 / The line</span><span>Real products&#160;&#160;·&#160;&#160;<em>2026</em> range</span></div>
+      </div>
+      <div class="grid" data-sc-in data-sc-stagger="60">
+        <div class="gcell"><span>Advent throws</span><span>01</span></div>
+        <figure class="cell">
+          <div class="ph"><img src="assets/throw-deer.webp" width="1400" height="1400" alt="Fleece throw printed with deer and holly on white, over an armchair" loading="lazy"></div>
+          <figcaption class="lab"><b>Throw</b><span>deer-holly fleece · H001-AW25</span></figcaption>
+        </figure>
+        <figure class="cell">
+          <div class="ph"><img src="assets/throw-penguin.webp" width="1400" height="1400" alt="Pale aqua fleece throw printed with penguins in red knitwear, on an armchair" loading="lazy"></div>
+          <figcaption class="lab"><b>Throw</b><span>penguins in knitwear · GTHS00153</span></figcaption>
+        </figure>
+        <div class="gcell"><span>Fur throws</span><span>02</span></div>
+        <figure class="cell">
+          <div class="ph"><img src="assets/rabbit-blue.webp" width="1400" height="1400" alt="Fog blue faux rabbit fur throw across a sofa, held by a woman with a cup" loading="lazy"></div>
+          <figcaption class="lab"><b>Fur throw</b><span>faux rabbit · 50 × 60 in · fog blue</span></figcaption>
+        </figure>
+        <div class="gcell"><span>Quilts &amp; sets</span><span>03</span></div>
+        <figure class="cell">
+          <div class="ph"><img src="assets/quilt-boho.webp" width="1400" height="1400" alt="Bohemian striped quilt set made up on a bed with two pillow shams" loading="lazy"></div>
+          <figcaption class="lab"><b>Quilt</b><span>printed quilt set · bohemian</span></figcaption>
+        </figure>
+        <figure class="cell">
+          <div class="ph"><img src="assets/sheet-set.webp" width="1400" height="1400" alt="Christmas-print sheet set on a bed, Santa and reindeer pattern on white" loading="lazy"></div>
+          <figcaption class="lab"><b>Sheet set</b><span>rotary print · 4-piece · GTHS01841</span></figcaption>
+        </figure>
+        <figure class="cell">
+          <div class="ph"><img src="assets/bedding-white.webp" width="1400" height="1400" alt="White four-piece bedding set made up on a bed in a bright room" loading="lazy"></div>
+          <figcaption class="lab"><b>Bedding</b><span>solid microfiber · 4-piece</span></figcaption>
+        </figure>
+        <div class="gcell"><span>Home basics</span><span>04</span></div>
+        <figure class="cell">
+          <div class="ph"><img src="assets/heated-blanket.webp" width="1400" height="1400" alt="White heated blanket folded beside its Kingrest box, with a digital remote" loading="lazy"></div>
+          <figcaption class="lab"><b>Heated</b><span>heated blanket · digital remote</span></figcaption>
+        </figure>
+        <figure class="cell">
+          <div class="ph"><img src="assets/towels-white.webp" width="1400" height="1400" alt="Four white cotton towels stacked, ribbed band detail" loading="lazy"></div>
+          <figcaption class="lab"><b>Towels</b><span>ring-spun cotton · 5 colours</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · craft on kraft -->
+  <section class="chap" id="craft" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" data-spine>The layer <em>you keep.</em></h2>
+        <div class="meta-strip"><span>02 / Craft</span><span>Packaging · labels · care</span></div>
+      </div>
+      <div class="grid" data-sc-in data-sc-stagger="60">
+        <figure class="cell wide">
+          <div class="ph contain"><img src="assets/craft-bellyband.webp" width="2200" height="251" alt="Kraft belly band printed with the Kingrest crown mark and product name" loading="lazy"></div>
+          <figcaption class="lab"><b>Belly band</b><span>kraft board · 105 × 12 cm</span></figcaption>
+        </figure>
+        <figure class="cell">
+          <div class="ph"><img src="assets/craft-colorcard.webp" width="1600" height="1066" alt="Kraft size card listing Twin, Queen and King quilt set dimensions" loading="lazy"></div>
+          <figcaption class="lab"><b>Size card</b><span>Twin 68 × 88 · Queen 92 × 96 · King 104 × 96</span></figcaption>
+        </figure>
+        <figure class="cell">
+          <div class="ph"><img src="assets/craft-carelabel.webp" width="764" height="1301" alt="Printed care label with fibre content, washing symbols and safety text" loading="lazy"></div>
+          <figcaption class="lab"><b>Care label</b><span>97% polyester · 3% spandex</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · film -->
+  <section class="chap" id="film" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" data-spine>The house, <em>lived in.</em></h2>
+        <div class="meta-strip"><span>03 / Film</span><span>Three short scenes · silent</span></div>
+      </div>
+      <div class="reel" data-sc-in data-sc-stagger="90">
+        <figure class="frame">
+          <video src="assets/video-sleep.mp4" poster="assets/poster-sleep.jpg" width="720" height="1280" muted loop playsinline preload="metadata"></video>
+          <figcaption>sleep study · 0:21</figcaption>
+        </figure>
+        <figure class="frame">
+          <video src="assets/video-pets.mp4" poster="assets/poster-pets.jpg" width="720" height="1280" muted loop playsinline preload="metadata"></video>
+          <figcaption>a house with pets · 0:46</figcaption>
+        </figure>
+        <figure class="frame">
+          <video src="assets/video-craft.mp4" poster="assets/poster-craft.jpg" width="720" height="1280" muted loop playsinline preload="metadata"></video>
+          <figcaption>from loom to bedroom · 0:47</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · resolve -->
+  <section class="close-sec" id="end">
+    <div class="close-plate" data-sc-in data-sc-stagger="70">
+      <img class="logo-kingrest on-dark" src="assets/logo-kingrest-on-dark.webp" data-light="assets/logo-kingrest-on-light.webp" alt="Kingrest">
+      <p class="close-line">Home textiles, made warm.</p>
+      <p class="close-fine">© 2026 Kingrest · 2026 home collection</p>
+    </div>
+    <footer class="foot"><span>Kingrest®</span><span>Throws · Quilts · Sheet sets</span></footer>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
+<script src="scrollcraft.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var desktopMQ = window.matchMedia("(min-width: 900px)");
+
+  ScrollCraft.mount(document.body);
+
+  var lenis = null;
+  if (!reduce && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.18, wheelMultiplier: 1, autoRaf: true });
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on("scroll", ScrollTrigger.update);
+    }
+  }
+  function scrollToEl(el) {
+    if (lenis) lenis.scrollTo(el, { offset: 0 });
+    else el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  }
+
+  /* ruler */
+  var ruler = document.querySelector(".ruler");
+  var ind = ruler.querySelector(".ind");
+  var pct = ruler.querySelector(".pct");
+  function docMax() { return Math.max(1, document.documentElement.scrollHeight - innerHeight); }
+  function buildRuler() {
+    ruler.querySelectorAll(".tick,.num").forEach(function (t) { t.remove(); });
+    for (var i = 0; i <= 50; i++) {
+      var t = document.createElement("span");
+      t.className = "tick" + (i % 5 === 0 ? " major" : "");
+      t.style.top = (i * 2) + "%";
+      t.setAttribute("aria-hidden", "true");
+      ruler.appendChild(t);
+    }
+    for (var n = 0; n <= 100; n += 10) {
+      var b = document.createElement("span");
+      b.className = "num";
+      b.style.top = n + "%";
+      b.textContent = n;
+      b.setAttribute("aria-hidden", "true");
+      ruler.appendChild(b);
+    }
+  }
+  var pad3 = function (n) { return (n < 10 ? "00" : n < 100 ? "0" : "") + n; };
+  function updateRuler() {
+    var p = (window.scrollY || document.documentElement.scrollTop) / docMax();
+    var top = (p * 100) + "%";
+    ind.style.top = top;
+    pct.style.top = top;
+    pct.textContent = pad3(Math.round(p * 100)) + "%";
+    ruler.classList.toggle("on", (window.scrollY || 0) > 60);
+  }
+  buildRuler(); updateRuler();
+  if (lenis) lenis.on("scroll", updateRuler);
+  window.addEventListener("scroll", updateRuler, { passive: true });
+
+  /* ── the galaxy ─────────────────────────────────────────────────────
+     Six Archimedean arms (r = c·θ). Cards are born small, square and
+     blurred in the pocket around the wordmark, ride their arm outward and
+     die offscreen. Progress = idle + scrollY×0.2/1000 journeys, so scroll
+     advances the field and scrolls back reverse it. Whole field rotates
+     −50°/min; a held card brakes itself and slows the rest. */
+  var hero = document.getElementById("hero");
+  var orbitEl = document.getElementById("orbit");
+  var gRoot = document.getElementById("galaxyRoot");
+  var gArms = document.getElementById("gArms");
+  var gComets = document.getElementById("gComets");
+  var gCircle = document.getElementById("gCircle");
+  var NS = "http://www.w3.org/2000/svg";
+
+  var CARD_IMGS = [
+    ["assets/hero-blanket.webp", "Advent patchwork throw by the Christmas tree"],
+    ["assets/throw-deer.webp", "Fleece throw printed with deer and holly"],
+    ["assets/throw-penguin.webp", "Aqua throw printed with penguins in knitwear"],
+    ["assets/rabbit-blue.webp", "Fog blue faux rabbit fur throw across a sofa"],
+    ["assets/quilt-boho.webp", "Bohemian striped quilt set made up on a bed"],
+    ["assets/sheet-set.webp", "Christmas print sheet set on a bed"],
+    ["assets/bedding-white.webp", "White four-piece bedding set"],
+    ["assets/hero-rabbit.webp", "Faux rabbit fur throw, close crop"],
+    ["assets/heated-blanket.webp", "White heated blanket with digital remote"],
+    ["assets/towels-white.webp", "Stacked white cotton towels"],
+    ["assets/craft-bellyband.webp", "Kraft belly band with the crown mark"],
+    ["assets/craft-colorcard.webp", "Kraft quilt size card"],
+    ["assets/craft-carelabel.webp", "Printed care label"],
+    ["assets/poster-sleep.jpg", "Still from the sleep film"]
+  ];
+
+  var heroVisible = true;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { heroVisible = en[0].isIntersecting; }, { threshold: 0.02 })
+      .observe(hero);
+  }
+
+  var ARMS, CARD_N, TURNS, RMAXF, W, H, CX, CY, rMax, thetaMax, C, thetaBirth, thetaExit, cardHCap, slotsPerArm, drawEnd;
+    var cards = [];
+
+  function armPathD(a) {
+    var d = "", t0 = 0.3 * thetaBirth, steps = 140;
+    for (var s = 0; s <= steps; s++) {
+      var th = t0 + (drawEnd - t0) * (s / steps);
+      var ang = th + a * Math.PI * 2 / ARMS;
+      d += (s ? "L" : "M") + (CX + C * th * Math.cos(ang)).toFixed(1) + " " + (CY + C * th * Math.sin(ang)).toFixed(1);
+    }
+    return d;
+  }
+  function buildSvg() {
+    var svg = document.getElementById("galaxySvg");
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    [gArms, gComets].forEach(function (g) { while (g.firstChild) g.removeChild(g.firstChild); });
+    for (var a = 0; a < ARMS; a++) {
+      var d = armPathD(a);
+      var base = document.createElementNS(NS, "path");
+      base.setAttribute("d", d); base.setAttribute("class", "arm");
+      gArms.appendChild(base);
+      var comet = document.createElementNS(NS, "path");
+      comet.setAttribute("d", d); comet.setAttribute("class", "comet");
+      comet.setAttribute("pathLength", "100");
+      comet.style.animationDelay = (-(a * 0.618 % 1) * 15.8 / 3).toFixed(2) + "s";
+      gComets.appendChild(comet);
+    }
+    gCircle.setAttribute("cx", CX); gCircle.setAttribute("cy", CY);
+    gCircle.setAttribute("r", (0.56 * rMax).toFixed(1));
+  }
+  function buildCards() {
+    while (orbitEl.firstChild) orbitEl.removeChild(orbitEl.firstChild);
+    cards = [];
+    for (var i = 0; i < CARD_N; i++) {
+      var img = CARD_IMGS[i % CARD_IMGS.length];
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "oc"; b.dataset.i = i;
+      b.setAttribute("aria-label", img[1]);
+      b.innerHTML = '<span class="oc-in"><img src="' + img[0] + '" alt="" loading="lazy" decoding="async"></span>';
+      orbitEl.appendChild(b);
+      cards.push({ el: b, arm: i % ARMS, slot: Math.floor(i / ARMS),
+        jY: 0, j: 0, h: 0, hold: 0, hov: 0, boost: 0, x: CX, y: CY, w: 100, hh: 60 });
+    }
+  }
+  function layout() {
+    W = hero.clientWidth; H = hero.clientHeight; CX = W / 2; CY = H / 2;
+    var phone = W < 700;
+    ARMS = phone ? 3 : 6;
+    CARD_N = phone ? 14 : 28;
+    TURNS = phone ? 0.9 : 0.85;
+    RMAXF = phone ? 0.8 : 0.7;
+    var halfDiag = Math.hypot(W, H) / 2;
+    rMax = RMAXF * halfDiag;
+    thetaMax = TURNS * Math.PI * 2;
+    C = rMax / thetaMax;
+    thetaBirth = 0.08 * thetaMax;
+    cardHCap = Math.min(240, Math.max(67, H * (phone ? 0.29 : 0.23)));
+    thetaExit = (halfDiag + 1.5 * cardHCap) / C;
+    drawEnd = halfDiag / C;
+    slotsPerArm = Math.max(1, Math.ceil(CARD_N / ARMS));
+    buildSvg();
+    if (cards.length !== CARD_N) buildCards();
+  }
+  layout();
+
+  /* pointer: hover brakes a card, click toggles a 3× boost on it */
+  var mouse = { x: 0, y: 0, active: false };
+  var spin = 0, idleP = 0, lastP = 0, last = 0, holdTarget = 0, holdRest = 0;
+  var targetI = -1, boostCard = -1, boostOn = false;
+  hero.addEventListener("pointermove", function (e) {
+    var r = hero.getBoundingClientRect();
+    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true;
+  });
+  hero.addEventListener("pointerleave", function () { mouse.active = false; boostOn = false; });
+  orbitEl.addEventListener("click", function (e) {
+    var b = e.target.closest(".oc"); if (!b) return;
+    var i = +b.dataset.i;
+    if (boostCard === i) boostOn = !boostOn;
+    else { boostCard = i; boostOn = true; }
+  });
+
+  var smooth01 = function (v) { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
+  function place(c, n, j, t, wobble) {
+    var th = thetaBirth + j * (thetaExit - thetaBirth);
+    var ang = th + c.arm * Math.PI * 2 / ARMS + spin;
+    var r = C * th;
+    var x = CX + r * Math.cos(ang), y = CY + r * Math.sin(ang);
+    if (wobble) {
+      x += 6 * (1 - c.hold) * Math.sin(t * 0.0016 + 2.399 * n);
+      y += 6 * (1 - c.hold) * Math.cos(t * 0.0011 + 1.713 * n);
+    }
+    return [x, y];
+  }
+  function frame(t) {
+    var dt = Math.min(0.05, last ? (t - last) / 1000 : 0.016); last = t;
+    if (heroVisible && !reduce) {
+      holdTarget += ((targetI >= 0 ? 1 : 0) - holdTarget) * (1 - Math.exp(-dt / 0.15));
+      holdRest += ((targetI >= 0 ? 1 : 0) - holdRest) * (1 - Math.exp(-dt / 1));
+      var rate = 1 - holdRest * 0.85;
+      spin += (-50 * Math.PI / 180) / 60 * dt * rate;
+      idleP += dt * (0.57 / 60) * rate;
+      var P = idleP + (window.scrollY || 0) * 0.2 / 1000;
+      var dP = P - lastP; lastP = P;
+      gRoot.setAttribute("transform", "rotate(" + (spin * 180 / Math.PI).toFixed(3) + " " + CX.toFixed(1) + " " + CY.toFixed(1) + ")");
+      if (mouse.active) {
+        /* sticky target lock: keep the held card while the pointer stays on
+           it (artcraft targetTau); re-elect only when it escaped */
+        var tc = targetI >= 0 ? cards[targetI] : null;
+        var keep = tc && Math.abs(mouse.x - tc.x) <= tc.w * 0.55 && Math.abs(mouse.y - tc.y) <= tc.hh * 0.55;
+        if (!keep) {
+          var best = -1, bestJ = -1;
+          for (var q = 0; q < cards.length; q++) {
+            var cq = cards[q];
+            if (Math.abs(mouse.x - cq.x) <= cq.w * 0.55 && Math.abs(mouse.y - cq.y) <= cq.hh * 0.55 && cq.j > bestJ) { bestJ = cq.j; best = q; }
+          }
+          targetI = best;
+        }
+      } else targetI = -1;
+      if (boostOn && targetI !== boostCard) boostOn = false;
+      for (var n = 0; n < cards.length; n++) {
+        var c = cards[n], isT = n === targetI;
+        c.jY -= dP * (isT ? holdTarget : holdRest);
+        c.j = (((c.slot + 0.5 + c.arm * 0.76) / slotsPerArm + P + c.jY) % 1 + 1) % 1;
+        c.hold += ((isT ? 1 : 0) - c.hold) * (1 - Math.exp(-dt / 0.25));
+        var pos = place(c, n, c.j, t, true), x = pos[0], y = pos[1];
+        if (mouse.active) {
+          var dx = mouse.x - x, dy = mouse.y - y, d2 = dx * dx + dy * dy;
+          var f = Math.exp(-d2 / (320 * 320)) * (1 - c.hold);
+          var dist = Math.max(1, Math.sqrt(d2));
+          x += dx / dist * 8 * f; y += dy / dist * 8 * f;
+        }
+        c.x = x; c.y = y;
+        var hT = cardHCap * (0.45 + 0.55 * c.j);
+        c.h += (hT - c.h) * (1 - Math.exp(-dt / 0.3));
+        c.hh = c.h; c.w = c.h;
+        c.hov += ((isT ? 1 : 0) - c.hov) * (1 - Math.exp(-dt / 0.12));
+        var isB = boostOn && n === boostCard;
+        c.boost += ((isB ? 1 : 0) - c.boost) * (1 - Math.exp(-dt / 0.18));
+        var sc = 1 + c.hov * (1 - c.boost) * 1.0 + c.boost * 2.0;
+        var rot = mouse.active && c.hov > 0.02
+          ? Math.max(-6, Math.min(6, (mouse.x - x) * 0.02)) * c.hov : 0;
+        var sy = (c.h / 200) * sc; var sx = sy;
+        c.el.style.transform = "translate(" + (x - 100).toFixed(1) + "px," + (y - 100).toFixed(1) + "px) rotate(" + rot.toFixed(2) + "deg) scale(" + sx.toFixed(4) + "," + sy.toFixed(4) + ")";
+        c.el.style.zIndex = 1 + Math.round(c.j * 20) + (isT ? 40 : 0) + (isB ? 60 : 0);
+        var op = smooth01(c.j / 0.15);
+        c.el.style.opacity = op < 1 ? op.toFixed(3) : "1";
+        var blur = c.j < 0.25 ? 7 * (1 - smooth01(c.j / 0.18)) * (1 - c.hold) : 0;
+        var filt = blur > 0.3 ? "blur(" + blur.toFixed(1) + "px)" : "";
+        if (c.el.style.filter !== filt) c.el.style.filter = filt;
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  if (!reduce) requestAnimationFrame(frame);
+  else {
+    /* reduced motion: a still, spread field at a fixed angle */
+    spin = -0.55;
+    for (var m = 0; m < cards.length; m++) {
+      var cm = cards[m];
+      cm.j = ((cm.slot + 0.5 + cm.arm * 0.76) / slotsPerArm + 0.32) % 1;
+      cm.h = cardHCap * (0.45 + 0.55 * cm.j);
+      var pm = place(cm, m, cm.j, 0, false);
+      cm.el.style.transform = "translate(" + (pm[0] - 100) + "px," + (pm[1] - 100) + "px) scale(" + (cm.h / 200).toFixed(4) + "," + (cm.h / 200).toFixed(4) + ")";
+      cm.el.style.zIndex = 1 + Math.round(cm.j * 20);
+    }
+    gRoot.setAttribute("transform", "rotate(" + (spin * 180 / Math.PI).toFixed(3) + " " + CX.toFixed(1) + " " + CY.toFixed(1) + ")");
+
+  }
+
+  /* theme toggle + logo swap */
+  function syncThemeImgs() {
+    var light = document.documentElement.dataset.theme === "light";
+    document.querySelectorAll("img[data-light]").forEach(function (im) {
+      im.src = light ? im.getAttribute("data-light") : im.getAttribute("data-dark") || im.src;
+    });
+  }
+  document.querySelectorAll("img[data-light]").forEach(function (im) {
+    im.setAttribute("data-dark", im.getAttribute("src"));
+  });
+  document.querySelector("[data-theme-toggle]").addEventListener("click", function () {
+    var next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("kingrest-theme", next); } catch (e) {}
+    syncThemeImgs();
+  });
+  syncThemeImgs();
+
+  /* word rail: rest (vertical at the ruler) --scrub--> active (top-right)
+     --scrub--> past (weakened high stack, never over the active word) */
+  var chapterEls = ["collection", "craft", "film", "end"].map(function (id) { return document.getElementById(id); });
+  var railWords = Array.prototype.slice.call(document.querySelectorAll(".rail-word"));
+  function restVars() { return { rotate: 90, top: window.innerHeight * 0.42, right: -6, fontSize: "clamp(1.5rem,2.4vw,2.1rem)", opacity: 0, letterSpacing: ".02em" }; }
+  function activeVars() { return { rotate: 0, top: 92, right: 16, fontSize: "clamp(2.2rem,4vw,3.5rem)", opacity: 1, letterSpacing: "-.01em" }; }
+  function pastVars(i) { return { rotate: 0, top: 8 + i * 22, right: 16, fontSize: ".72rem", opacity: 0.22, letterSpacing: ".22em" }; }
+  railWords.forEach(function (w) {
+    w.addEventListener("click", function () { scrollToEl(chapterEls[railWords.indexOf(w)]); });
+    if (window.gsap) gsap.set(w, restVars());
+  });
+  document.querySelectorAll("[data-goto]").forEach(function (b) {
+    b.addEventListener("click", function () { scrollToEl(document.getElementById(b.getAttribute("data-goto"))); });
+  });
+  function splitWord(w) {
+    if (!w._split && window.SplitText) w._split = new SplitText(w, { type: "chars", charsClass: "sp-ch" });
+    return w._split ? w._split.chars : [];
+  }
+  if (window.ScrollTrigger && window.gsap && !reduce) {
+    chapterEls.forEach(function (sec, i) {
+      var w = railWords[i];
+      var chars = splitWord(w);
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: sec, start: "top bottom", end: "top 30%", scrub: 0.5 }
+      });
+      tl.to(w, Object.assign(activeVars(), { duration: 1 }), 0);
+      if (chars.length) {
+        tl.fromTo(chars, { y: function (j, c) { return (j - chars.length / 2) * 12; }, opacity: 0.25 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.03 }, 0.35);
+      }
+      if (i < chapterEls.length - 1) {
+        gsap.timeline({
+          scrollTrigger: { trigger: sec, start: "bottom 55%", end: "bottom 12%", scrub: 0.5 }
+        }).to(w, Object.assign(pastVars(i), { duration: 1 }), 0);
+      }
+    });
+  } else {
+    railWords.forEach(function (w) { if (window.gsap) gsap.set(w, restVars()); });
+  }
+
+  /* nav scroll-spy: artcraft fills the tab of the section in view */
+  var spySecs = chapterEls;
+  var tabBtns = Array.prototype.slice.call(document.querySelectorAll(".tabs button"));
+  function updateSpy() {
+    var y = (window.scrollY || 0) + innerHeight * 0.4;
+    var cur = -1;
+    spySecs.forEach(function (s, i) { if (s.offsetTop <= y) cur = i; });
+    tabBtns.forEach(function (b, i) { b.classList.toggle("active", i === cur); });
+  }
+  updateSpy();
+  if (lenis) lenis.on("scroll", updateSpy);
+  window.addEventListener("scroll", updateSpy, { passive: true });
+
+  /* mobile in-flow titles: letters rise on first entry */
+  if (window.ScrollTrigger && window.gsap && !reduce) {
+    document.querySelectorAll("[data-spine]").forEach(function (t) {
+      ScrollTrigger.create({
+        trigger: t, start: "top 85%", once: true,
+        onEnter: function () {
+          if (!window.SplitText) return;
+          if (!t._split) t._split = new SplitText(t, { type: "chars", charsClass: "sp-ch" });
+          gsap.from(t._split.chars, { y: 26, opacity: 0, duration: 0.5, ease: "power2.out", stagger: 0.04 });
+        }
+      });
+    });
+  }
+
+  /* films */
+  var films = document.querySelectorAll(".frame video");
+  if (reduce) films.forEach(function (v) { v.controls = true; });
+  else if ("IntersectionObserver" in window) {
+    var fio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { var p = e.target.play(); if (p && p.catch) p.catch(function () {}); }
+        else e.target.pause();
+      });
+    }, { threshold: 0.45 });
+    films.forEach(function (v) { fio.observe(v); });
+  }
+
+  window.addEventListener("load", function () { layout(); ScrollTrigger.refresh(); buildRuler(); updateRuler(); });
+  var rT;
+  window.addEventListener("resize", function () {
+    clearTimeout(rT);
+    rT = setTimeout(function () { layout(); buildRuler(); updateRuler(); ScrollTrigger.refresh(); }, 200);
+  });
+})();
+</script>
+</body>
+</html>
