@@ -18,6 +18,11 @@
 | `作品清单.md` | 作品元数据台账（待建：日期/平台/产品/类型/说明） |
 | `FINGERPRINTS.md` | scroll-craft build 登记表 |
 
+## 常用命令
+
+- 本地预览：`node ~/.zcode/skills/scroll-craft/scripts/serve.mjs --root . --port 4500`
+- 发布：`git commit + push` → GitHub Pages 自动部署（约 1 分钟生效）
+
 ## 上线
 
 - 地址：`https://sanglaoge.github.io/visual-hall/`（仓库 `sanglaoge/visual-hall`，main 分支根目录发布）
@@ -34,7 +39,7 @@
 
 1. 桑老哥把图/视频丢进 `素材/`
 2. AI 按 `作品清单.md` 的元数据生成/更新页面
-3. 本地起服务预览（`node ~/.zcode/skills/scroll-craft/scripts/serve.mjs --root . --port 4500`）
+3. 本地起服务预览（命令见「常用命令」）
 4. 桑老哥点头后 `git commit + push`，Pages 自动发布（约 1 分钟生效）
 
 ## 铁律
