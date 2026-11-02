@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>视频 · 视觉厅</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="assets/gallery.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="./">视觉厅</a>
+  <nav>
+    <a href="./">总览</a>
+    <a href="videos.html" aria-current="page">视频</a>
+    <a href="accessories.html">辅料</a>
+    <a href="ugc.html">买家秀</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <header class="page-head">
+    <div class="eyebrow">Motion</div>
+    <h1>视频</h1>
+    <p class="lede">主图视频两条路：AI 生成的场景片，和用代码逐帧生成的商品演示。横竖版都有，点开直接播。</p>
+  </header>
+
+  <div class="vhero" id="vhero"></div>
+  <div id="groups"></div>
+
+  <div class="foot">
+    <a href="./">← 回总览</a>
+    <span>为省流量已压缩，原片另存</span>
+    <span>Updated 2026.11.02</span>
+  </div>
+</div>
+
+<script src="assets/data/works.js"></script>
+<script src="assets/gallery.js"></script>
+<script>
+(function () {
+  var W = window.WORKS || {};
+  var vids = W.videos || [];
+  var pmap = {};
+  (W.products || []).forEach(function (p) { pmap[p.key] = p.name; });
+
+  var hero = vids.find(function (v) { return v.id === "v06"; }) || vids.find(function (v) { return v.long === "横"; }) || vids[0];
+  if (hero) {
+    document.getElementById("vhero").innerHTML =
+      '<video src="' + hero.src + '" poster="' + hero.poster + '" autoplay muted loop playsinline></video>' +
+      '<button class="sound" type="button">开启声音</button>' +
+      '<div class="cap"><b>' + hero.title + '</b><span>' + hero.tag + ' · ' + hero.dur + 's</span></div>';
+    var v = document.querySelector("#vhero video");
+    var btn = document.querySelector("#vhero .sound");
+    btn.addEventListener("click", function () {
+      v.muted = !v.muted;
+      btn.textContent = v.muted ? "开启声音" : "关闭声音";
+    });
+  }
+
+  var order = ["electric-blanket", "rabbit", "quilt"], seen = {};
+  var groups = [];
+  order.forEach(function (k) {
+    var list = vids.filter(function (v) { return v.product === k; });
+    if (list.length) { groups.push({ name: pmap[k] || k, list: list }); list.forEach(function (v) { seen[v.id] = 1; }); }
+  });
+  var rest = vids.filter(function (v) { return !seen[v.id]; });
+  if (rest.length) groups.push({ name: "品牌短片", list: rest });
+
+  document.getElementById("groups").innerHTML = groups.map(function (g) {
+    return '<div class="label"><h2>' + g.name + '</h2><span>' + g.list.length + ' 条</span></div>' +
+      '<div style="display:grid;gap:clamp(12px,2vw,20px);grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">' +
+      g.list.map(function (v) {
+        return '<article class="vcard"><div class="frame" data-src="' + v.src + '" data-poster="' + v.poster + '">' +
+          '<img src="' + v.poster + '" alt="' + v.title + '" loading="lazy">' +
+          '<span class="play"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="rgba(244,241,234,.7)"/><path d="M26 21l18 11-18 11z" fill="#f4f1ea"/></svg></span>' +
+          '</div><div class="meta">' + v.title + '<em>' + v.long + '版 · ' + v.dur + 's</em></div>' +
+          '<div class="sub" style="padding:0 14px 13px;font-family:var(--sans);font-size:11px;letter-spacing:.08em;color:var(--muted)">' + v.note + '</div></article>';
+      }).join("") + '</div>';
+  }).join("");
+})();
+</script>
+</body>
+</html>

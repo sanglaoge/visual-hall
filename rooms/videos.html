@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>视频厅 · 视觉厅</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="../assets/gallery.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="../">视觉厅</a>
+  <nav>
+    <a href="../">总览</a>
+    <a href="./main-images.html">主图</a>
+    <a href="./videos.html" aria-current="page">视频</a>
+    <a href="./accessories.html">辅料</a>
+    <a href="./ugc.html">买家秀</a>
+    <a href="../builds/kingrest-showcase/">案例</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <header class="page-head">
+    <div class="eyebrow">Room 02 · Motion</div>
+    <h1>视频厅</h1>
+    <p class="lede">主图视频分两路：AI 生成的场景短片，和用代码逐帧生成的商品演示。横竖版都有，点开直接播。</p>
+    <div class="counts">
+      <span><b data-stat="videos">—</b> 条成片</span>
+      <span><b>AI 生成</b> 场景篇</span>
+      <span><b>代码生成</b> 演示篇</span>
+    </div>
+  </header>
+
+  <div class="filters" id="filters"></div>
+  <div id="rooms" style="display:grid;gap:clamp(12px,2vw,22px);grid-template-columns:repeat(auto-fill,minmax(300px,1fr))"></div>
+
+  <div class="foot">
+    <a href="../">← 回视觉厅</a>
+    <span>为省流量已压缩，原片另存</span>
+    <span>无声播放请自行开音量</span>
+  </div>
+</div>
+
+<script src="../assets/data/works.js"></script>
+<script src="../assets/gallery.js"></script>
+<script>
+(function () {
+  var data = (window.WORKS && window.WORKS.videos) || [];
+  var R = "../";
+  var rooms = document.getElementById("rooms");
+  var filters = document.getElementById("filters");
+  var kinds = ["全部", "AI 生成", "代码生成"];
+  var current = "全部";
+
+  filters.innerHTML = kinds.map(function (s) {
+    return '<button class="chip" data-kind="' + s + '" aria-pressed="' + (s === "全部") + '">' + s + '</button>';
+  }).join("");
+
+  filters.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    current = b.dataset.kind;
+    filters.querySelectorAll(".chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(c === b));
+    });
+    paint();
+  });
+
+  function paint() {
+    rooms.innerHTML = data.filter(function (v) {
+      return current === "全部" || v.tag.indexOf(current) === 0;
+    }).map(function (v) {
+      return '<article class="vcard">' +
+        '<div class="frame" data-src="' + R + v.src + '" data-poster="' + R + v.poster + '">' +
+        '<img src="' + R + v.poster + '" alt="' + v.title + '" loading="lazy">' +
+        '<span class="play"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="rgba(244,241,234,.7)"/><path d="M26 21l18 11-18 11z" fill="#f4f1ea"/></svg></span>' +
+        '</div><div class="meta">' + v.title + '<em>' + v.long + '版 · ' + v.dur + 's</em></div></article>';
+    }).join("");
+  }
+
+  paint();
+})();
+</script>
+</body>
+</html>

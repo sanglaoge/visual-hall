@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>买家秀 · 视觉厅</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="assets/gallery.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="./">视觉厅</a>
+  <nav>
+    <a href="./">总览</a>
+    <a href="videos.html">视频</a>
+    <a href="accessories.html">辅料</a>
+    <a href="ugc.html" aria-current="page">买家秀</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <header class="page-head">
+    <div class="eyebrow">UGC</div>
+    <h1>买家秀</h1>
+    <p class="lede">生活场景里的真实使用感：沙发上、床铺上、宠物身上、手指按压面料的回弹。面料特写单独一组。</p>
+  </header>
+
+  <div class="filters" id="filters"></div>
+  <div class="masonry" id="rooms"></div>
+
+  <div class="foot">
+    <a href="./">← 回总览</a>
+    <span>点图看大图，可左右翻</span>
+    <span>含 AI 场景合成，非真实买家上传</span>
+  </div>
+</div>
+
+<script src="assets/data/works.js"></script>
+<script src="assets/gallery.js"></script>
+<script>
+(function () {
+  var W = window.WORKS || {};
+  var data = W.ugc || [];
+  var groups = [], seen = {};
+  data.forEach(function (u) { if (!seen[u.group]) { seen[u.group] = 1; groups.push(u.group); } });
+  groups = ["全部"].concat(groups);
+  var current = "全部";
+  var filters = document.getElementById("filters");
+
+  filters.innerHTML = groups.map(function (g) {
+    return '<button class="chip" data-group="' + g + '" aria-pressed="' + (g === "全部") + '">' + g + '</button>';
+  }).join("");
+
+  filters.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    current = b.dataset.group;
+    filters.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === b)); });
+    paint();
+  });
+
+  function paint() {
+    var list = data.filter(function (u) { return current === "全部" || u.group === current; });
+    document.getElementById("rooms").innerHTML = list.map(function (u) {
+      return '<button class="m-item" data-image="' + u.src + '" data-title="' + u.title + '">' +
+        '<img src="' + u.src + '" alt="' + u.title + '" loading="lazy">' +
+        '<span class="tagx">' + u.group + '</span></button>';
+    }).join("");
+  }
+
+  paint();
+})();
+</script>
+</body>
+</html>

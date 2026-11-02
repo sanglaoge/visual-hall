@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>辅料 · 视觉厅</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="assets/gallery.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="./">视觉厅</a>
+  <nav>
+    <a href="./">总览</a>
+    <a href="videos.html">视频</a>
+    <a href="accessories.html" aria-current="page">辅料</a>
+    <a href="ugc.html">买家秀</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <header class="page-head">
+    <div class="eyebrow">Print &amp; Pack</div>
+    <h1>辅料</h1>
+    <p class="lede">包装盒、彩卡、材质说明与规格页。有实物照的放实物，还没有的先看印刷展开图。</p>
+  </header>
+
+  <div class="filters" id="filters"></div>
+  <div class="agrid" id="rooms"></div>
+
+  <div class="foot">
+    <a href="./">← 回总览</a>
+    <span>点图看大图</span>
+    <span>Updated 2026.11.02</span>
+  </div>
+</div>
+
+<script src="assets/data/works.js"></script>
+<script src="assets/gallery.js"></script>
+<script>
+(function () {
+  var W = window.WORKS || {};
+  var data = W.acc || [];
+  var pmap = {};
+  (W.products || []).forEach(function (p) { pmap[p.key] = p.name; });
+
+  var kinds = ["全部"], seenK = {};
+  data.forEach(function (a) { if (!seenK[a.kind]) { seenK[a.kind] = 1; kinds.push(a.kind); } });
+  var current = "全部";
+  var filters = document.getElementById("filters");
+
+  filters.innerHTML = kinds.map(function (k) {
+    return '<button class="chip" data-kind="' + k + '" aria-pressed="' + (k === "全部") + '">' + k + '</button>';
+  }).join("");
+
+  filters.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    current = b.dataset.kind;
+    filters.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === b)); });
+    paint();
+  });
+
+  function paint() {
+    document.getElementById("rooms").innerHTML = data.filter(function (a) {
+      return current === "全部" || a.kind === current;
+    }).map(function (a) {
+      var isPhoto = a.preview.indexOf("photo-") > -1;
+      var owner = pmap[a.product] || "通用";
+      return '<article class="acard">' +
+        '<div class="ph' + (isPhoto ? " photo" : "") + '" data-image="' + a.preview + '" data-title="' + a.title + '">' +
+        '<img src="' + a.preview + '" alt="' + a.title + '" loading="' + (a.preview.indexOf("assets/acc") === 0 ? "lazy" : "lazy") + '"></div>' +
+        '<div class="info">' + a.title + '<em>' + a.kind + ' · ' + a.type + '</em></div>' +
+        '<div class="sub">' + owner +
+        (a.die ? ' · <a href="' + a.die + '" data-image="' + a.die + '" data-title="' + a.title + ' 展开图">展开图</a>' : '') +
+        '</div></article>';
+    }).join("");
+  }
+
+  paint();
+})();
+</script>
+</body>
+</html>

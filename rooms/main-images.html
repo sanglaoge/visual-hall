@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>主图厅 · 视觉厅</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="../assets/gallery.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="../">视觉厅</a>
+  <nav>
+    <a href="../">总览</a>
+    <a href="./main-images.html" aria-current="page">主图</a>
+    <a href="./videos.html">视频</a>
+    <a href="./accessories.html">辅料</a>
+    <a href="./ugc.html">买家秀</a>
+    <a href="../builds/kingrest-showcase/">案例</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <header class="page-head">
+    <div class="eyebrow">Room 01 · Main Images</div>
+    <h1>主图厅</h1>
+    <p class="lede">每个 SKU 一套完整主图，含首图、卖点、细节、场景与尺寸。按产品分组，点开看整组。</p>
+    <div class="counts">
+      <span><b data-stat="mainSets">—</b> 套主图</span>
+      <span><b data-stat="mainShots">—</b> 张图</span>
+      <span><b>12</b> 个产品</span>
+    </div>
+  </header>
+
+  <div class="filters" id="filters"></div>
+  <div id="rooms"></div>
+
+  <div class="foot">
+    <a href="../">← 回视觉厅</a>
+    <span>点任意图可全屏看整组</span>
+    <span>来源：2026 年主图存档</span>
+  </div>
+</div>
+
+<script src="../assets/data/works.js"></script>
+<script src="../assets/gallery.js"></script>
+<script>
+(function () {
+  var data = (window.WORKS && window.WORKS.main) || [];
+  var R = "../";
+  var rooms = document.getElementById("rooms");
+  var filters = document.getElementById("filters");
+  var series = ["全部", "新品", "节日"];
+  var current = "全部";
+
+  filters.innerHTML = series.map(function (s) {
+    return '<button class="chip" data-series="' + s + '" aria-pressed="' + (s === "全部") + '">' + s + '</button>';
+  }).join("");
+
+  filters.addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    current = b.dataset.series;
+    filters.querySelectorAll(".chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", String(c === b));
+    });
+    paint();
+  });
+
+  function paint() {
+    var html = "";
+    data.forEach(function (g) {
+      if (current !== "全部" && g.series !== current) return;
+      html += '<section class="group"><div class="group-head"><h2>' + g.name +
+        '</h2><span class="num">' + g.series + ' · ' + g.items.length + ' 套</span></div><div class="grid">';
+      g.items.forEach(function (it) {
+        html += '<button class="card" data-images=\'' + JSON.stringify(it.images.map(function(p){return R+p;})) +
+          '\' data-title="' + g.name + ' · ' + it.sub + '">' +
+          '<span class="media"><img src="' + R + it.cover + '" alt="' + g.name + ' ' + it.sub +
+          '" loading="lazy" width="600" height="600"></span>' +
+          '<span class="cap">' + it.sub + '<em>' + it.count + ' 张</em></span></button>';
+      });
+      html += "</div></section>";
+    });
+    rooms.innerHTML = html;
+  }
+
+  paint();
+})();
+</script>
+</body>
+</html>

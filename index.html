@@ -1,59 +1,1168 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>视觉厅 · 近一年视觉作品</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>视觉厅 · 2026 电商视觉</title>
+<meta name="description" content="视觉厅：2026 年电商视觉作品，产品主图、主图视频、印刷辅料与买家秀。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f2f1ee'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23101014' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500&family=Playfair+Display:wght@500;600;700&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/scrollcraft.css">
 <style>
-  :root{ --ink:#0f0f11; --paper:#f4f1ea; --muted:#8a8578; --line:rgba(244,241,234,.14); }
-  *{ margin:0; padding:0; box-sizing:border-box; }
-  html,body{ height:100%; }
-  body{
-    background:var(--ink); color:var(--paper);
-    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
-    display:grid; place-items:center; padding:6vw;
-    -webkit-font-smoothing:antialiased;
+  :root {
+    --sc-canvas:     #f2f1ee;
+    --sc-surface:    #ffffff;
+    --sc-ink:        #101014;
+    --sc-ink-soft:   rgba(16, 16, 20, .62);
+    --sc-accent:     #d9a441;
+    --sc-accent-ink: #171207;
+    --sc-font-display: "Playfair Display", "Songti SC", "Noto Serif SC", Georgia, serif;
+    --sc-font-text:    "Outfit", -apple-system, "PingFang SC", system-ui, sans-serif;
+    --font-archivo:  "Archivo", system-ui, sans-serif;
+    --font-mono:     "Geist Mono", ui-monospace, "SF Mono", monospace;
+    --font-serifit:  "Instrument Serif", Georgia, serif;
+    --edge: rgba(16, 16, 20, .3);
+    --hair: rgba(16, 16, 20, .14);
+    --shadow: rgba(20, 22, 34, .16);
+    --ruler-blue: #4d7cff;
   }
-  main{ width:100%; max-width:640px; }
-  .eyebrow{
-    font-family:-apple-system,"PingFang SC",sans-serif;
-    font-size:12px; letter-spacing:.34em; color:var(--muted);
-    text-transform:uppercase; margin-bottom:clamp(18px,4vh,32px);
+  html[data-theme="dark"] {
+    --sc-canvas:     #0e1219;
+    --sc-surface:    #161c26;
+    --sc-ink:        #f2ede3;
+    --sc-ink-soft:   #9aa3b0;
+    --edge: rgba(242, 237, 227, .28);
+    --hair: rgba(242, 237, 227, .13);
+    --shadow: rgba(0, 0, 0, .55);
   }
-  h1{
-    font-size:clamp(52px,13vw,104px); font-weight:400;
-    letter-spacing:.12em; line-height:1.05;
+
+  html, body { overflow-x: clip; }
+  .nw { white-space: nowrap; }
+  ::selection { background: var(--sc-accent); color: var(--sc-accent-ink); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* brand mark + chapter links + theme */
+  .site-head {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: stretch; height: 48px;
+    background: color-mix(in oklab, var(--sc-canvas) 95%, transparent);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hair);
   }
-  .rule{ height:1px; background:var(--line); margin:clamp(24px,5vh,40px) 0; }
-  p{
-    font-size:clamp(14px,3.6vw,16px); line-height:2;
-    color:#c9c4b6; letter-spacing:.02em;
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    padding-inline: 16px 18px; border-right: 1px solid var(--hair);
+    text-decoration: none;
   }
-  footer{
-    margin-top:clamp(36px,9vh,72px);
-    font-family:-apple-system,"PingFang SC",sans-serif;
-    font-size:12px; letter-spacing:.16em; color:var(--muted);
-    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  .brand .brand-kingrest { height: 24px; width: auto; display: block; }
+  .brand .brand-gogreen { height: 12px; width: auto; display: block; }
+  .brand-sep { width: 1px; height: 18px; background: var(--hair); }
+  .brand:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: -2px; }
+  .tabs { display: flex; align-items: stretch; }
+  .tabs button {
+    background: none; border: 0; cursor: pointer; padding: 0 11px;
+    display: flex; align-items: center; margin-block: 6px;
+    font: 500 11px/1 var(--font-mono); letter-spacing: .12em;
+    text-transform: uppercase; color: var(--sc-ink-soft);
+    transition: background .16s var(--sc-ease-out), color .16s var(--sc-ease-out);
   }
-  a{ color:inherit; text-decoration:none; border-bottom:1px solid var(--line); }
-  a:hover{ border-color:var(--paper); }
+  .tabs button:hover, .tabs button.active { background: var(--sc-ink); color: var(--sc-canvas); }
+  .tabs button:focus-visible { outline: 1px solid var(--sc-accent); outline-offset: -2px; }
+  .head-right { margin-left: auto; display: flex; align-items: stretch; }
+  .hall-back {
+    display: flex; align-items: center; padding: 0 14px;
+    border-left: 1px solid var(--hair); text-decoration: none;
+    font: 500 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--sc-ink-soft); transition: color .16s var(--sc-ease-out);
+  }
+  .hall-back:hover { color: var(--sc-ink); }
+  .hall-back:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: -2px; }
+  .theme-btn {
+    width: 48px; display: grid; place-items: center; cursor: pointer;
+    background: none; border: 0; border-left: 1px solid var(--hair); color: var(--sc-ink);
+    transition: color .16s var(--sc-ease-out);
+  }
+  .theme-btn:hover { color: var(--sc-accent); }
+  .theme-btn:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: -2px; }
+  .theme-btn svg { width: 16px; height: 16px; }
+  .theme-btn .i-sun { display: block; }
+  .theme-btn .i-moon { display: none; }
+  html[data-theme="dark"] .theme-btn .i-sun { display: none; }
+  html[data-theme="dark"] .theme-btn .i-moon { display: block; }
+  @media (max-width: 899px) { .tabs { display: none; } }
+
+  /* theme-aware logos: JS swaps src on toggle (syncThemeImgs) */
+
+  /* the ruler: percent scale. Blue line, blue readout, mono numbers. */
+  .ruler {
+    position: fixed; right: max(12px, env(safe-area-inset-right)); top: 50%;
+    height: min(72vh, 620px); width: 30px; z-index: 30;
+    transform: translateY(-50%) translateX(14px); opacity: 0;
+    transition: opacity .5s var(--sc-ease-out), transform .5s var(--sc-ease-out);
+    pointer-events: none;
+  }
+  .ruler.on { opacity: 1; transform: translateY(-50%); }
+  .ruler .tick {
+    position: absolute; right: 0; width: 7px; height: 1px;
+    background: var(--sc-ink-soft); opacity: .5;
+  }
+  .ruler .tick.major { width: 12px; opacity: .85; }
+  .ruler .num {
+    position: absolute; right: 20px; translate: 0 -50%;
+    font: 400 9px/1 var(--font-mono); letter-spacing: .08em;
+    font-variant-numeric: tabular-nums; color: var(--sc-ink-soft);
+  }
+  .ruler .ind { position: absolute; right: 0; width: 22px; height: 2px; background: var(--ruler-blue); }
+  .ruler .pct {
+    position: absolute; right: 28px; translate: 0 -50%;
+    font: 500 10px/1 var(--font-mono); letter-spacing: .12em;
+    font-variant-numeric: tabular-nums; color: var(--ruler-blue);
+  }
+  @media (max-width: 700px) { .ruler .num { display: none; } }
+
+  /* the word rail: rest = vertical at the ruler edge, flight = scrubbed with
+     the chapter, active = horizontal top-right, past = weakened high stack.
+     The bg-coloured text stroke keeps words readable over photos. */
+  .wordrail { position: fixed; inset: 0; z-index: 35; pointer-events: none; }
+  .rail-word {
+    position: absolute; top: 34vh; right: 4px; pointer-events: auto; cursor: pointer;
+    background: none; border: 0; padding: 4px 2px; white-space: nowrap;
+    font-family: var(--font-archivo); font-weight: 700; text-transform: uppercase;
+    line-height: 1; color: var(--sc-ink);
+    -webkit-text-stroke: 4px var(--sc-canvas); paint-order: stroke fill;
+    transition: color .4s var(--sc-ease-out);
+  }
+  .rail-word .sp-ch { display: inline-block; will-change: transform, opacity; }
+  .rail-word:focus-visible { outline: 1px solid var(--sc-accent); outline-offset: 4px; }
+  @media (max-width: 899px) { .wordrail { display: none; } }
+
+  /* chapter titles (mobile / in-flow): sentence case display, serif-italic
+     tail, one distinct claim per chapter */
+  .sec-title {
+    margin: 0; font-family: var(--font-archivo); font-weight: 600;
+    font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.04;
+    letter-spacing: -.02em; color: var(--sc-ink);
+  }
+  .sec-title em { font-family: var(--font-serifit); font-style: italic; font-weight: 400; color: var(--sc-ink-soft); }
+  .sec-title .sp-ch { display: inline-block; will-change: transform, opacity; }
+  .sec-head { display: flex; flex-direction: column; gap: 16px; margin-bottom: 26px; }
+  @media (min-width: 900px) { .sec-head { flex-direction: row; align-items: flex-end; justify-content: space-between; } }
+
+  .meta-strip {
+    display: flex; justify-content: space-between; gap: 16px;
+    border: 1px solid var(--hair); padding: 10px 14px;
+    font: 400 .7rem/1.4 var(--font-mono); letter-spacing: .18em;
+    text-transform: uppercase; color: var(--sc-ink-soft);
+  }
+  .meta-strip em { font-family: var(--font-serifit); font-style: italic; font-size: 1.15em; letter-spacing: .02em; }
+  .plate {
+    display: inline-block; margin: 0; padding: 10px 14px; border-radius: 9px;
+    background: var(--sc-surface); border: 1px solid var(--hair); border-top-color: var(--edge);
+    font: 500 .84rem/1.5 var(--sc-font-text); letter-spacing: .08em;
+    text-transform: uppercase; color: var(--sc-ink);
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .acc { font-family: var(--font-serifit); font-style: italic; font-weight: 400; }
+
+  /* ACT 1 · hero: the galaxy. Six Archimedean arms; cards are born at the
+     wordmark pocket and ride the conveyor outward. Scroll advances the
+     conveyor (0.2 journeys / 1000px) and reverses it on the way back up. */
+  .hero { position: relative; min-height: calc(100svh - 48px); overflow: clip; display: grid; place-items: center; }
+  :root { --armline: rgba(16, 16, 20, .16); --comet: rgba(16, 16, 20, .5); }
+  html[data-theme="dark"] { --armline: rgba(242, 237, 227, .14); --comet: #4d7cff; }
+  .galaxy-bg { position: absolute; inset: 0; z-index: 0; }
+  .galaxy-bg svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .arm { fill: none; stroke: var(--armline); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .circ { fill: none; stroke: var(--armline); stroke-dasharray: 1 13; }
+  /* comets: dashes riding outward along each arm; pathLength normalises
+     the cycle, per-arm negative delays dephase them (never in lockstep) */
+  .comet {
+    fill: none; stroke: var(--comet); stroke-width: 2.5; stroke-linecap: round;
+    stroke-dasharray: 6 27.333; animation: cometflow 15.8s linear infinite;
+  }
+  @keyframes cometflow { to { stroke-dashoffset: -100; } }
+  @media (prefers-reduced-motion: reduce) { .comet { animation: none; stroke-dasharray: none; opacity: 0; } }
+
+  .orbit { position: absolute; inset: 0; z-index: 1; }
+  .oc {
+    position: absolute; left: 0; top: 0; width: 200px; height: 200px;
+    padding: 0; background: none; border: 0; cursor: zoom-in; display: block;
+    will-change: transform;
+  }
+  .oc-in {
+    display: block; width: 100%; height: 100%; border-radius: 10px; overflow: hidden;
+    box-shadow: inset 0 0 0 1px var(--hair);
+  }
+  .oc-in img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* centre stack: wordmark on a frosted plate, h1, copy, two CTAs, hud row.
+     Whole layer is pointer-transparent except the buttons. */
+  .hero-center {
+    position: relative; z-index: 30; width: min(672px, 90vw);
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center,
+      color-mix(in oklab, var(--sc-canvas) 60%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 50%, transparent) 52%,
+      transparent 80%);
+  }
+  html[data-theme="dark"] .hero-center {
+    background: radial-gradient(ellipse at center,
+      color-mix(in oklab, var(--sc-canvas) 86%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 78%, transparent) 52%,
+      transparent 86%);
+  }
+  .wm-row { position: relative; width: 100%; }
+  .wm-scrim {
+    position: absolute; inset: -46% -14%;
+    background: radial-gradient(closest-side, color-mix(in oklab, var(--sc-canvas) 88%, transparent), transparent);
+  }
+  .wordmark {
+    position: relative; display: flex; flex-direction: column; align-items: center;
+    gap: clamp(4px, 0.9vw, 10px); font-family: var(--font-archivo); font-weight: 700;
+    font-size: clamp(2.1rem, 5vw, 4.5rem); line-height: 0.96; letter-spacing: -.015em;
+    text-transform: uppercase; color: var(--sc-ink); white-space: nowrap;
+  }
+  .hero-h1 {
+    position: relative; margin: 24px 0 0; font-family: var(--font-archivo); font-weight: 600;
+    font-size: clamp(1.25rem, 2.1vw, 1.6rem); letter-spacing: -.02em; color: var(--sc-ink);
+  }
+  .hero-h1 em { font-family: var(--font-serifit); font-style: italic; font-weight: 400; color: var(--sc-ink-soft); }
+  .hero-copy {
+    position: relative; margin: 14px 0 0; max-width: 34rem;
+    font-size: 1.02rem; line-height: 1.65; color: var(--sc-ink-soft); text-wrap: pretty;
+  }
+  .ctas { display: flex; gap: 12px; margin-top: 26px; pointer-events: auto; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 20px;
+    font: 700 .68rem/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase;
+    cursor: pointer; transition: transform .15s var(--sc-ease-out), border-color .15s var(--sc-ease-out);
+  }
+  .cta:active { transform: scale(.97); }
+  .cta svg { width: 13px; height: 13px; transition: translate .15s var(--sc-ease-out); }
+  .cta-a { background: var(--sc-ink); color: var(--sc-canvas); border: 0; }
+  .cta-a:hover svg { translate: 0 2px; }
+  .cta-b { background: none; color: var(--sc-ink); border: 1px solid var(--edge); }
+  .cta-b:hover { border-color: var(--sc-ink); }
+  .cta:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 2px; }
+  .hud-row {
+    display: flex; align-items: center; gap: 18px; margin: 24px 0 0;
+    font: 500 .62rem/1 var(--font-mono); letter-spacing: .18em; text-transform: uppercase;
+    color: var(--sc-ink-soft);
+  }
+  .hud-row .d { color: var(--ruler-blue); font-size: .45rem; }
+
+  /* the ticker: product conveyor */
+  .ticker { border-block: 1px solid var(--hair); padding: 16px 0; overflow: clip; }
+  .ticker-track { display: flex; align-items: center; width: max-content; animation: tick 32s linear infinite; }
+  .ticker-track .t {
+    font: 400 .78rem/1 var(--font-mono); letter-spacing: .26em;
+    text-transform: uppercase; color: var(--sc-ink-soft); white-space: nowrap;
+    margin-right: 56px;
+  }
+  .ticker-track .d { color: var(--ruler-blue); margin-right: 56px; font-size: .6rem; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
+
+  /* method */
+  .method { border-bottom: 1px solid var(--hair); }
+  .method-grid { display: grid; grid-template-columns: .8fr 1fr 1fr 1fr; }
+  .method-intro {
+    display: flex; flex-direction: column; justify-content: center; gap: 8px;
+    padding: clamp(26px, 4.6vh, 46px) clamp(18px, 2.4vw, 30px) clamp(26px, 4.6vh, 46px) 0;
+    border-right: 1px solid var(--hair);
+  }
+  .method-intro span { font: 400 .62rem/1 var(--font-mono); letter-spacing: .22em; color: var(--ruler-blue); }
+  .method-intro b { font: 600 1.12rem/1.3 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
+  .method-item { padding: clamp(26px, 4.6vh, 46px) clamp(18px, 2.4vw, 30px); border-right: 1px solid var(--hair); }
+  .method-item:last-child { border-right: 0; }
+  .method-item .m-no { font: 400 .62rem/1 var(--font-mono); letter-spacing: .18em; color: var(--sc-ink-soft); }
+  .method-item h3 { margin: 10px 0 7px; font: 600 1rem/1.3 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
+  .method-item p { margin: 0; font-size: .82rem; line-height: 1.65; color: var(--sc-ink-soft); }
+  @media (max-width: 900px) {
+    .method-grid { grid-template-columns: 1fr 1fr; }
+    .method-intro { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--hair); padding-right: 0; }
+  }
+  @media (max-width: 600px) {
+    .method-grid { grid-template-columns: 1fr; }
+    .method-item { border-right: 0; border-bottom: 1px solid var(--hair); }
+    .method-item:last-child { border-bottom: 0; }
+  }
+
+  /* chapters: plain flow, hairline grid */
+  .chap { padding: clamp(90px, 14vh, 170px) 0; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
+  .cell { background: var(--sc-canvas); }
+  .gcell {
+    grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; background: var(--sc-canvas);
+    font: 400 .68rem/1 var(--font-mono); letter-spacing: .26em;
+    text-transform: uppercase; color: var(--sc-ink-soft);
+  }
+  .cell .ph { padding: clamp(14px, 2vw, 26px); }
+  .cell .ph img { width: 100%; height: auto; display: block; }
+  .cell .lab {
+    display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
+    padding: 13px 16px; border-top: 1px solid var(--hair);
+    font: 400 .72rem/1.5 var(--font-mono); letter-spacing: .06em; color: var(--sc-ink-soft);
+  }
+  .cell .lab b { font: 600 .95rem/1.4 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
+  .cell .lab > span { text-align: right; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+  /* craft on kraft */
+  #craft {
+    background: #b3906b url("assets/texture-kraft.webp") center / 620px repeat;
+    background-blend-mode: multiply;
+    --sc-canvas: #bb9772; --sc-ink: #241a10; --sc-ink-soft: #55432e;
+    --sc-surface: #faf4ea; --hair: rgba(36, 26, 16, .22); --edge: rgba(36, 26, 16, .32);
+    color: var(--sc-ink);
+  }
+  .craft-lead {
+    display: grid; grid-template-columns: 1.45fr 1fr;
+    gap: clamp(18px, 2.2vw, 28px); align-items: start;
+  }
+  .craft-piece { margin: 0; }
+  .craft-stack { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 28px); }
+  .piece-img {
+    display: grid; place-items: center; padding: clamp(10px, 1.3vw, 18px);
+    background: #f7f0e4;
+    border: 1px solid rgba(36, 26, 16, .2);
+    box-shadow: 0 24px 36px -28px rgba(36, 26, 16, .85), inset 0 0 0 1px rgba(255, 255, 255, .35);
+  }
+  .piece-img img { display: block; width: 100%; height: auto; }
+  .piece-cap {
+    display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
+    padding: 10px 2px 0; font: 400 .7rem/1.5 var(--font-mono);
+    letter-spacing: .04em; color: rgba(36, 26, 16, .68);
+  }
+  .piece-cap b { font: 600 .95rem/1.3 var(--font-archivo); letter-spacing: .01em; color: #241a10; }
+  .piece-cap span { text-align: right; }
+  .proof-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    margin: clamp(42px, 6vh, 68px) 0 18px; padding-bottom: 11px;
+    border-bottom: 1px solid rgba(248, 241, 229, .38);
+    font: 400 .72rem/1 var(--font-mono); letter-spacing: .22em;
+    text-transform: uppercase; color: #f8f1e5;
+  }
+  .proof-head a {
+    color: #f8f1e5; text-decoration: none;
+    border-bottom: 1px solid rgba(248, 241, 229, .45); padding-bottom: 3px;
+    transition: opacity .2s;
+  }
+  .proof-head a:hover { opacity: .7; }
+  .proofs {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: clamp(18px, 2.4vw, 30px) clamp(14px, 2vw, 24px);
+  }
+  .proof { margin: 0; }
+  .proof .paper {
+    aspect-ratio: 4 / 3; display: grid; place-items: center;
+    padding: clamp(10px, 1.2vw, 16px); background: #fbf8f0;
+    box-shadow: 0 22px 32px -26px rgba(36, 26, 16, .9), inset 0 0 0 1px rgba(36, 26, 16, .08);
+    transition: transform .35s var(--sc-ease-out), box-shadow .35s var(--sc-ease-out);
+  }
+  .proof .paper img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; }
+  .proof:hover .paper {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 44px -26px rgba(36, 26, 16, .95), inset 0 0 0 1px rgba(36, 26, 16, .08);
+  }
+  .proof figcaption {
+    display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
+    padding: 9px 2px 0; font: 400 .68rem/1.5 var(--font-mono);
+    letter-spacing: .04em; color: rgba(36, 26, 16, .62);
+  }
+  .proof figcaption b { font-weight: 500; letter-spacing: .02em; color: #241a10; }
+  @media (max-width: 860px) {
+    .craft-lead { grid-template-columns: 1fr; }
+    .craft-stack { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
+  }
+  @media (max-width: 700px) {
+    .proofs { grid-template-columns: repeat(2, 1fr); }
+    .proof figcaption span { display: none; }
+    .craft-stack { grid-template-columns: 1fr; }
+    .piece-cap span, .proof figcaption span { text-align: right; }
+  }
+  .cell.wide { grid-column: span 2; }
+  @media (max-width: 760px) { .cell.wide { grid-column: span 1; } }
+  .cell .ph.contain { display: grid; place-items: center; min-height: clamp(140px, 24vh, 240px); }
+  .cell .ph.contain img { max-width: min(92%, 980px); }
+
+  /* film */
+  .reel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); align-items: start; }
+  .reel.brand { max-width: 1000px; margin-inline: auto; }
+  .frame { margin: 0; }
+  .video-shell { position: relative; }
+  .video-shell video {
+    width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; display: block;
+    border-radius: 16px; background: var(--sc-surface);
+    border: 1px solid var(--hair); border-top-color: var(--edge);
+    box-shadow: 0 22px 44px -20px var(--shadow);
+  }
+  .frame-no {
+    position: absolute; top: 10px; left: 10px; z-index: 3;
+    padding: 5px 8px; border-radius: 999px; background: rgba(12, 10, 8, .42); color: #fff;
+    font: 500 .56rem/1 var(--font-mono); letter-spacing: .16em;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  .frame figcaption {
+    display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
+    margin: 11px 2px 0; font: 400 .7rem/1.5 var(--font-mono);
+    letter-spacing: .05em; color: var(--sc-ink-soft);
+  }
+  .frame figcaption b { font: 600 .88rem/1.4 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
+  .frame figcaption span { text-align: right; }
+  .reel.land .video-shell video { aspect-ratio: 16 / 9; border-radius: 12px; }
+  .vid-play {
+    position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    border: 0; border-radius: 12px; cursor: pointer; color: #fff;
+    background: rgba(10, 10, 12, .14);
+    font: 500 .58rem/1 var(--font-mono); letter-spacing: .2em;
+    transition: background .2s, opacity .2s;
+  }
+  .vid-play svg { width: 44px; height: 44px; padding: 13px; border: 1px solid rgba(255, 255, 255, .72); border-radius: 50%; background: rgba(0, 0, 0, .28); backdrop-filter: blur(6px); }
+  .vid-play:hover { background: rgba(10, 10, 12, .28); }
+  .video-shell.playing .vid-play { opacity: 0; pointer-events: none; }
+  .film-more { margin: clamp(32px, 5vh, 54px) 0 0; text-align: right; }
+  .film-more a {
+    font: 500 .72rem/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase;
+    color: var(--sc-ink); text-decoration: none; border-bottom: 1px solid var(--hair); padding-bottom: 5px;
+  }
+  @media (max-width: 700px) {
+    .reel { display: flex; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 8px; }
+    .frame { flex: 0 0 auto; width: min(300px, 78vw); scroll-snap-align: center; }
+    .reel.land .frame { width: min(86vw, 520px); }
+    .frame figcaption span { display: none; }
+    .lab-row { flex-direction: column; gap: 7px; align-items: flex-start; }
+    .film-more { text-align: left; }
+  }
+
+  .craft-note {
+    margin: 22px 0 0; font: 400 .76rem/1.7 var(--font-mono); letter-spacing: .1em;
+    color: rgba(248,241,229,.72);
+  }
+  .lab-row {
+    display: flex; justify-content: space-between; gap: 16px; align-items: baseline;
+    margin: clamp(26px,4vh,44px) 0 18px; padding-bottom: 10px; border-bottom: 1px solid var(--hair);
+    font: 400 .72rem/1 var(--font-mono); letter-spacing: .22em; text-transform: uppercase; color: var(--sc-ink-soft);
+  }
+  .lab-row:first-of-type { margin-top: 0; }
+
+  /* close */
+  .close-sec { min-height: 92svh; display: grid; place-items: center; position: relative; }
+  .close-plate { text-align: center; }
+  .close-plate img.logo-kingrest { height: clamp(40px, 6vw, 60px); width: auto; margin: 0 auto 16px; display: block; }
+  .close-line { margin: 0 0 26px; font-family: var(--font-serifit); font-style: italic; font-size: 1.3rem; color: var(--sc-ink-soft); }
+  .close-fine { margin: 0; font: 400 .7rem/1.6 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--sc-ink-soft); }
+  .foot {
+    position: absolute; left: 0; right: 0; bottom: 22px;
+    display: flex; justify-content: space-between; padding: 0 clamp(20px, 4vw, 56px);
+    font: 400 .68rem/1.6 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft);
+  }
+  @media (max-width: 700px) {
+    .foot { flex-direction: column; gap: 4px; align-items: center; text-align: center; }
+    .plate { font-size: .66rem; padding: 8px 10px; }
+    .meta-strip { font-size: .6rem; }
+    .cta { height: 42px; padding: 0 16px; }
+    .hud-row { gap: 12px; }
+    .cell .ph img { max-height: min(105vw, 520px); object-fit: contain; margin: 0 auto; }
+  }
+
+  .brand .brand-text { font: 600 15px/1 var(--font-archivo); letter-spacing: .22em; color: var(--sc-ink); }
+  .brand .brand-sub { font: 400 9px/1 var(--font-mono); letter-spacing: .24em; color: var(--sc-ink-soft); }
+  .close-mark { font-family: var(--sc-font-display); font-size: clamp(34px, 7vw, 64px); letter-spacing: .16em; margin: 0 0 14px; color: var(--sc-ink); }
+  .cell .ph { display: block; }
+  .more-bar {
+    grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between;
+    padding: clamp(18px, 2.6vw, 26px) clamp(16px, 2.4vw, 26px); background: var(--sc-ink); color: var(--sc-canvas);
+    text-decoration: none; font: 500 clamp(.9rem, 1.6vw, 1.05rem)/1 var(--sc-font-text); letter-spacing: .08em;
+    transition: opacity .25s;
+  }
+  .more-bar:hover { opacity: .88; }
+  #craft .sec-title { color: #f8f1e5; }
+  #craft .sec-title em { color: rgba(248,241,229,.72); }
+  #craft .meta-strip { color: rgba(248,241,229,.82); border-color: rgba(248,241,229,.34); }
+  .hero-h1 em, .sec-title em { font-style: normal; }
+  .cell .ph.contain img { max-height: min(54vh, 480px); width: auto; }
 </style>
+<noscript><style>[data-sc-in] > *{opacity:1 !important;transform:none !important}.orbit{display:none !important}</style></noscript>
 </head>
-<body>
+<body id="top">
+
+<div class="sc-grain" aria-hidden="true"></div>
+
+<header class="site-head">
+  <a class="brand" href="#top" aria-label="视觉厅，回到顶部">
+    <span class="brand-text">视觉厅</span>
+    <span class="brand-sep" aria-hidden="true"></span>
+    <span class="brand-sub">VISUAL HALL</span>
+  </a>
+  <nav class="tabs" aria-label="章节">
+    <button type="button" data-goto="collection">产品</button>
+    <button type="button" data-goto="craft">辅料</button>
+    <button type="button" data-goto="film">视频</button>
+  </nav>
+  <div class="head-right">
+    <a class="hall-back" href="library.html">全部作品</a>
+    <button class="theme-btn" type="button" data-theme-toggle aria-label="切换明暗">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="ruler" aria-label="Page progress"><div class="ind"></div><span class="pct" aria-hidden="true">000%</span></nav>
+
+<nav class="wordrail" aria-label="Chapters">
+  <button class="rail-word" type="button" data-chapter="collection">PRODUCTS</button>
+  <button class="rail-word" type="button" data-chapter="craft">CRAFT</button>
+  <button class="rail-word" type="button" data-chapter="film">FILMS</button>
+  <button class="rail-word" type="button" data-chapter="end">FIN</button>
+</nav>
+
+
 <main>
-  <div class="eyebrow">Visual Hall · 2025 — 2026</div>
-  <h1>视觉厅</h1>
-  <div class="rule"></div>
-  <p>
-    这里陈列近一年的电商视觉产出：产品主图、主图视频、买家秀与详情页。
-    作品正在整理归位，页面会持续增删更新。
-  </p>
-  <footer>
-    <span>筹备中 · 即将开展</span>
-    <a href="https://sanglaoge.github.io/">回主页 ↗</a>
-    <span>Updated 2026.10.30</span>
-  </footer>
+
+  <!-- 1 · hero: the galaxy -->
+  <section class="hero" id="hero">
+    <div class="galaxy-bg" aria-hidden="true">
+      <svg id="galaxySvg">
+        <g id="galaxyRoot">
+          <circle id="gCircle" class="circ" r="0" cx="0" cy="0"></circle>
+          <g id="gArms"></g>
+          <g id="gComets"></g>
+        </g>
+      </svg>
+    </div>
+    <div class="orbit" id="orbit"></div>
+    <div class="hero-center">
+      <div class="wm-row">
+        <div class="wm-scrim" aria-hidden="true"></div>
+        <p class="wordmark"><span>VISUAL</span><span>HALL</span></p>
+      </div>
+      <h1 class="hero-h1">这一年的活，<em>都摆在这儿。</em></h1>
+      <p class="hero-copy">今年的图，几乎都从一张手机实拍开始。<br>剩下的光、景和氛围，交给 Lovart 的 <span class="nw">nano banana</span>、<span class="nw">GPT Image 2</span> 系列。<br>实物是真的，画面是生成的。</p>
+      <div class="ctas">
+        <button class="cta cta-a" type="button" data-goto="collection">看作品
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 4v14M6 12l6 6 6-6"/></svg>
+        </button>
+        <button class="cta cta-b" type="button" data-goto="film">看片子</button>
+      </div>
+      <p class="hud-row" aria-hidden="true"><span>实拍 + AI 生图</span><span class="d">◆</span><span>2026</span><span class="d">◆</span><span>Kingrest / GOGREEN</span></p>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="t">电热毯</span><span class="d">◆</span><span class="t">兔毛毯</span><span class="d">◆</span><span class="t">绗缝被</span><span class="d">◆</span><span class="t">毛巾</span><span class="d">◆</span><span class="t">磨毛布床单套件</span><span class="d">◆</span><span class="t">圣诞系列</span><span class="d">◆</span><span class="t">万圣毯</span><span class="d">◆</span>
+      <span class="t">电热毯</span><span class="d">◆</span><span class="t">兔毛毯</span><span class="d">◆</span><span class="t">绗缝被</span><span class="d">◆</span><span class="t">毛巾</span><span class="d">◆</span><span class="t">磨毛布床单套件</span><span class="d">◆</span><span class="t">圣诞系列</span><span class="d">◆</span><span class="t">万圣毯</span><span class="d">◆</span>
+    </div>
+  </div>
+
+  <!-- method -->
+  <section class="method" aria-label="制作方法">
+    <div class="wrap">
+      <div class="method-grid">
+        <div class="method-intro"><span>METHOD</span><b>怎么做的</b></div>
+        <div class="method-item"><span class="m-no">01</span><h3>手机实拍</h3><p>实物、面料、控制器先拍清楚，留住真实纹理与细节。</p></div>
+        <div class="method-item"><span class="m-no">02</span><h3>AI 生图</h3><p>Lovart 的 nano banana、GPT Image 2 系列模型补光、换景、搭氛围。</p></div>
+        <div class="method-item"><span class="m-no">03</span><h3>排版成稿</h3><p>按平台规格排版，主图、辅料、视频、买家秀成一套。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · collection -->
+  <section class="chap" id="collection">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" data-spine>按品类，<em>慢慢看。</em></h2>
+        <div class="meta-strip"><span>01 / 产品</span><span>2026 全年&#160;&#160;·&#160;&#160;<em>按产品</em>分类</span></div>
+      </div>
+      <div class="grid" data-sc-in data-sc-stagger="60">
+        <div class="gcell"><span>新品系列</span><span>01</span></div>
+        <figure class="cell "><a class="ph" href="product.html?p=electric-blanket"><img src="assets/main/m003/01.webp" width="1200" height="1200" alt="电热毯" loading="lazy"></a><figcaption class="lab"><b>电热毯</b><span>5 套 · 深蓝 / 卡其 / 灰 / 粉 / 白</span></figcaption></figure>
+        <figure class="cell "><a class="ph" href="product.html?p=rabbit"><img src="assets/main/m006/01.webp" width="1200" height="1200" alt="单面橡筋兔毛毯" loading="lazy"></a><figcaption class="lab"><b>单面橡筋兔毛毯</b><span>5 套 · 棕 / 灰 / 粉 / 雾蓝</span></figcaption></figure>
+        <figure class="cell"><a class="ph" href="product.html?p=rabbit"><img src="assets/main/m010/01.webp" width="1200" height="1200" alt="单面橡筋兔毛毯 雾蓝" loading="lazy"></a><figcaption class="lab"><b>单面橡筋兔毛毯</b><span>雾蓝 · 8 张</span></figcaption></figure>
+        <figure class="cell "><a class="ph" href="product.html?p=quilt"><img src="assets/main/m011/01.webp" width="1200" height="1200" alt="全涤印花绗缝被" loading="lazy"></a><figcaption class="lab"><b>全涤印花绗缝被</b><span>4 套 · 波西米亚 / 粉 / 红</span></figcaption></figure>
+        <figure class="cell "><a class="ph" href="product.html?p=towel"><img src="assets/main/m015/01.webp" width="1200" height="1200" alt="毛巾" loading="lazy"></a><figcaption class="lab"><b>毛巾</b><span>5 套 · 深蓝 / 白 / 粉 / 青 / 黑</span></figcaption></figure>
+        <figure class="cell "><a class="ph" href="product.html?p=brushed"><img src="assets/main/m020/01.webp" width="1200" height="1200" alt="水洗磨毛布" loading="lazy"></a><figcaption class="lab"><b>水洗磨毛布</b><span>5 套 · 白 / 黑 / 灰 / 藏青 / 卡其</span></figcaption></figure>
+        <div class="gcell"><span>节日系列</span><span>02</span></div>
+        <figure class="cell "><a class="ph" href="product.html?p=christmas"><img src="assets/main/m052/01.webp" width="1200" height="1200" alt="圣诞系列 · 挂毯/靠垫" loading="lazy"></a><figcaption class="lab"><b>圣诞系列 · 挂毯/靠垫</b><span>49 套 · 圣诞毯 / 套件 / 床单</span></figcaption></figure>
+        <figure class="cell "><a class="ph" href="product.html?p=christmas"><img src="assets/main/m068/01.webp" width="1200" height="1200" alt="圣诞系列 · 床单套件" loading="lazy"></a><figcaption class="lab"><b>圣诞系列 · 床单套件</b><span>圆网印花 · 双人四件套</span></figcaption></figure>
+        <figure class="cell"><a class="ph" href="product.html?p=christmas"><img src="assets/main/m030/01.webp" width="1200" height="1200" alt="圣诞系列 被套" loading="lazy"></a><figcaption class="lab"><b>圣诞系列 · 被套</b><span>H018 系列 · 8 张</span></figcaption></figure>
+        <figure class="cell "><a class="ph" href="product.html?p=halloween"><img src="assets/main/m046/01.webp" width="1200" height="1200" alt="万圣毯" loading="lazy"></a><figcaption class="lab"><b>万圣毯</b><span>6 套 · 南瓜 / 幽灵 / 蜘蛛</span></figcaption></figure>
+        <div class="gcell"><span>全部作品</span><span>03</span></div>
+        <a class="more-bar" href="library.html"><span>全部作品 · 按产品浏览</span><span>→</span></a>
+</div>
+    </div>
+  </section>
+
+  <!-- 3 · craft on kraft -->
+  <section class="chap" id="craft" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" data-spine>包装和吊牌，<em>也是作品。</em></h2>
+        <div class="meta-strip"><span>02 / 辅料</span><span>实物 · 认证 · 印刷稿</span></div>
+      </div>
+
+      <div class="craft-lead" data-sc-in data-sc-stagger="80">
+        <figure class="craft-piece craft-main">
+          <div class="piece-img"><img src="assets/craft/giftbox.webp" width="1600" height="1600" alt="电热毯礼盒与电热毯实物" loading="lazy"></div>
+          <figcaption class="piece-cap"><b>电热毯礼盒</b><span>实物 / 礼盒与数显控制器</span></figcaption>
+        </figure>
+        <div class="craft-stack">
+          <figure class="craft-piece">
+            <div class="piece-img"><img src="assets/craft/controller.webp" width="1600" height="1600" alt="数显控制器特写" loading="lazy"></div>
+            <figcaption class="piece-cap"><b>数显控制器</b><span>6 档调温 · 定时</span></figcaption>
+          </figure>
+          <figure class="craft-piece">
+            <div class="piece-img"><img src="assets/craft/cert.webp" width="1400" height="574" alt="Intertek 认证与检测报告" loading="lazy"></div>
+            <figcaption class="piece-cap"><b>认证</b><span>Intertek · ETL · FCC</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="proof-head">
+        <span>印刷稿 / PRINT PROOFS</span>
+        <a href="accessories.html">全部辅料 →</a>
+      </div>
+      <div class="proofs" data-sc-in data-sc-stagger="60">
+        <figure class="proof">
+          <div class="paper"><img src="assets/acc/a06-p1.webp" width="1400" height="934" alt="绗缝被彩卡" loading="lazy"></div>
+          <figcaption><b>绗缝被彩卡</b><span>牛皮纸 · 3 个尺寸</span></figcaption>
+        </figure>
+        <figure class="proof">
+          <div class="paper"><img src="assets/acc/a05-p1.webp" width="1400" height="1003" alt="纯色四件套彩卡" loading="lazy"></div>
+          <figcaption><b>纯色四件套彩卡</b><span>5 色 · 4 个尺寸</span></figcaption>
+        </figure>
+        <figure class="proof">
+          <div class="paper"><img src="assets/acc/a04-p1.webp" width="1400" height="1074" alt="电热毯纸盒刀模展开图" loading="lazy"></div>
+          <figcaption><b>电热毯纸盒</b><span>刀模 · 330 × 160 × 330</span></figcaption>
+        </figure>
+        <figure class="proof">
+          <div class="paper"><img src="assets/acc/a03-p2.webp" width="1400" height="1516" alt="凉感被包装盒展开图" loading="lazy"></div>
+          <figcaption><b>凉感被包装盒</b><span>牛皮纸刀模</span></figcaption>
+        </figure>
+        <figure class="proof">
+          <div class="paper"><img src="assets/acc/a02-p1.webp" width="1400" height="2253" alt="兔毛毯塑料袋展开示意" loading="lazy"></div>
+          <figcaption><b>兔毛毯塑料袋</b><span>40 × 70 · 展开示意</span></figcaption>
+        </figure>
+        <figure class="proof">
+          <div class="paper"><img src="assets/acc/a01-p2.webp" width="1400" height="1516" alt="Bamboo 纸盒展开图" loading="lazy"></div>
+          <figcaption><b>Bamboo 纸盒</b><span>100% 竹纤维 · 刀模</span></figcaption>
+        </figure>
+      </div>
+
+      <p class="craft-note">水洗标、吊牌和更多彩卡还在整理，补上后再入册。</p>
+    </div>
+  </section>
+
+  <!-- 4 · film -->
+  <section class="chap" id="film" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" data-spine>品牌片讲气氛，<em>产品片讲卖点。</em></h2>
+        <div class="meta-strip"><span>03 / 视频</span><span>品牌 3 条 · 产品 3 条</span></div>
+      </div>
+
+      <div class="lab-row"><span>品牌片 / BRAND FILMS</span><span>AI 生成 · 9:16 · 循环静音</span></div>
+      <div class="reel brand" data-sc-in data-sc-stagger="90">
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v01.mp4" poster="assets/video/v01.webp" width="720" height="1280" muted loop playsinline preload="metadata" data-auto></video>
+            <span class="frame-no">01</span>
+          </div>
+          <figcaption><b>梦境</b><span>AI 生成 · 0:19</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v02.mp4" poster="assets/video/v02.webp" width="720" height="1280" muted loop playsinline preload="metadata" data-auto></video>
+            <span class="frame-no">02</span>
+          </div>
+          <figcaption><b>温暖居室</b><span>有宠物的家 · 0:46</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v03.mp4" poster="assets/video/v03.webp" width="720" height="1280" muted loop playsinline preload="metadata" data-auto></video>
+            <span class="frame-no">03</span>
+          </div>
+          <figcaption><b>从村落回到卧室</b><span>兔毛毯场景 · 0:47</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="lab-row"><span>产品片 / PRODUCT FILMS</span><span>代码生成 · 16:9 · 点击播放</span></div>
+      <div class="reel land product" data-sc-in data-sc-stagger="90">
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v05.mp4" poster="assets/video/v05.webp" width="1280" height="720" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 电热毯 产品视频">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg>
+              <span>PLAY</span>
+            </button>
+          </div>
+          <figcaption><b>电热毯</b><span>卖点分镜 · 0:30</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v06.mp4" poster="assets/video/v06.webp" width="1280" height="720" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 兔毛毯 产品视频">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg>
+              <span>PLAY</span>
+            </button>
+          </div>
+          <figcaption><b>兔毛毯</b><span>面料与场景 · 0:25</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v08.mp4" poster="assets/video/v08.webp" width="1280" height="720" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 绗缝被 产品视频">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg>
+              <span>PLAY</span>
+            </button>
+          </div>
+          <figcaption><b>绗缝被</b><span>印花与厚度 · 0:22</span></figcaption>
+        </figure>
+      </div>
+      <p class="film-more"><a href="videos.html">全部视频 →</a></p>
+    </div>
+  </section>
+
+  <!-- 5 · resolve -->
+  <section class="close-sec" id="end">
+    <div class="close-plate" data-sc-in data-sc-stagger="70">
+      <p class="close-mark">视觉厅</p>
+      <p class="close-line">主图、视频、辅料、买家秀，未完待续……</p>
+      <p class="close-fine">© 2026 视觉厅 · Kingrest / GOGREEN</p>
+    </div>
+    <footer class="foot"><span>视觉厅</span><a href="library.html" style="color:inherit">全部作品 →</a><span>Updated 2026.11.02</span></footer>
+  </section>
+
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
+<script src="assets/scrollcraft.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var desktopMQ = window.matchMedia("(min-width: 900px)");
+
+  ScrollCraft.mount(document.body);
+
+  var lenis = null;
+  if (!reduce && window.Lenis) {
+    lenis = new Lenis({ lerp: 0.18, wheelMultiplier: 1, autoRaf: true });
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on("scroll", ScrollTrigger.update);
+    }
+  }
+  function scrollToEl(el) {
+    if (lenis) lenis.scrollTo(el, { offset: 0 });
+    else el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  }
+
+  /* ruler */
+  var ruler = document.querySelector(".ruler");
+  var ind = ruler.querySelector(".ind");
+  var pct = ruler.querySelector(".pct");
+  function docMax() { return Math.max(1, document.documentElement.scrollHeight - innerHeight); }
+  function buildRuler() {
+    ruler.querySelectorAll(".tick,.num").forEach(function (t) { t.remove(); });
+    for (var i = 0; i <= 50; i++) {
+      var t = document.createElement("span");
+      t.className = "tick" + (i % 5 === 0 ? " major" : "");
+      t.style.top = (i * 2) + "%";
+      t.setAttribute("aria-hidden", "true");
+      ruler.appendChild(t);
+    }
+    for (var n = 0; n <= 100; n += 10) {
+      var b = document.createElement("span");
+      b.className = "num";
+      b.style.top = n + "%";
+      b.textContent = n;
+      b.setAttribute("aria-hidden", "true");
+      ruler.appendChild(b);
+    }
+  }
+  var pad3 = function (n) { return (n < 10 ? "00" : n < 100 ? "0" : "") + n; };
+  function updateRuler() {
+    var p = (window.scrollY || document.documentElement.scrollTop) / docMax();
+    var top = (p * 100) + "%";
+    ind.style.top = top;
+    pct.style.top = top;
+    pct.textContent = pad3(Math.round(p * 100)) + "%";
+    ruler.classList.toggle("on", (window.scrollY || 0) > 60);
+  }
+  buildRuler(); updateRuler();
+  if (lenis) lenis.on("scroll", updateRuler);
+  window.addEventListener("scroll", updateRuler, { passive: true });
+
+  /* ── the galaxy ─────────────────────────────────────────────────────
+     Six Archimedean arms (r = c·θ). Cards are born small, square and
+     blurred in the pocket around the wordmark, ride their arm outward and
+     die offscreen. Progress = idle + scrollY×0.2/1000 journeys, so scroll
+     advances the field and scrolls back reverse it. Whole field rotates
+     −50°/min; a held card brakes itself and slows the rest. */
+  var hero = document.getElementById("hero");
+  var orbitEl = document.getElementById("orbit");
+  var gRoot = document.getElementById("galaxyRoot");
+  var gArms = document.getElementById("gArms");
+  var gComets = document.getElementById("gComets");
+  var gCircle = document.getElementById("gCircle");
+  var NS = "http://www.w3.org/2000/svg";
+
+  var CARD_IMGS = [
+    ["assets/orbit/m001.webp", "作品主图"],
+    ["assets/orbit/m002.webp", "作品主图"],
+    ["assets/orbit/m003.webp", "作品主图"],
+    ["assets/orbit/m006.webp", "作品主图"],
+    ["assets/orbit/m007.webp", "作品主图"],
+    ["assets/orbit/m008.webp", "作品主图"],
+    ["assets/orbit/m009.webp", "作品主图"],
+    ["assets/orbit/m011.webp", "作品主图"],
+    ["assets/orbit/m012.webp", "作品主图"],
+    ["assets/orbit/m013.webp", "作品主图"],
+    ["assets/orbit/m015.webp", "作品主图"],
+    ["assets/orbit/m017.webp", "作品主图"],
+    ["assets/orbit/m020.webp", "作品主图"],
+    ["assets/orbit/m022.webp", "作品主图"],
+    ["assets/orbit/m025.webp", "作品主图"],
+    ["assets/orbit/m028.webp", "作品主图"],
+    ["assets/orbit/m031.webp", "作品主图"],
+    ["assets/orbit/m034.webp", "作品主图"],
+    ["assets/orbit/m037.webp", "作品主图"],
+    ["assets/orbit/m040.webp", "作品主图"],
+    ["assets/orbit/m043.webp", "作品主图"],
+    ["assets/orbit/m052.webp", "作品主图"],
+    ["assets/orbit/m055.webp", "作品主图"],
+    ["assets/orbit/m058.webp", "作品主图"],
+    ["assets/orbit/m061.webp", "作品主图"],
+    ["assets/orbit/m064.webp", "作品主图"],
+    ["assets/orbit/m067.webp", "作品主图"],
+    ["assets/orbit/m070.webp", "作品主图"],
+    ["assets/orbit/m046.webp", "作品主图"],
+    ["assets/orbit/m047.webp", "作品主图"],
+    ["assets/orbit/m048.webp", "作品主图"],
+    ["assets/orbit/m049.webp", "作品主图"],
+    ["assets/ugc/027.webp", "作品主图"],
+    ["assets/ugc/028.webp", "作品主图"],
+    ["assets/ugc/005.webp", "作品主图"],
+    ["assets/ugc/006.webp", "作品主图"]
+  ];
+
+  var heroVisible = true;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { heroVisible = en[0].isIntersecting; }, { threshold: 0.02 })
+      .observe(hero);
+  }
+
+  var ARMS, CARD_N, TURNS, RMAXF, W, H, CX, CY, rMax, thetaMax, C, thetaBirth, thetaExit, cardHCap, slotsPerArm, drawEnd;
+    var cards = [];
+
+  function armPathD(a) {
+    var d = "", t0 = 0.3 * thetaBirth, steps = 140;
+    for (var s = 0; s <= steps; s++) {
+      var th = t0 + (drawEnd - t0) * (s / steps);
+      var ang = th + a * Math.PI * 2 / ARMS;
+      d += (s ? "L" : "M") + (CX + C * th * Math.cos(ang)).toFixed(1) + " " + (CY + C * th * Math.sin(ang)).toFixed(1);
+    }
+    return d;
+  }
+  function buildSvg() {
+    var svg = document.getElementById("galaxySvg");
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    [gArms, gComets].forEach(function (g) { while (g.firstChild) g.removeChild(g.firstChild); });
+    for (var a = 0; a < ARMS; a++) {
+      var d = armPathD(a);
+      var base = document.createElementNS(NS, "path");
+      base.setAttribute("d", d); base.setAttribute("class", "arm");
+      gArms.appendChild(base);
+      var comet = document.createElementNS(NS, "path");
+      comet.setAttribute("d", d); comet.setAttribute("class", "comet");
+      comet.setAttribute("pathLength", "100");
+      comet.style.animationDelay = (-(a * 0.618 % 1) * 15.8 / 3).toFixed(2) + "s";
+      gComets.appendChild(comet);
+    }
+    gCircle.setAttribute("cx", CX); gCircle.setAttribute("cy", CY);
+    gCircle.setAttribute("r", (0.56 * rMax).toFixed(1));
+  }
+  function buildCards() {
+    while (orbitEl.firstChild) orbitEl.removeChild(orbitEl.firstChild);
+    cards = [];
+    for (var i = 0; i < CARD_N; i++) {
+      var img = CARD_IMGS[i % CARD_IMGS.length];
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "oc"; b.dataset.i = i;
+      b.setAttribute("aria-label", img[1]);
+      b.innerHTML = '<span class="oc-in"><img src="' + img[0] + '" alt="" loading="' + (i < 8 ? "eager" : "lazy") + '" decoding="async"' + (i < 4 ? ' fetchpriority="high"' : "") + '></span>';
+      orbitEl.appendChild(b);
+      cards.push({ el: b, arm: i % ARMS, slot: Math.floor(i / ARMS),
+        jY: 0, j: 0, h: 0, hold: 0, hov: 0, boost: 0, x: CX, y: CY, w: 100, hh: 60 });
+    }
+  }
+  function layout() {
+    W = hero.clientWidth; H = hero.clientHeight; CX = W / 2; CY = H / 2;
+    var phone = W < 700;
+    ARMS = phone ? 3 : 6;
+    CARD_N = phone ? 14 : 28;
+    TURNS = phone ? 0.9 : 0.85;
+    RMAXF = phone ? 0.8 : 0.7;
+    var halfDiag = Math.hypot(W, H) / 2;
+    rMax = RMAXF * halfDiag;
+    thetaMax = TURNS * Math.PI * 2;
+    C = rMax / thetaMax;
+    thetaBirth = 0.08 * thetaMax;
+    cardHCap = Math.min(240, Math.max(67, H * (phone ? 0.29 : 0.23)));
+    thetaExit = (halfDiag + 1.5 * cardHCap) / C;
+    drawEnd = halfDiag / C;
+    slotsPerArm = Math.max(1, Math.ceil(CARD_N / ARMS));
+    buildSvg();
+    if (cards.length !== CARD_N) buildCards();
+  }
+  layout();
+
+  /* pointer: hover brakes a card, click toggles a 3× boost on it */
+  var mouse = { x: 0, y: 0, active: false };
+  var spin = 0, idleP = 0, lastP = 0, last = 0, holdTarget = 0, holdRest = 0;
+  var targetI = -1, boostCard = -1, boostOn = false;
+  hero.addEventListener("pointermove", function (e) {
+    var r = hero.getBoundingClientRect();
+    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true;
+  });
+  hero.addEventListener("pointerleave", function () { mouse.active = false; boostOn = false; });
+  orbitEl.addEventListener("click", function (e) {
+    var b = e.target.closest(".oc"); if (!b) return;
+    var i = +b.dataset.i;
+    if (boostCard === i) boostOn = !boostOn;
+    else { boostCard = i; boostOn = true; }
+  });
+
+  var smooth01 = function (v) { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
+  function place(c, n, j, t, wobble) {
+    var th = thetaBirth + j * (thetaExit - thetaBirth);
+    var ang = th + c.arm * Math.PI * 2 / ARMS + spin;
+    var r = C * th;
+    var x = CX + r * Math.cos(ang), y = CY + r * Math.sin(ang);
+    if (wobble) {
+      x += 6 * (1 - c.hold) * Math.sin(t * 0.0016 + 2.399 * n);
+      y += 6 * (1 - c.hold) * Math.cos(t * 0.0011 + 1.713 * n);
+    }
+    return [x, y];
+  }
+  function frame(t) {
+    var dt = Math.min(0.05, last ? (t - last) / 1000 : 0.016); last = t;
+    if (heroVisible && !reduce) {
+      holdTarget += ((targetI >= 0 ? 1 : 0) - holdTarget) * (1 - Math.exp(-dt / 0.15));
+      holdRest += ((targetI >= 0 ? 1 : 0) - holdRest) * (1 - Math.exp(-dt / 1));
+      var rate = 1 - holdRest * 0.85;
+      spin += (-50 * Math.PI / 180) / 60 * dt * rate;
+      idleP += dt * (0.57 / 60) * rate;
+      var P = idleP + (window.scrollY || 0) * 0.2 / 1000;
+      var dP = P - lastP; lastP = P;
+      gRoot.setAttribute("transform", "rotate(" + (spin * 180 / Math.PI).toFixed(3) + " " + CX.toFixed(1) + " " + CY.toFixed(1) + ")");
+      if (mouse.active) {
+        /* sticky target lock: keep the held card while the pointer stays on
+           it (artcraft targetTau); re-elect only when it escaped */
+        var tc = targetI >= 0 ? cards[targetI] : null;
+        var keep = tc && Math.abs(mouse.x - tc.x) <= tc.w * 0.55 && Math.abs(mouse.y - tc.y) <= tc.hh * 0.55;
+        if (!keep) {
+          var best = -1, bestJ = -1;
+          for (var q = 0; q < cards.length; q++) {
+            var cq = cards[q];
+            if (Math.abs(mouse.x - cq.x) <= cq.w * 0.55 && Math.abs(mouse.y - cq.y) <= cq.hh * 0.55 && cq.j > bestJ) { bestJ = cq.j; best = q; }
+          }
+          targetI = best;
+        }
+      } else targetI = -1;
+      if (boostOn && targetI !== boostCard) boostOn = false;
+      for (var n = 0; n < cards.length; n++) {
+        var c = cards[n], isT = n === targetI;
+        c.jY -= dP * (isT ? holdTarget : holdRest);
+        c.j = (((c.slot + 0.5 + c.arm * 0.76) / slotsPerArm + P + c.jY) % 1 + 1) % 1;
+        c.hold += ((isT ? 1 : 0) - c.hold) * (1 - Math.exp(-dt / 0.25));
+        var pos = place(c, n, c.j, t, true), x = pos[0], y = pos[1];
+        if (mouse.active) {
+          var dx = mouse.x - x, dy = mouse.y - y, d2 = dx * dx + dy * dy;
+          var f = Math.exp(-d2 / (320 * 320)) * (1 - c.hold);
+          var dist = Math.max(1, Math.sqrt(d2));
+          x += dx / dist * 8 * f; y += dy / dist * 8 * f;
+        }
+        c.x = x; c.y = y;
+        var hT = cardHCap * (0.45 + 0.55 * c.j);
+        c.h += (hT - c.h) * (1 - Math.exp(-dt / 0.3));
+        c.hh = c.h; c.w = c.h;
+        c.hov += ((isT ? 1 : 0) - c.hov) * (1 - Math.exp(-dt / 0.12));
+        var isB = boostOn && n === boostCard;
+        c.boost += ((isB ? 1 : 0) - c.boost) * (1 - Math.exp(-dt / 0.18));
+        var sc = 1 + c.hov * (1 - c.boost) * 1.0 + c.boost * 2.0;
+        var rot = mouse.active && c.hov > 0.02
+          ? Math.max(-6, Math.min(6, (mouse.x - x) * 0.02)) * c.hov : 0;
+        var sy = (c.h / 200) * sc; var sx = sy;
+        c.el.style.transform = "translate(" + (x - 100).toFixed(1) + "px," + (y - 100).toFixed(1) + "px) rotate(" + rot.toFixed(2) + "deg) scale(" + sx.toFixed(4) + "," + sy.toFixed(4) + ")";
+        c.el.style.zIndex = 1 + Math.round(c.j * 20) + (isT ? 40 : 0) + (isB ? 60 : 0);
+        var op = smooth01(c.j / 0.15);
+        c.el.style.opacity = op < 1 ? op.toFixed(3) : "1";
+        if (c.el.style.filter) c.el.style.filter = "";
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  if (!reduce) requestAnimationFrame(frame);
+  else {
+    /* reduced motion: a still, spread field at a fixed angle */
+    spin = -0.55;
+    for (var m = 0; m < cards.length; m++) {
+      var cm = cards[m];
+      cm.j = ((cm.slot + 0.5 + cm.arm * 0.76) / slotsPerArm + 0.32) % 1;
+      cm.h = cardHCap * (0.45 + 0.55 * cm.j);
+      var pm = place(cm, m, cm.j, 0, false);
+      cm.el.style.transform = "translate(" + (pm[0] - 100) + "px," + (pm[1] - 100) + "px) scale(" + (cm.h / 200).toFixed(4) + "," + (cm.h / 200).toFixed(4) + ")";
+      cm.el.style.zIndex = 1 + Math.round(cm.j * 20);
+    }
+    gRoot.setAttribute("transform", "rotate(" + (spin * 180 / Math.PI).toFixed(3) + " " + CX.toFixed(1) + " " + CY.toFixed(1) + ")");
+
+  }
+
+  /* theme toggle + logo swap */
+  function syncThemeImgs() {
+    var light = document.documentElement.dataset.theme === "light";
+    document.querySelectorAll("img[data-light]").forEach(function (im) {
+      im.src = light ? im.getAttribute("data-light") : im.getAttribute("data-dark") || im.src;
+    });
+  }
+  document.querySelectorAll("img[data-light]").forEach(function (im) {
+    im.setAttribute("data-dark", im.getAttribute("src"));
+  });
+  document.querySelector("[data-theme-toggle]").addEventListener("click", function () {
+    var next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("vh-theme", next); } catch (e) {}
+    syncThemeImgs();
+  });
+  syncThemeImgs();
+
+  /* word rail: rest (vertical at the ruler) --scrub--> active (horizontal top-right)
+     --scrub--> past (weakened high stack, never over the active word) */
+  var chapterEls = ["collection", "craft", "film", "end"].map(function (id) { return document.getElementById(id); });
+  var railWords = Array.prototype.slice.call(document.querySelectorAll(".rail-word"));
+  function restVars() { return { rotate: 90, top: window.innerHeight * 0.42, right: -6, fontSize: "clamp(1.5rem,2.4vw,2.1rem)", opacity: 0, letterSpacing: ".02em" }; }
+  function activeVars() { return { rotate: 0, top: 92, right: 16, fontSize: "clamp(2.2rem,4vw,3.5rem)", opacity: 1, letterSpacing: "-.01em" }; }
+  function pastVars(i) { return { rotate: 0, top: 8 + i * 22, right: 16, fontSize: ".72rem", opacity: 0.22, letterSpacing: ".22em" }; }
+  railWords.forEach(function (w) {
+    w.addEventListener("click", function () { scrollToEl(chapterEls[railWords.indexOf(w)]); });
+    if (window.gsap) gsap.set(w, restVars());
+  });
+  document.querySelectorAll("[data-goto]").forEach(function (b) {
+    b.addEventListener("click", function () { scrollToEl(document.getElementById(b.getAttribute("data-goto"))); });
+  });
+  function splitWord(w) {
+    if (!w._split && window.SplitText) w._split = new SplitText(w, { type: "chars", charsClass: "sp-ch" });
+    return w._split ? w._split.chars : [];
+  }
+  if (window.ScrollTrigger && window.gsap && !reduce) {
+    chapterEls.forEach(function (sec, i) {
+      var w = railWords[i];
+      var chars = splitWord(w);
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: sec, start: "top bottom", end: "top 30%", scrub: 0.5 }
+      });
+      tl.to(w, Object.assign(activeVars(), { duration: 1 }), 0);
+      if (chars.length) {
+        tl.fromTo(chars, { y: function (j, c) { return (j - chars.length / 2) * 12; }, opacity: 0.25 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.03 }, 0.35);
+      }
+      if (i < chapterEls.length - 1) {
+        gsap.timeline({
+          scrollTrigger: { trigger: sec, start: "bottom 55%", end: "bottom 12%", scrub: 0.5 }
+        }).to(w, Object.assign(pastVars(i), { duration: 1 }), 0);
+      }
+    });
+  } else {
+    railWords.forEach(function (w) { if (window.gsap) gsap.set(w, restVars()); });
+  }
+
+  /* nav scroll-spy: artcraft fills the tab of the section in view */
+  var spySecs = chapterEls;
+  var tabBtns = Array.prototype.slice.call(document.querySelectorAll(".tabs button"));
+  function updateSpy() {
+    var y = (window.scrollY || 0) + innerHeight * 0.4;
+    var cur = -1;
+    spySecs.forEach(function (s, i) { if (s.offsetTop <= y) cur = i; });
+    tabBtns.forEach(function (b, i) { b.classList.toggle("active", i === cur); });
+  }
+  updateSpy();
+  if (lenis) lenis.on("scroll", updateSpy);
+  window.addEventListener("scroll", updateSpy, { passive: true });
+
+  /* mobile in-flow titles: letters rise on first entry */
+  if (window.ScrollTrigger && window.gsap && !reduce) {
+    document.querySelectorAll("[data-spine]").forEach(function (t) {
+      ScrollTrigger.create({
+        trigger: t, start: "top 85%", once: true,
+        onEnter: function () {
+          if (!window.SplitText) return;
+          if (!t._split) t._split = new SplitText(t, { type: "chars", charsClass: "sp-ch" });
+          gsap.from(t._split.chars, { y: 26, opacity: 0, duration: 0.5, ease: "power2.out", stagger: 0.04 });
+        }
+      });
+    });
+  }
+
+  /* films */
+  var brandFilms = document.querySelectorAll(".reel.brand video");
+  if (reduce) brandFilms.forEach(function (v) { v.controls = true; });
+  else if ("IntersectionObserver" in window) {
+    var fio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { var p = e.target.play(); if (p && p.catch) p.catch(function () {}); }
+        else e.target.pause();
+      });
+    }, { threshold: 0.45 });
+    brandFilms.forEach(function (v) { fio.observe(v); });
+  }
+
+  /* product films: poster first, click to play with sound; one at a time */
+  var productFilms = document.querySelectorAll(".reel.product video");
+  productFilms.forEach(function (v) {
+    var shell = v.closest(".video-shell");
+    var btn = shell ? shell.querySelector(".vid-play") : null;
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      productFilms.forEach(function (other) {
+        if (other === v) return;
+        var os = other.closest(".video-shell");
+        other.pause(); other.controls = false; other.muted = true;
+        if (os) os.classList.remove("playing");
+      });
+      brandFilms.forEach(function (f) { f.pause(); });
+      v.muted = false;
+      v.controls = true;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { v.muted = true; v.play(); });
+      shell.classList.add("playing");
+    });
+    v.addEventListener("ended", function () {
+      shell.classList.remove("playing");
+      v.controls = false;
+      v.currentTime = 0;
+    });
+  });
+
+  window.addEventListener("load", function () { layout(); ScrollTrigger.refresh(); buildRuler(); updateRuler(); });
+  var rT;
+  window.addEventListener("resize", function () {
+    clearTimeout(rT);
+    rT = setTimeout(function () { layout(); buildRuler(); updateRuler(); ScrollTrigger.refresh(); }, 200);
+  });
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>视觉厅 · 旧版首页（预览）</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="assets/gallery.css">
+<style>
+  .hero{ padding:clamp(52px,11vh,110px) 0 clamp(24px,5vh,44px); }
+  .hero h1{ font-size:clamp(56px,13vw,124px); font-weight:400; letter-spacing:.14em; line-height:1; margin-top:16px; }
+  .hero .rule{ height:1px; background:var(--line); margin:clamp(22px,5vh,38px) 0; }
+  .hero .lede{ color:var(--soft); font-size:clamp(14px,3.4vw,17px); line-height:2.05; max-width:36em; }
+
+  .stats{ display:flex; flex-wrap:wrap; gap:clamp(18px,4vw,54px); margin-top:clamp(26px,5vh,42px); }
+  .stat b{ display:block; font-size:clamp(30px,6vw,52px); font-weight:400; letter-spacing:.02em; font-family:var(--serif); }
+  .stat span{ display:block; margin-top:6px; font-family:var(--sans); font-size:11px; letter-spacing:.22em; color:var(--muted); }
+
+  .label{ display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    margin:clamp(44px,9vh,84px) 0 clamp(16px,3vh,24px); padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .label h2{ font-size:clamp(18px,4vw,22px); font-weight:400; letter-spacing:.2em; }
+  .label span{ font-family:var(--sans); font-size:11px; letter-spacing:.2em; color:var(--muted); }
+
+  .rooms{ display:grid; gap:clamp(12px,2vw,20px); grid-template-columns:repeat(2,1fr); }
+  .room{ position:relative; display:block; overflow:hidden; border:1px solid var(--line2); min-height:clamp(220px,30vw,340px); }
+  .room img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.62;
+    transition:opacity .5s, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .room:hover img{ opacity:.8; transform:scale(1.035); }
+  .room .veil{ position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,10,12,.15) 30%,rgba(10,10,12,.86)); }
+  .room .txt{ position:absolute; inset:auto 0 0 0; padding:clamp(16px,2.4vw,28px); }
+  .room h3{ font-size:clamp(22px,3.4vw,30px); font-weight:400; letter-spacing:.1em; }
+  .room p{ margin-top:8px; font-family:var(--sans); font-size:12px; letter-spacing:.08em; color:var(--soft); line-height:1.8; }
+  .room .n{ position:absolute; top:clamp(14px,2vw,22px); left:clamp(16px,2.4vw,26px);
+    font-family:var(--sans); font-size:11px; letter-spacing:.24em; color:var(--barmark); }
+  .room .go{ display:inline-block; margin-top:14px; font-family:var(--sans); font-size:12px; letter-spacing:.16em;
+    border-bottom:1px solid var(--line); padding-bottom:4px; }
+
+  .case{ display:grid; grid-template-columns:minmax(0,.5fr) minmax(0,1fr); gap:clamp(18px,4vw,44px); align-items:center;
+    border:1px solid var(--line2); padding:clamp(14px,2vw,20px); transition:border-color .3s; }
+  .case:hover{ border-color:var(--hover); }
+  .case .thumb{ aspect-ratio:4/5; overflow:hidden; background:#1a1a1c; }
+  .case .thumb img{ width:100%; height:100%; object-fit:cover; }
+  .case h3{ font-size:clamp(24px,4.6vw,38px); font-weight:400; letter-spacing:.05em; line-height:1.3; }
+  .case .sub{ margin-top:8px; font-family:var(--sans); font-size:12px; letter-spacing:.14em; color:var(--muted); }
+  .case p{ margin-top:clamp(12px,2.4vh,18px); color:var(--soft); font-size:clamp(14px,3.2vw,16px); line-height:2; max-width:26em; }
+  .case .go{ display:inline-block; margin-top:18px; font-family:var(--sans); font-size:12px; letter-spacing:.16em; border-bottom:1px solid var(--line); padding-bottom:5px; }
+
+  @media (max-width:720px){
+    .rooms{ grid-template-columns:1fr; }
+    .case{ grid-template-columns:1fr; }
+    .case .thumb{ aspect-ratio:16/10; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="index-v1.html">视觉厅</a>
+  <nav>
+    <a href="index-v1.html" aria-current="page">旧版</a>
+    <a href="rooms/main-images.html">主图</a>
+    <a href="rooms/videos.html">视频</a>
+    <a href="rooms/accessories.html">辅料</a>
+    <a href="rooms/ugc.html">买家秀</a>
+    <a href="builds/kingrest-showcase/">案例</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Visual Hall · Kingrest / GOGREEN · 2026</div>
+    <h1>视觉厅</h1>
+    <div class="rule"></div>
+    <p class="lede">
+      这里陈列本年度做的电商视觉：产品主图、主图视频、辅料印刷与买家秀。
+      四个厅按类型分，想深看某一件，进案例厅。
+    </p>
+    <div class="stats">
+      <div class="stat"><b>79</b><span>套主图</span></div>
+      <div class="stat"><b>651</b><span>张图片</span></div>
+      <div class="stat"><b>8</b><span>条视频</span></div>
+      <div class="stat"><b>36</b><span>张买家秀</span></div>
+      <div class="stat"><b>6</b><span>份辅料</span></div>
+    </div>
+  </header>
+
+  <div class="label"><h2>四个厅</h2><span>ROOMS 01—04</span></div>
+
+  <div class="rooms">
+    <a class="room" href="rooms/main-images.html">
+      <img src="assets/main/m052/01.webp" alt="圣诞毯主图" loading="lazy">
+      <div class="veil"></div>
+      <div class="n">01</div>
+      <div class="txt">
+        <h3>主图厅</h3>
+        <p>79 套 SKU 完整主图 · 新品与节日节令两条线</p>
+        <span class="go">进入 →</span>
+      </div>
+    </a>
+    <a class="room" href="rooms/videos.html">
+      <img src="assets/video/v03.webp" alt="产品视频" loading="lazy">
+      <div class="veil"></div>
+      <div class="n">02</div>
+      <div class="txt">
+        <h3>视频厅</h3>
+        <p>8 条主图视频 · AI 场景片与代码生成演示</p>
+        <span class="go">进入 →</span>
+      </div>
+    </a>
+    <a class="room" href="rooms/accessories.html">
+      <img src="assets/acc/a06-p1.webp" alt="辅料印刷" loading="lazy">
+      <div class="veil"></div>
+      <div class="n">03</div>
+      <div class="txt">
+        <h3>辅料厅</h3>
+        <p>6 份包装盒 / 彩卡 / 材质说明</p>
+        <span class="go">进入 →</span>
+      </div>
+    </a>
+    <a class="room" href="rooms/ugc.html">
+      <img src="assets/ugc/006.webp" alt="买家秀" loading="lazy">
+      <div class="veil"></div>
+      <div class="n">04</div>
+      <div class="txt">
+        <h3>买家秀厅</h3>
+        <p>36 张生活场景 · 沙发、床铺、宠物与面料特写</p>
+        <span class="go">进入 →</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="label"><h2>案例厅</h2><span>CASE STUDY</span></div>
+
+  <a class="case" href="builds/kingrest-showcase/">
+    <div class="thumb"><img src="builds/kingrest-showcase/assets/poster-sleep.jpg" alt="Kingrest 2026 家居系列" loading="lazy"></div>
+    <div>
+      <h3>Kingrest · 2026 家居系列</h3>
+      <div class="sub">家纺 / 产品展示站 / 2026</div>
+      <p>把一条产品线做成一整个下滑叙事：首屏星系、产品全集、辅料工艺、三条短片，收尾落回品牌。</p>
+      <span class="go">进入案例 ↗</span>
+    </div>
+  </a>
+
+  <div class="foot">
+    <a href="https://sanglaoge.github.io/">回主页 ↗</a>
+    <span>这是旧版预览页 · 确认后可换回首页</span>
+    <span>Updated 2026.11.02</span>
+  </div>
+</div>
+
+<script src="assets/data/works.js"></script>
+<script src="assets/gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>产品 · 视觉厅</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="assets/gallery.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="./">视觉厅</a>
+  <nav>
+    <a href="./">总览</a>
+    <a href="videos.html">视频</a>
+    <a href="accessories.html">辅料</a>
+    <a href="ugc.html">买家秀</a>
+  </nav>
+</div>
+
+<div class="wrap" id="page">
+  <p style="padding-top:28px"><a class="back" href="./">← 全部产品</a></p>
+  <div id="body"></div>
+  <div class="foot">
+    <a href="./">← 回总览</a>
+    <span>点图看大图</span>
+    <span>Updated 2026.11.02</span>
+  </div>
+</div>
+
+<script src="assets/data/works.js"></script>
+<script src="assets/gallery.js"></script>
+<script>
+(function () {
+  var W = window.WORKS || {};
+  var key = new URLSearchParams(location.search).get("p");
+  var p = (W.products || []).find(function (x) { return x.key === key; });
+  var body = document.getElementById("body");
+
+  if (!p) {
+    body.innerHTML = '<header class="page-head"><div class="eyebrow">Not found</div><h1>没有这个产品</h1>' +
+      '<p class="lede">链接可能过期了，回总览重新选。</p></header>';
+    document.title = "未找到 · 视觉厅";
+    return;
+  }
+
+  document.title = p.name + " · 视觉厅";
+  var hero = p.sets.length ? p.sets[0].cover
+    : p.ugc.length ? (W.ugc.find(function (u) { return u.id === p.ugc[0]; }) || {}).src
+    : p.acc.length ? (W.acc.find(function (a) { return a.id === p.acc[0]; }) || {}).preview : "";
+
+  var vids = (W.videos || []).filter(function (v) { return p.videos.indexOf(v.id) > -1; });
+  var ugc = (W.ugc || []).filter(function (u) { return p.ugc.indexOf(u.id) > -1; });
+  var acc = (W.acc || []).filter(function (a) { return p.acc.indexOf(a.id) > -1; });
+  var shots = p.sets.reduce(function (a, s) { return a + s.count; }, 0);
+
+  var meta = [];
+  if (p.sets.length) meta.push("<b>" + p.sets.length + "</b> 套主图");
+  if (shots) meta.push("<b>" + shots + "</b> 张");
+  if (vids.length) meta.push("<b>" + vids.length + "</b> 条视频");
+  if (ugc.length) meta.push("<b>" + ugc.length + "</b> 张买家秀");
+  if (acc.length) meta.push("<b>" + acc.length + "</b> 份辅料");
+
+  var html = '<header class="p-head"><div>' +
+    '<div class="eyebrow">Product</div><h1>' + p.name + '</h1>' +
+    '<div class="p-meta">' + meta.join("") + '</div></div>' +
+    '<div class="cover">' + (hero ? '<img src="' + hero + '" alt="' + p.name + '">' : "") + '</div></header>';
+
+  if (p.sets.length) {
+    html += '<div class="label"><h2>主图</h2><span>整套 ' + p.sets.length + ' 组</span></div><div class="grid">';
+    p.sets.forEach(function (s) {
+      html += '<button class="card" data-images=\'' + JSON.stringify(s.images) +
+        '\' data-title="' + p.name + ' · ' + s.sub + '">' +
+        '<span class="media"><img src="' + s.cover + '" alt="' + p.name + ' ' + s.sub + '" loading="lazy"></span>' +
+        '<span class="cap">' + s.sub + '<em>' + s.count + ' 张</em></span></button>';
+    });
+    html += '</div>';
+  }
+
+  if (vids.length) {
+    html += '<div class="label"><h2>视频</h2><span>' + vids.length + ' 条</span></div>' +
+      '<div style="display:grid;gap:clamp(12px,2vw,20px);grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">';
+    vids.forEach(function (v) {
+      html += '<article class="vcard"><div class="frame" data-src="' + v.src + '" data-poster="' + v.poster + '">' +
+        '<img src="' + v.poster + '" alt="' + v.title + '" loading="lazy">' +
+        '<span class="play"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="rgba(244,241,234,.7)"/><path d="M26 21l18 11-18 11z" fill="#f4f1ea"/></svg></span>' +
+        '</div><div class="meta">' + v.title + '<em>' + v.long + '版 · ' + v.dur + 's</em></div></article>';
+    });
+    html += '</div>';
+  }
+
+  if (ugc.length) {
+    html += '<div class="label"><h2>买家秀</h2><span>' + ugc.length + ' 张</span></div><div class="masonry">';
+    ugc.forEach(function (u) {
+      html += '<button class="m-item" data-image="' + u.src + '" data-title="' + u.title + '">' +
+        '<img src="' + u.src + '" alt="' + u.title + '" loading="lazy">' +
+        '<span class="tagx">' + u.group + '</span></button>';
+    });
+    html += '</div>';
+  }
+
+  if (acc.length) {
+    html += '<div class="label"><h2>辅料</h2><span>' + acc.length + ' 份</span></div><div class="agrid">';
+    acc.forEach(function (a) {
+      var isPhoto = a.preview.indexOf("photo-") > -1;
+      html += '<article class="acard"><div class="ph' + (isPhoto ? " photo" : "") +
+        '" data-image="' + a.preview + '" data-title="' + a.title + '">' +
+        '<img src="' + a.preview + '" alt="' + a.title + '" loading="lazy"></div>' +
+        '<div class="info">' + a.title + '<em>' + a.kind + '</em></div>' +
+        (a.die ? '<div class="sub">展开图：<a href="' + a.die + '" data-image="' + a.die + '" data-title="' + a.title + ' 展开图">查看刀模</a></div>' : '') +
+        '</article>';
+    });
+    html += '</div>';
+  }
+
+  body.innerHTML = html;
+})();
+</script>
+</body>
+</html>
