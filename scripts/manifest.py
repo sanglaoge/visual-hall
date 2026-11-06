@@ -29,6 +29,18 @@ L += ["", "## 2026 品类", "", "| 品类 | 套 | 张 |", "|---|---|---|"]
 for p in W["products"]:
     L.append("| %s | %d | %d |" % (p["name"], len(p["sets"]), sum(s["count"] for s in p["sets"])))
 
+L += ["", "## 2025 主图明细", "", "| 品牌 | 品类 | 套名 | 张数 |", "|---|---|---|---|"]
+for b in W["brands"]:
+    if b.get("year") != 2025:
+        continue
+    for s in b["sets"]:
+        L.append("| %s | %s | %s | %d |" % (b["name"], s["cat"], s["sku"], s["count"]))
+
+L += ["", "## 2026 主图明细", "", "| 品类 | 套名 | 张数 |", "|---|---|---|"]
+for p in W["products"]:
+    for s in p["sets"]:
+        L.append("| %s | %s | %d |" % (p["name"], s["sub"], s["count"]))
+
 L += ["", "## 辅料", "", "| 品牌 | 件数 |", "|---|---|"]
 for k, v in amap.items():
     L.append("| %s | %d |" % (k, v))

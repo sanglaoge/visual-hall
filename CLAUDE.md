@@ -22,8 +22,9 @@
 | `videos.html` `accessories.html` `ugc.html` | 三个专项页 |
 | `rooms/` | 旧四厅页面，已被上面替代（待删） |
 | `builds/` | 深度案例（当前 `kingrest-showcase/`，scroll-craft 独立站） |
-| `assets/` | 站点产物：`main/` `video/` `ugc/` `acc/` `orbit/` + `data/works.js` + 共用 `gallery.css/js` + `scrollcraft.css/js`（引擎，勿按项目改） |
-| `scripts/build-gallery.py` | 源素材 → 上站产物 + `作品清单.md`，幂等可重跑 |
+| `assets/` | 站点产物：`main/` `video/` `ugc/` `acc/` `orbit/` + `data/works.js`（brands / sets2025 / products / acc）+ 共用 `gallery.css/js` + `scrollcraft.css/js`（引擎，勿按项目改） |
+| `scripts/build-gallery.py` | 源素材 → 上站产物，幂等可重跑；⚠️ 旧目录路径，待重写 |
+| `scripts/manifest.py` | 读 `assets/data/works.js` 生成 `作品清单.md` |
 | `素材/` | 收料口（当前空；原片仍在本机 Downloads，见下） |
 | `作品清单.md` | 作品台账，脚本生成，勿手改 |
 | `FINGERPRINTS.md` | scroll-craft build 登记表 |
