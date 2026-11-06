@@ -6,6 +6,7 @@
 
 - 2026-10-30 从 `~/valve/热点日报/产品展示站/` 搬出独立建库（原名产品展示站，同日定名视觉厅）
 - 2026-11-02 改成「产品优先」结构：总览（随机主图 + 产品分类）→ 产品页（主图整套 + 视频 + 买家秀 + 辅料），另设视频/辅料/买家秀三个专项页；Kingrest 站降为延伸阅读
+- 2026-11-06 改「品牌优先」：全部作品 → GOGREEN / HITIME / KINGREST / 2026 新品 → 品类 → 套图；新增 `brand.html`，`library.html` 改为品牌墙
 - 溯源：源于日报 2026-10-14 发现的 scroll-craft skill；首个成品是 Kingrest 家纺客户站
 - 进度、决策、待办统一记在 `index.md`
 
@@ -14,9 +15,10 @@
 | 目录/文件 | 用途 |
 |---|---|
 | `index.html` | 首页：scroll-craft 滚动站（星系首屏 + 产品章节 + 辅料 + 视频），首页即门面 |
-| `library.html` | 全部作品：按产品分类的卡片墙，点进产品页 |
+| `library.html` | 全部作品：品牌墙（2025 三家 + 2026 新品），点进品牌页 |
+| `brand.html` | 品牌页，按 `?b=key` 渲染该品牌的品类筛选、整套主图与辅料 |
 | `index-v1.html` | 旧版预览页（临时，待删） |
-| `product.html` | 产品页，按 `?p=key` 渲染该产品的整套主图/视频/买家秀/辅料 |
+| `product.html` | 2026 产品页，按 `?p=key` 渲染该品类的整套主图/视频/买家秀/辅料 |
 | `videos.html` `accessories.html` `ugc.html` | 三个专项页 |
 | `rooms/` | 旧四厅页面，已被上面替代（待删） |
 | `builds/` | 深度案例（当前 `kingrest-showcase/`，scroll-craft 独立站） |
@@ -26,12 +28,15 @@
 | `作品清单.md` | 作品台账，脚本生成，勿手改 |
 | `FINGERPRINTS.md` | scroll-craft build 登记表 |
 
-素材源目录：`~/Downloads/B2B&B2C/网页素材/`（01-主图 / 02-产品视频 / 03-辅料 / 04-ugc，约 1.2G，不入库）
+素材源目录：`~/Downloads/B2B&B2C/网页素材/`（2025 按品牌 GOGREEN / HITIME / KINGREST / 辅料系列，2026 按类型 01-主图 / 02-视频 / 03-辅料 / 04-ugc，约 3.2G，不入库）
+
+> ⚠️ 2026-11-06 起源目录改成「年度/品牌/品类」结构，`scripts/build-gallery.py` 还写着旧路径，跑之前先改；2025 的导入与合并暂用 `网页素材/_筛选/` 里的临时脚本。
 
 ## 常用命令
 
 - 本地预览：`node ~/.zcode/skills/scroll-craft/scripts/serve.mjs --root . --port 4500`
-- 重新生成素材与数据：`python3 scripts/build-gallery.py`（加 `--skip-video` 只转图）
+- 重新生成作品清单：`python3 scripts/manifest.py`（读 `assets/data/works.js`）
+- 重新生成素材与数据：`python3 scripts/build-gallery.py`（⚠️ 旧目录路径，待按年度结构重写）
 - 发布：`git commit + push` → GitHub Pages 自动部署（约 1 分钟生效）
 
 ## 上线
@@ -44,7 +49,7 @@
 
 - 单文件 < 100MB（硬限）｜整站 < 1GB｜月流量 100GB（软限）
 - 视频按桑老哥口径控制：每条几十秒、几十 MB，只放几条；超限的改外链嵌入
-- 当前实测：整站约 200MB，单文件最大 24MB（视频 v03）
+- 当前实测：站点资产约 443MB（主图 293 / 首屏 78 / 视频 59 / 辅料 6），单文件最大 24MB（视频 v03）
 - 图片长边 1200px webp q80；首屏 orbit 1600px webp q86；视频 1280 内 H.264 CRF27（脚本已固化）
 
 ## 工作流

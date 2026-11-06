@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>品牌 · 视觉厅</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<link rel="stylesheet" href="assets/gallery.css">
+<style>
+  .b-head{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.72fr); gap:clamp(20px,4vw,48px); align-items:end;
+    padding:clamp(36px,7vh,72px) 0 clamp(18px,3vh,28px); }
+  .b-head .cover{ aspect-ratio:4/3; overflow:hidden; background:var(--ink2); border:1px solid var(--line2); order:2; }
+  .b-head .cover img{ width:100%; height:100%; object-fit:cover; }
+  .b-head h1{ font-size:clamp(40px,8vw,76px); font-weight:400; letter-spacing:.12em; line-height:1; }
+  .b-head .lede{ margin-top:16px; color:var(--soft); font-size:14px; line-height:2; max-width:30em; }
+  .cats{ display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
+  @media (max-width:760px){ .b-head{ grid-template-columns:1fr; } .b-head .cover{ order:0; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="./">视觉厅</a>
+  <nav>
+    <a href="./">总览</a>
+    <a href="library.html">全部作品</a>
+    <a href="videos.html">视频</a>
+    <a href="accessories.html">辅料</a>
+    <a href="ugc.html">买家秀</a>
+  </nav>
+</div>
+
+<div class="wrap" id="page">
+  <p style="padding-top:28px"><a class="back" href="library.html">← 全部作品</a></p>
+  <div id="body"></div>
+  <div class="foot">
+    <a href="library.html">← 回全部作品</a>
+    <span>点图看大图</span>
+    <span>Updated 2026.11.06</span>
+  </div>
+</div>
+
+<script src="assets/data/works.js"></script>
+<script src="assets/gallery.js"></script>
+<script>
+(function () {
+  var W = window.WORKS || {};
+  var key = new URLSearchParams(location.search).get("b");
+  var brand = (W.brands || []).find(function (b) { return b.key === key; });
+  var body = document.getElementById("body");
+
+  if (!brand) {
+    body.innerHTML = '<header class="page-head"><div class="eyebrow">Not found</div><h1>没有这个品牌</h1>' +
+      '<p class="lede">链接可能过期了，回全部作品重新选。</p></header>';
+    document.title = "未找到 · 视觉厅";
+    return;
+  }
+
+  document.title = brand.name + " · 视觉厅";
+  var isOwn = brand.key === "own";
+  var cats = brand.categories || [];
+  var accIds = brand.acc || [];
+  var acc = (W.acc || []).filter(function (a) { return accIds.indexOf(a.id) > -1; });
+
+  var html = '<header class="b-head"><div>' +
+    '<div class="eyebrow">' + (isOwn ? "2026 · 新品" : "2025 · 客户项目") + '</div>' +
+    '<h1>' + brand.name + '</h1>' +
+    '<div class="p-meta"><span><b>' + brand.count + '</b> 套</span><span><b>' + brand.images + '</b> 张主图</span>' +
+    (acc.length ? '<span><b>' + acc.length + '</b> 份辅料</span>' : '') + '</div>' +
+    '<p class="lede">' + (isOwn
+      ? '2026 年的新品与节日系列，按产品品类分。点进去看整套主图、视频、买家秀和辅料。'
+      : '2025 年 ' + brand.name + ' 的客户项目，按品类分。点开任意一套看完整主图。') + '</p>' +
+    '</div><div class="cover"><img src="' + brand.cover + '" alt="' + brand.name + '"></div></header>';
+
+  if (isOwn) {
+    var products = (W.products || []).filter(function (p) { return (brand.products || []).indexOf(p.key) > -1; });
+    html += '<div class="label"><h2>品类</h2><span>' + products.length + ' 个</span></div><div class="pgrid">';
+    products.forEach(function (p) {
+      var cover = p.sets.length ? p.sets[0].cover : "";
+      if (!cover && p.ugc.length) {
+        var u = (W.ugc || []).find(function (x) { return x.id === p.ugc[0]; });
+        cover = u ? u.src : "";
+      }
+      if (!cover && p.acc.length) {
+        var a0 = (W.acc || []).find(function (x) { return x.id === p.acc[0]; });
+        cover = a0 ? a0.preview : "";
+      }
+      var shots = p.sets.reduce(function (a, s) { return a + s.count; }, 0);
+      var tags = [];
+      if (p.sets.length) tags.push(p.sets.length + " 套主图");
+      if (p.videos.length) tags.push(p.videos.length + " 条视频");
+      if (p.ugc.length) tags.push(p.ugc.length + " 张买家秀");
+      if (p.acc.length) tags.push(p.acc.length + " 份辅料");
+      html += '<a class="pcard" href="product.html?p=' + p.key + '">' +
+        '<div class="ph"><img src="' + cover + '" alt="' + p.name + '" loading="lazy"></div>' +
+        '<div class="info"><h3>' + p.name + '</h3><span class="n">' + (shots ? shots + " 张" : "") + '</span></div>' +
+        '<div class="tags">' + tags.map(function (t) { return "<span>" + t + "</span>"; }).join("") + '</div></a>';
+    });
+    html += '</div>';
+  } else {
+    html += '<div class="filters" id="filters"><button class="chip" data-cat="全部" aria-pressed="true">全部 ' + brand.count + '</button>' +
+      cats.map(function (c) {
+        return '<button class="chip" data-cat="' + c.name + '" aria-pressed="false">' + c.name + ' ' + c.count + '</button>';
+      }).join("") + '</div>';
+    html += '<div class="grid tall" id="sets"></div>';
+  }
+
+  if (acc.length) {
+    html += '<div class="label"><h2>辅料</h2><span>' + acc.length + ' 份</span></div><div class="agrid">';
+    acc.forEach(function (a) {
+      html += '<article class="acard"><div class="ph" data-image="' + a.preview + '" data-title="' + a.title + '">' +
+        '<img src="' + a.preview + '" alt="' + a.title + '" loading="lazy"></div>' +
+        '<div class="info">' + a.title + '<em>' + a.kind + '</em></div>' +
+        '<div class="sub">' + a.cat + '</div></article>';
+    });
+    html += '</div>';
+  }
+
+  body.innerHTML = html;
+
+  if (isOwn) return;
+
+  var current = "全部";
+  var sets = brand.sets || [];
+  function paint() {
+    document.getElementById("sets").innerHTML = sets.filter(function (s) {
+      return current === "全部" || s.cat === current;
+    }).map(function (s) {
+      return '<button class="card tall" data-images=\'' + JSON.stringify(s.images) +
+        '\' data-title="' + brand.name + " · " + s.sku + '">' +
+        '<span class="media"><img src="' + s.cover + '" alt="' + s.sku + '" loading="lazy"></span>' +
+        '<span class="cap">' + s.cat + ' · ' + s.sku + '<em>' + s.count + ' 张</em></span></button>';
+    }).join("");
+  }
+  document.getElementById("filters").addEventListener("click", function (e) {
+    var b = e.target.closest(".chip");
+    if (!b) return;
+    current = b.dataset.cat;
+    this.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === b)); });
+    paint();
+  });
+  paint();
+})();
+</script>
+</body>
+</html>
