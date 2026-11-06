@@ -64,13 +64,13 @@
   var acc = (W.acc || []).filter(function (a) { return accIds.indexOf(a.id) > -1; });
 
   var html = '<header class="b-head"><div>' +
-    '<div class="eyebrow">' + (isOwn ? "2026 · 新品" : "2025 · 客户项目") + '</div>' +
+    '<div class="eyebrow">' + (isOwn ? "2026 · 新品" : "2025 · 品牌线") + '</div>' +
     '<h1>' + brand.name + '</h1>' +
     '<div class="p-meta"><span><b>' + brand.count + '</b> 套</span><span><b>' + brand.images + '</b> 张主图</span>' +
     (acc.length ? '<span><b>' + acc.length + '</b> 份辅料</span>' : '') + '</div>' +
     '<p class="lede">' + (isOwn
       ? '2026 年的新品与节日系列，按产品品类分。点进去看整套主图、视频、买家秀和辅料。'
-      : '2025 年 ' + brand.name + ' 的客户项目，按品类分。点开任意一套看完整主图。') + '</p>' +
+      : '2025 年 ' + brand.name + ' 品牌，按品类分。点开任意一套看完整主图。') + '</p>' +
     '</div><div class="cover"><img src="' + brand.cover + '" alt="' + brand.name + '"></div></header>';
 
   if (isOwn) {

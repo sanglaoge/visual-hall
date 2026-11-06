@@ -7,7 +7,7 @@
 - 2026-10-30 从 `~/valve/热点日报/产品展示站/` 搬出独立建库（原名产品展示站，同日定名视觉厅）
 - 2026-11-02 改成「产品优先」结构：总览（随机主图 + 产品分类）→ 产品页（主图整套 + 视频 + 买家秀 + 辅料），另设视频/辅料/买家秀三个专项页；Kingrest 站降为延伸阅读
 - 2026-11-06 改「品牌优先」：全部作品 → GOGREEN / HITIME / KINGREST / 2026 新品 → 品类 → 套图；新增 `brand.html`，`library.html` 改为品牌墙
-- 溯源：源于日报 2026-10-14 发现的 scroll-craft skill；首个成品是 Kingrest 家纺客户站
+- 溯源：源于日报 2026-10-14 发现的 scroll-craft skill；首个成品是 Kingrest 家纺品牌站
 - 进度、决策、待办统一记在 `index.md`
 
 ## 目录约定
@@ -44,7 +44,7 @@
 
 - 地址：`https://sanglaoge.github.io/visual-hall/`（仓库 `sanglaoge/visual-hall`，main 分支根目录发布）
 - 暂时公开访问；页面与 `robots.txt` 已设 `noindex`，不被搜索引擎收录
-- ⚠️ 公开即全网可看，客户素材（含买家秀）上线前须过一遍授权/敏感信息
+- ⚠️ 公开即全网可看，品牌素材（含买家秀）上线前须过一遍敏感信息检查
 
 ## 容量红线（GitHub Pages 免费版）
 
