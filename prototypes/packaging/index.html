@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>视觉厅 v3 · 包装章节原型</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2f1ee; --surface:#fbfaf7; --ink:#14120f; --muted:#676157;
+    --line:rgba(20,18,15,.16); --kraft:#b3906b;
+    --sans:"Archivo",system-ui,-apple-system,"PingFang SC",sans-serif;
+    --mono:"Geist Mono",ui-monospace,"SF Mono",monospace;
+    --serif:"Instrument Serif",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html,body{overflow-x:clip}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);padding-bottom:92px}
+  a{color:inherit;text-decoration:none}
+  img{display:block}
+  .shell{width:min(1320px,calc(100% - 48px));margin:0 auto}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;border-bottom:1px solid var(--line);font:500 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+  .top .back,.top .note{color:var(--muted)}
+  .intro{padding:clamp(54px,8vw,96px) 0 clamp(30px,4vw,46px)}
+  .kicker{font:500 10px/1 var(--mono);letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+  .intro h1{margin:18px 0 0;max-width:1000px;font-size:clamp(2.4rem,6vw,5rem);line-height:.98;letter-spacing:-.045em;font-weight:600}
+  .intro h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--muted);letter-spacing:-.02em;white-space:nowrap}
+  .intro p{max-width:620px;margin:20px 0 0;font-size:1rem;line-height:1.7;color:var(--muted)}
+  .switch-note{font:500 10px/1.5 var(--mono);letter-spacing:.12em;color:var(--muted);margin:0 0 16px}
+  .panel{display:none}.panel.on{display:block}
+
+  /* 01 proof desk */
+  .desk{
+    background:var(--kraft) url("../../assets/texture-kraft.webp") center/620px repeat;
+    background-blend-mode:multiply;color:#241a10;padding:clamp(24px,4vw,46px);
+  }
+  .desk .head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px solid rgba(36,26,16,.32);padding-bottom:12px;margin-bottom:clamp(20px,3vw,32px);font:500 10px/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+  .desk .head b{font:600 1.2rem/1.2 var(--sans);letter-spacing:.01em}
+  .desk-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(12px,1.8vw,22px)}
+  .proof{grid-column:span 3;margin:0;display:flex;flex-direction:column}
+  .proof.big{grid-column:span 6;grid-row:span 2}
+  .proof.wide{grid-column:span 6}
+  .proof.tall{grid-column:span 3;grid-row:span 2}
+  .proof .paper{
+    display:grid;place-items:center;padding:clamp(8px,1.2vw,16px);background:#fbf8f0;
+    box-shadow:0 22px 34px -24px rgba(36,26,16,.95),inset 0 0 0 1px rgba(36,26,16,.08);
+    flex:1;min-height:160px;
+  }
+  .proof.big .paper{min-height:420px}
+  .proof.tall .paper{min-height:360px}
+  .proof .paper img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .proof figcaption{display:flex;justify-content:space-between;gap:10px;padding:9px 2px 0;font:400 .66rem/1.5 var(--mono);color:rgba(36,26,16,.7)}
+  .proof figcaption b{font:600 .82rem/1.3 var(--sans);color:#241a10}
+  .desk .foot{margin-top:clamp(22px,3vw,34px);display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(36,26,16,.32);padding-top:12px;font:400 .66rem/1.5 var(--mono);color:rgba(36,26,16,.65)}
+
+  /* 02 packaging shelf */
+  .shelf-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:14px}
+  .shelf-head h2{margin:0;font-size:clamp(1.4rem,2.4vw,2rem);letter-spacing:-.04em}
+  .shelf-head span{font:500 10px/1.5 var(--mono);letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+  .shelf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,22px)}
+  .pack{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--accent)}
+  .pack .ph{aspect-ratio:1;display:grid;place-items:center;padding:14px;background:#fff}
+  .pack .ph img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .pack .cap{padding:14px 14px 16px}
+  .pack .cap b{display:block;font-size:.9rem;line-height:1.3}
+  .pack .cap span{display:block;margin-top:5px;font:500 9px/1.5 var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .shelf-note{margin:18px 0 0;font:400 .68rem/1.6 var(--mono);color:var(--muted)}
+
+  /* 03 specimen board */
+  .board{position:relative;background:#171512;color:#f4f1ea;padding:clamp(24px,4vw,46px);min-height:640px;overflow:hidden}
+  .board::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.05),transparent 58%)}
+  .board-head{position:relative;z-index:2;display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid rgba(244,241,234,.2);padding-bottom:12px;font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.65)}
+  .board-head b{color:#f4f1ea}
+  .board-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;margin-top:clamp(24px,4vw,42px)}
+  .pin{background:#f7f1e5;color:#241a10;padding:10px 10px 12px;box-shadow:0 24px 38px -26px rgba(0,0,0,.9);transform:rotate(var(--r,0deg))}
+  .pin img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#fff;padding:10px}
+  .pin .cap{display:flex;justify-content:space-between;gap:8px;padding-top:8px;font:400 .62rem/1.4 var(--mono);letter-spacing:.04em}
+  .pin .cap b{font-weight:500;color:#241a10}
+  .pin.a{grid-column:span 4;--r:-1.2deg}.pin.b{grid-column:span 3;--r:1.4deg}.pin.c{grid-column:span 5;--r:-.6deg}
+  .pin.d{grid-column:span 3;--r:.8deg}.pin.e{grid-column:span 4;--r:-1deg}.pin.f{grid-column:span 5;--r:.4deg}
+  .pin.dark{background:#24211d;color:#f4f1ea}.pin.dark .cap b{color:#f4f1ea}
+  .pin.g{grid-column:span 5;--r:1.1deg}.pin.h{grid-column:span 7;--r:-.8deg}
+  .board .quote{position:relative;z-index:2;margin:clamp(28px,4vw,44px) 0 0;max-width:760px;font-family:var(--serif);font-style:italic;font-size:clamp(1.8rem,4vw,3.4rem);line-height:1.05;color:rgba(244,241,234,.82)}
+
+  /* picker */
+  .picker{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;padding:6px;border:1px solid rgba(20,18,15,.22);background:rgba(242,241,238,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 18px 36px -22px rgba(20,18,15,.6);white-space:nowrap}
+  .picker button{appearance:none;border:0;background:none;color:var(--muted);cursor:pointer;padding:10px 14px;font:500 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .picker button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .picker .hint{font:400 9px/1 var(--mono);letter-spacing:.06em;color:var(--muted);padding:0 10px}
+
+  @media (max-width:860px){
+    .proof{grid-column:span 6}.proof.big{grid-column:span 12;grid-row:auto}.proof.wide{grid-column:span 12}.proof.tall{grid-column:span 6;grid-row:auto}
+    .proof.big .paper{min-height:360px}.proof.tall .paper{min-height:280px}
+    .shelf{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .pin.a,.pin.b,.pin.c,.pin.d,.pin.e,.pin.f,.pin.g,.pin.h{grid-column:span 6}
+  }
+  @media (max-width:600px){
+    .shell{width:calc(100% - 32px)}
+    .top{font-size:9px}.top .note{display:none}
+    .desk{padding:18px}
+    .desk-grid{gap:12px}
+    .proof{grid-column:span 12}.proof.tall{grid-column:span 12}
+    .proof .paper{min-height:200px!important}
+    .shelf{grid-template-columns:1fr}
+    .pin.a,.pin.b,.pin.c,.pin.d,.pin.e,.pin.f,.pin.g,.pin.h{grid-column:span 12}
+    .pin{transform:none}
+    .picker .hint{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <a class="back" href="../../index.html">← 视觉厅 · 副本</a>
+    <span>V3 / PACKAGING / 3 DIRECTIONS</span>
+    <span class="note">不是母版 · 先用现有素材示意</span>
+  </header>
+
+  <section class="intro">
+    <div class="kicker">V3 · 包装 / 辅料</div>
+    <h1>包装和吊牌，<em>也是作品。</em></h1>
+    <p>先用现有素材挑 8 件示意。水洗标、更多彩卡补上后，再替换内容和顺序。</p>
+  </section>
+  <p class="switch-note" id="switchNote">方向 01 · 纸样台</p>
+
+  <section class="panel on" data-panel="1" aria-label="方向一 纸样台">
+    <div class="desk">
+      <div class="head"><b>印刷稿 / PRINT PROOFS</b><span>SELECTED · 2025–2026</span></div>
+      <div class="desk-grid">
+        <figure class="proof big"><div class="paper"><img src="../../assets/craft/giftbox.webp" alt="电热毯礼盒"></div><figcaption><b>电热毯礼盒</b><span>礼盒 / 数显控制器</span></figcaption></figure>
+        <figure class="proof"><div class="paper"><img src="../../assets/acc/a25-021/01.webp" alt="绗缝被彩卡"></div><figcaption><b>绗缝被彩卡</b><span>彩卡</span></figcaption></figure>
+        <figure class="proof"><div class="paper"><img src="../../assets/acc/a25-028/01.webp" alt="儿童套件彩卡"></div><figcaption><b>儿童套件彩卡</b><span>彩卡</span></figcaption></figure>
+        <figure class="proof"><div class="paper"><img src="../../assets/acc/a25-002/01.webp" alt="枕套包装"></div><figcaption><b>枕套包装</b><span>包装</span></figcaption></figure>
+        <figure class="proof wide"><div class="paper"><img src="../../assets/craft/cert.webp" alt="Intertek 认证"></div><figcaption><b>Intertek 认证</b><span>检测报告</span></figcaption></figure>
+        <figure class="proof"><div class="paper"><img src="../../assets/acc/a25-065/01.webp" alt="水洗标"></div><figcaption><b>水洗标</b><span>洗标</span></figcaption></figure>
+        <figure class="proof"><div class="paper"><img src="../../assets/acc/a03-p2.webp" alt="纸盒刀版"></div><figcaption><b>纸盒刀版</b><span>结构</span></figcaption></figure>
+      </div>
+      <div class="foot"><span>现有素材示意</span><span>待补：水洗标 / 更多彩卡</span></div>
+    </div>
+  </section>
+
+  <section class="panel" data-panel="2" aria-label="方向二 包装货架">
+    <div class="shelf-head"><h2>Packaging shelf</h2><span>包装作为产品陈列</span></div>
+    <div class="shelf">
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/craft/giftbox.webp" alt="电热毯礼盒"></div><div class="cap"><b>电热毯礼盒</b><span>GOGREEN · 礼盒</span></div></div>
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/acc/a25-013/01.webp" alt="床垫保护垫包装"></div><div class="cap"><b>床垫保护垫</b><span>GOGREEN · 包装</span></div></div>
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/acc/a25-002/01.webp" alt="枕套包装"></div><div class="cap"><b>防水枕套</b><span>GOGREEN · 包装</span></div></div>
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/acc/a25-006/01.webp" alt="枕头包装"></div><div class="cap"><b>枕头包装</b><span>GOGREEN · 包装</span></div></div>
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/acc/a25-032/01.webp" alt="绗缝被彩卡"></div><div class="cap"><b>绗缝被彩卡</b><span>GOGREEN · 彩卡</span></div></div>
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/acc/a25-021/01.webp" alt="绗缝被彩卡"></div><div class="cap"><b>Quilt Set 彩卡</b><span>GOGREEN · 彩卡</span></div></div>
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/acc/a25-048/01.webp" alt="规格页"></div><div class="cap"><b>规格页</b><span>GOGREEN · 印刷</span></div></div>
+      <div class="pack" style="--accent:#439b44"><div class="ph"><img src="../../assets/acc/a25-065/01.webp" alt="水洗标"></div><div class="cap"><b>水洗标</b><span>GOGREEN · 洗标</span></div></div>
+    </div>
+    <p class="shelf-note">像货架一样把包装当产品看：先看正面，再看品牌色和品类。</p>
+  </section>
+
+  <section class="panel" data-panel="3" aria-label="方向三 样本板">
+    <div class="board">
+      <div class="board-head"><b>辅料样本板 / SPECIMEN BOARD</b><span>8 件示意</span></div>
+      <div class="board-grid">
+        <figure class="pin a"><img src="../../assets/craft/giftbox.webp" alt="电热毯礼盒"><figcaption><b>礼盒</b><span>结构</span></figcaption></figure>
+        <figure class="pin b"><img src="../../assets/craft/cert.webp" alt="认证"><figcaption><b>认证</b><span>纸张</span></figcaption></figure>
+        <figure class="pin dark c"><img src="../../assets/acc/a25-048/01.webp" alt="规格页"><figcaption><b>规格页</b><span>印刷</span></figcaption></figure>
+        <figure class="pin d"><img src="../../assets/acc/a25-065/01.webp" alt="水洗标"><figcaption><b>水洗标</b><span>织标</span></figcaption></figure>
+        <figure class="pin e"><img src="../../assets/acc/a25-021/01.webp" alt="彩卡"><figcaption><b>彩卡</b><span>印刷</span></figcaption></figure>
+        <figure class="pin f"><img src="../../assets/acc/a03-p2.webp" alt="刀版"><figcaption><b>刀版</b><span>结构</span></figcaption></figure>
+        <figure class="pin g"><img src="../../assets/acc/a25-002/01.webp" alt="枕套包装"><figcaption><b>枕套包装</b><span>包装</span></figcaption></figure>
+        <figure class="pin h"><img src="../../assets/acc/a25-028/01.webp" alt="儿童套件彩卡"><figcaption><b>儿童套件彩卡</b><span>彩卡</span></figcaption></figure>
+      </div>
+      <p class="quote">辅料不是配图，<br>是产品的一部分。</p>
+    </div>
+  </section>
+</div>
+
+<nav class="picker" aria-label="切换方向">
+  <button type="button" data-v="1" aria-pressed="true">01 纸样台</button>
+  <button type="button" data-v="2" aria-pressed="false">02 货架</button>
+  <button type="button" data-v="3" aria-pressed="false">03 样本板</button>
+  <span class="hint">按 1 / 2 / 3 切换</span>
+</nav>
+
+<script>
+(function(){
+  var titles={"1":"方向 01 · 纸样台","2":"方向 02 · 包装货架","3":"方向 03 · 样本板"};
+  var buttons=[].slice.call(document.querySelectorAll("[data-v]"));
+  function show(v){
+    v=String(v);
+    document.querySelectorAll("[data-panel]").forEach(function(p){p.classList.toggle("on",p.dataset.panel===v)});
+    buttons.forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===v))});
+    document.getElementById("switchNote").textContent=titles[v]||titles["1"];
+    var url=new URL(location.href);url.searchParams.set("v",v);history.replaceState(null,"",url);
+  }
+  buttons.forEach(function(b){b.addEventListener("click",function(){show(b.dataset.v)})});
+  addEventListener("keydown",function(e){
+    if(e.key==="1"||e.key==="2"||e.key==="3")show(e.key);
+    if(e.key==="ArrowRight"||e.key==="ArrowLeft"){
+      var cur=Number(new URL(location.href).searchParams.get("v")||1);
+      var next=e.key==="ArrowRight"?cur+1:cur-1;
+      if(next<1)next=3;if(next>3)next=1;show(next);
+    }
+  });
+  show(new URL(location.href).searchParams.get("v")||"1");
+})();
+</script>
+</body>
+</html>

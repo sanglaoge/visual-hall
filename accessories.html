@@ -48,7 +48,7 @@
 <script>
 (function () {
   var W = window.WORKS || {};
-  var data = W.acc || [];
+  var data = (W.acc || []).filter(function (a) { return a.kind !== "三视图"; });
   var currentBrand = "全部", currentKind = "全部";
 
   document.getElementById("counts").innerHTML =

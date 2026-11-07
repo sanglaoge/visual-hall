@@ -53,7 +53,7 @@
 
   var vids = (W.videos || []).filter(function (v) { return p.videos.indexOf(v.id) > -1; });
   var ugc = (W.ugc || []).filter(function (u) { return p.ugc.indexOf(u.id) > -1; });
-  var acc = (W.acc || []).filter(function (a) { return p.acc.indexOf(a.id) > -1; });
+  var acc = (W.acc || []).filter(function (a) { return p.acc.indexOf(a.id) > -1 && a.kind !== "三视图"; });
   var shots = p.sets.reduce(function (a, s) { return a + s.count; }, 0);
 
   var meta = [];

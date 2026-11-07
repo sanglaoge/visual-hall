@@ -126,6 +126,7 @@
 </div>
 
 <script src="assets/data/works.js"></script>
+<script src="assets/data/gogreen-selection.js"></script>
 <script src="assets/gallery.js"></script>
 <script>
 (function () {
@@ -133,15 +134,42 @@
   var brands = W.brands || [];
   var hero = W.hero || [];
   var s = W.stats || {};
+  var SEL = window.GOGREEN_SELECTION || null;
+  function filteredSets(b) {
+    if (b.key === "own") return [];
+    if (b.key !== "gogreen" || !SEL) return b.sets || [];
+    return (b.sets || []).filter(function (set) {
+      if (set.id === "a25-116" || set.id === "a25-117") return false;
+      var ex = SEL.sets && SEL.sets[set.id] ? (SEL.sets[set.id].exclude || []) : [];
+      return set.images.some(function (_, i) { return ex.indexOf(i) === -1; });
+    });
+  }
+  function keptCount(set) {
+    if (!SEL || !SEL.sets || !SEL.sets[set.id]) return set.count;
+    return set.images.length - (SEL.sets[set.id].exclude || []).length;
+  }
+  function bStats(b) {
+    if (b.key === "own") return { sets: b.count, images: b.images };
+    var ss = filteredSets(b);
+    return { sets: ss.length, images: ss.reduce(function (a, set) { return a + keptCount(set); }, 0) };
+  }
+  var stats = brands.map(bStats);
+  var totalSets = stats.reduce(function (a, x) { return a + x.sets; }, 0);
+  var totalImages = stats.reduce(function (a, x) { return a + x.images; }, 0);
 
   document.getElementById("bCount").textContent = brands.length + " 个品牌 / 年份";
   document.getElementById("counts").innerHTML =
-    "<span><b>" + (s.sets || 0) + "</b> 套主图</span>" +
-    "<span><b>" + (s.images || 0) + "</b> 张</span>" +
-    "<span><b>" + (s.acc || 0) + "</b> 份辅料</span>";
+    "<span><b>" + totalSets + "</b> 套主图</span>" +
+    "<span><b>" + totalImages + "</b> 张</span>" +
+    "<span><b>" + (W.acc || []).filter(function (a) { return a.kind !== "三视图"; }).length + "</b> 份辅料</span>";
 
-  document.getElementById("brands").innerHTML = brands.map(function (b) {
-    var cs = (b.categories || []).map(function (c) { return c.name + " " + c.count; });
+  document.getElementById("brands").innerHTML = brands.map(function (b, bi) {
+    var bs = stats[bi];
+    var fs = filteredSets(b);
+    var cs = (b.categories || []).map(function (c) {
+      var n = b.key === "own" ? c.count : fs.filter(function (set) { return set.cat === c.name; }).length;
+      return c.name + " " + n;
+    });
     var cats = cs.slice(0, 4).join(" · ") + (cs.length > 4 ? " · 另 " + (cs.length - 4) + " 类" : "");
     return '<a class="bcard" href="brand.html?b=' + b.key + '">' +
       '<div class="ph"><img src="' + b.cover + '" alt="' + b.name + '" loading="lazy"></div>' +
@@ -149,7 +177,7 @@
       '<span class="go">进入 →</span>' +
       '<span class="txt"><span class="yr">' + (b.year || "") + (b.year === 2025 ? " · 品牌线" : " · 新品") + '</span>' +
       '<h2>' + b.name + '</h2>' +
-      '<span class="num">' + b.count + ' 套 · ' + b.images + ' 张</span>' +
+      '<span class="num">' + bs.sets + ' 套 · ' + bs.images + ' 张</span>' +
       '<span class="cats">' + cats + '</span></span></a>';
   }).join("");
 

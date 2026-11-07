@@ -7,6 +7,7 @@
 - 2026-10-30 从 `~/valve/热点日报/产品展示站/` 搬出独立建库（原名产品展示站，同日定名视觉厅）
 - 2026-11-02 改成「产品优先」结构：总览（随机主图 + 产品分类）→ 产品页（主图整套 + 视频 + 买家秀 + 辅料），另设视频/辅料/买家秀三个专项页；Kingrest 站降为延伸阅读
 - 2026-11-06 改「品牌优先」：全部作品 → GOGREEN / HITIME / KINGREST / 2026 新品 → 品类 → 套图；新增 `brand.html`，`library.html` 改为品牌墙
+- 2026-11-07 v3 改造（副本 `wip/2026-11-07-v3`）：品牌入口、纸样台包装、品牌页分组、动效库本地化、首屏/封面缩图
 - 溯源：源于日报 2026-10-14 发现的 scroll-craft skill；首个成品是 Kingrest 家纺品牌站
 - 进度、决策、待办统一记在 `index.md`
 
@@ -22,6 +23,7 @@
 | `videos.html` `accessories.html` `ugc.html` | 三个专项页 |
 | `rooms/` | 旧四厅页面，已被上面替代（待删） |
 | `builds/` | 深度案例（当前 `kingrest-showcase/`，scroll-craft 独立站） |
+| `prototypes/` `assets/vendor/` `assets/covers/` `assets/orbit-card/` `assets/covers-clean/` `assets/brand-logos/` | v3 方向稿、自托管动效库、列表封面 700px、首屏卡 640px、无文案封面、品牌 LOGO |
 | `assets/` | 站点产物：`main/` `video/` `ugc/` `acc/` `orbit/` + `data/works.js`（brands / sets2025 / products / acc）+ 共用 `gallery.css/js` + `scrollcraft.css/js`（引擎，勿按项目改） |
 | `scripts/build-gallery.py` | 源素材 → 上站产物，幂等可重跑；⚠️ 旧目录路径，待重写 |
 | `scripts/manifest.py` | 读 `assets/data/works.js` 生成 `作品清单.md` |
@@ -36,6 +38,7 @@
 ## 常用命令
 
 - 本地预览：`node ~/.zcode/skills/scroll-craft/scripts/serve.mjs --root . --port 4500`
+- v3 副本预览：同上，端口换 `4501`（当前副本服务已跑在 4501）
 - 重新生成作品清单：`python3 scripts/manifest.py`（读 `assets/data/works.js`）
 - 重新生成素材与数据：`python3 scripts/build-gallery.py`（⚠️ 旧目录路径，待按年度结构重写）
 - 发布：`git commit + push` → GitHub Pages 自动部署（约 1 分钟生效）
@@ -50,7 +53,7 @@
 
 - 单文件 < 100MB（硬限）｜整站 < 1GB｜月流量 100GB（软限）
 - 视频按桑老哥口径控制：每条几十秒、几十 MB，只放几条；超限的改外链嵌入
-- 当前实测：站点资产约 443MB（主图 293 / 首屏 78 / 视频 59 / 辅料 6），单文件最大 24MB（视频 v03）
+- 当前实测：站点资产约 457MB（主图 293 / 首屏 78 / 视频 59 / 辅料 6 + v3 缩图/选图约 14），单文件最大 24MB（视频 v03）
 - 图片长边 1200px webp q80；首屏 orbit 1600px webp q86；视频 1280 内 H.264 CRF27（脚本已固化）
 
 ## 工作流
@@ -64,6 +67,7 @@
 
 - `main` 分支 + `v2-master` tag = 当前母版，不再直接改
 - 上一版：`v1-master`（2026-11-02，产品优先）
+- 当前副本：`/Users/sanglaoge/valve/视觉厅-优化`，分支 `wip/2026-11-07-v3`
 - 后续改版：新建 `wip/日期-主题` 分支或独立 worktree 副本，改完合回 `main` 再发布
 - 新增素材先补源目录，再跑脚本；母版只做紧急修复，日常实验都在副本
 

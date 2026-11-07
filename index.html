@@ -9,7 +9,7 @@
 <script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500&family=Playfair+Display:wght@500;600;700&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/scrollcraft.css">
 <style>
   :root {
@@ -19,8 +19,8 @@
     --sc-ink-soft:   rgba(16, 16, 20, .62);
     --sc-accent:     #d9a441;
     --sc-accent-ink: #171207;
-    --sc-font-display: "Playfair Display", "Songti SC", "Noto Serif SC", Georgia, serif;
-    --sc-font-text:    "Outfit", -apple-system, "PingFang SC", system-ui, sans-serif;
+    --sc-font-display: "Instrument Serif", "Songti SC", Georgia, serif;
+    --sc-font-text:    "Archivo", -apple-system, "PingFang SC", system-ui, sans-serif;
     --font-archivo:  "Archivo", system-ui, sans-serif;
     --font-mono:     "Geist Mono", ui-monospace, "SF Mono", monospace;
     --font-serifit:  "Instrument Serif", Georgia, serif;
@@ -295,6 +295,55 @@
   /* chapters: plain flow, hairline grid */
   .chap { padding: clamp(90px, 14vh, 170px) 0; }
   .wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
+
+  /* brand gate: editorial index */
+  .bgate { border-top: 1px solid var(--hair); }
+  .brow {
+    display: grid; grid-template-columns: 56px minmax(0, 1fr) minmax(200px, 280px) 38px;
+    gap: clamp(16px, 3vw, 36px); align-items: center;
+    padding: 26px 0; border-bottom: 1px solid var(--hair);
+    color: var(--sc-ink); text-decoration: none;
+  }
+  .brow .no { font: 400 10px/1 var(--font-mono); letter-spacing: .16em; color: var(--sc-ink-soft); }
+  .bmain { min-width: 0; }
+  .bname {
+    display: block; font: 600 clamp(2.2rem, 5.2vw, 4.7rem)/.9 var(--font-archivo);
+    letter-spacing: -.055em; white-space: nowrap;
+  }
+  .bname em {
+    font-family: var(--font-serifit); font-style: italic; font-weight: 400;
+    letter-spacing: -.02em; color: var(--sc-ink-soft);
+  }
+  .brow .meta {
+    display: block; margin-top: 14px; font: 500 10px/1.6 var(--font-mono);
+    letter-spacing: .08em; color: var(--sc-ink-soft);
+  }
+  .brow .thumb {
+    aspect-ratio: 16 / 10; overflow: hidden; background: var(--sc-surface);
+    border: 1px solid var(--hair);
+  }
+  .brow .thumb img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .8s cubic-bezier(.2, .7, .2, 1);
+  }
+  .brow .arrow { font-size: 22px; color: var(--accent); transition: transform .3s; }
+  .brow:hover .thumb img { transform: scale(1.05); }
+  .brow:hover .arrow { transform: translateX(5px); }
+  .brow.own { background: #171512; border-color: #171512; color: #f4f1ea; padding-inline: 22px; }
+  .brow.own .no, .brow.own .meta { color: rgba(244, 241, 234, .6); }
+  .brow.own .bname em { color: rgba(244, 241, 234, .6); }
+  .brow.own .thumb { border-color: rgba(255, 255, 255, .12); }
+  .bgate-more { margin: 22px 0 0; text-align: right; }
+  .bgate-more a {
+    font: 500 .7rem/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--sc-ink); text-decoration: none; border-bottom: 1px solid var(--hair); padding-bottom: 4px;
+  }
+  @media (max-width: 760px) {
+    .brow { grid-template-columns: 34px minmax(0, 1fr) 34px; gap: 14px; padding: 22px 0; }
+    .bname { font-size: clamp(2rem, 10vw, 3rem); }
+    .brow .thumb { grid-column: 1 / -1; grid-row: 2; }
+    .brow.own { padding: 22px 14px; }
+  }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
   .cell { background: var(--sc-canvas); }
   .gcell {
@@ -314,78 +363,53 @@
   .cell .lab > span { text-align: right; }
   @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
 
-  /* craft on kraft */
-  #craft {
+  /* craft: proof desk */
+  .paperdesk {
     background: #b3906b url("assets/texture-kraft.webp") center / 620px repeat;
     background-blend-mode: multiply;
-    --sc-canvas: #bb9772; --sc-ink: #241a10; --sc-ink-soft: #55432e;
-    --sc-surface: #faf4ea; --hair: rgba(36, 26, 16, .22); --edge: rgba(36, 26, 16, .32);
-    color: var(--sc-ink);
+    color: #241a10; padding: clamp(24px, 4vw, 46px);
   }
-  .craft-lead {
-    display: grid; grid-template-columns: 1.45fr 1fr;
-    gap: clamp(18px, 2.2vw, 28px); align-items: start;
-  }
-  .craft-piece { margin: 0; }
-  .craft-stack { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 28px); }
-  .piece-img {
-    display: grid; place-items: center; padding: clamp(10px, 1.3vw, 18px);
-    background: #f7f0e4;
-    border: 1px solid rgba(36, 26, 16, .2);
-    box-shadow: 0 24px 36px -28px rgba(36, 26, 16, .85), inset 0 0 0 1px rgba(255, 255, 255, .35);
-  }
-  .piece-img img { display: block; width: 100%; height: auto; }
-  .piece-cap {
-    display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
-    padding: 10px 2px 0; font: 400 .7rem/1.5 var(--font-mono);
-    letter-spacing: .04em; color: rgba(36, 26, 16, .68);
-  }
-  .piece-cap b { font: 600 .95rem/1.3 var(--font-archivo); letter-spacing: .01em; color: #241a10; }
-  .piece-cap span { text-align: right; }
-  .proof-head {
+  .desk-head {
     display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-    margin: clamp(42px, 6vh, 68px) 0 18px; padding-bottom: 11px;
-    border-bottom: 1px solid rgba(248, 241, 229, .38);
-    font: 400 .72rem/1 var(--font-mono); letter-spacing: .22em;
-    text-transform: uppercase; color: #f8f1e5;
+    border-bottom: 1px solid rgba(36, 26, 16, .32); padding-bottom: 12px;
+    margin-bottom: clamp(20px, 3vw, 32px);
+    font: 500 10px/1.3 var(--font-mono); letter-spacing: .16em; text-transform: uppercase;
   }
-  .proof-head a {
-    color: #f8f1e5; text-decoration: none;
-    border-bottom: 1px solid rgba(248, 241, 229, .45); padding-bottom: 3px;
-    transition: opacity .2s;
+  .desk-head b { font: 600 1.2rem/1.2 var(--font-archivo); letter-spacing: .01em; }
+  .desk-head a { color: #241a10; text-decoration: none; border-bottom: 1px solid rgba(36, 26, 16, .4); padding-bottom: 3px; }
+  .desk-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(12px, 1.8vw, 22px); }
+  .pd-card { grid-column: span 3; margin: 0; display: flex; flex-direction: column; }
+  .pd-card.big { grid-column: span 6; grid-row: span 2; }
+  .pd-card.wide { grid-column: span 6; }
+  .pd-card .paper {
+    display: grid; place-items: center; padding: clamp(8px, 1.2vw, 16px);
+    background: #fbf8f0; flex: 1; min-height: 160px;
+    box-shadow: 0 22px 34px -24px rgba(36, 26, 16, .95), inset 0 0 0 1px rgba(36, 26, 16, .08);
   }
-  .proof-head a:hover { opacity: .7; }
-  .proofs {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: clamp(18px, 2.4vw, 30px) clamp(14px, 2vw, 24px);
+  .pd-card.big .paper { min-height: 420px; }
+  .pd-card .paper img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+  .pd-card figcaption {
+    display: flex; justify-content: space-between; gap: 10px; padding: 9px 2px 0;
+    font: 400 .66rem/1.5 var(--font-mono); color: rgba(36, 26, 16, .7);
   }
-  .proof { margin: 0; }
-  .proof .paper {
-    aspect-ratio: 4 / 3; display: grid; place-items: center;
-    padding: clamp(10px, 1.2vw, 16px); background: #fbf8f0;
-    box-shadow: 0 22px 32px -26px rgba(36, 26, 16, .9), inset 0 0 0 1px rgba(36, 26, 16, .08);
-    transition: transform .35s var(--sc-ease-out), box-shadow .35s var(--sc-ease-out);
+  .pd-card figcaption b { font: 600 .82rem/1.3 var(--font-archivo); color: #241a10; }
+  .desk-foot {
+    margin-top: clamp(22px, 3vw, 34px); display: flex; justify-content: space-between; gap: 16px;
+    border-top: 1px solid rgba(36, 26, 16, .32); padding-top: 12px;
+    font: 400 .66rem/1.5 var(--font-mono); color: rgba(36, 26, 16, .65);
   }
-  .proof .paper img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; }
-  .proof:hover .paper {
-    transform: translateY(-4px);
-    box-shadow: 0 30px 44px -26px rgba(36, 26, 16, .95), inset 0 0 0 1px rgba(36, 26, 16, .08);
-  }
-  .proof figcaption {
-    display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
-    padding: 9px 2px 0; font: 400 .68rem/1.5 var(--font-mono);
-    letter-spacing: .04em; color: rgba(36, 26, 16, .62);
-  }
-  .proof figcaption b { font-weight: 500; letter-spacing: .02em; color: #241a10; }
   @media (max-width: 860px) {
-    .craft-lead { grid-template-columns: 1fr; }
-    .craft-stack { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
+    .pd-card { grid-column: span 6; }
+    .pd-card.big { grid-column: span 12; grid-row: auto; }
+    .pd-card.big .paper { min-height: 360px; }
+    .pd-card.wide { grid-column: span 12; }
   }
-  @media (max-width: 700px) {
-    .proofs { grid-template-columns: repeat(2, 1fr); }
-    .proof figcaption span { display: none; }
-    .craft-stack { grid-template-columns: 1fr; }
-    .piece-cap span, .proof figcaption span { text-align: right; }
+  @media (max-width: 600px) {
+    .paperdesk { padding: 18px; }
+    .pd-card, .pd-card.big, .pd-card.wide { grid-column: span 12; }
+    .pd-card .paper { min-height: 200px; }
+    .pd-card.big .paper { min-height: 320px; }
+    .pd-card figcaption span { text-align: right; }
   }
   .cell.wide { grid-column: span 2; }
   @media (max-width: 760px) { .cell.wide { grid-column: span 1; } }
@@ -484,9 +508,6 @@
     transition: opacity .25s;
   }
   .more-bar:hover { opacity: .88; }
-  #craft .sec-title { color: #f8f1e5; }
-  #craft .sec-title em { color: rgba(248,241,229,.72); }
-  #craft .meta-strip { color: rgba(248,241,229,.82); border-color: rgba(248,241,229,.34); }
   .hero-h1 em, .sec-title em { font-style: normal; }
   .cell .ph.contain img { max-height: min(54vh, 480px); width: auto; }
 </style>
@@ -503,6 +524,7 @@
     <span class="brand-sub">VISUAL HALL</span>
   </a>
   <nav class="tabs" aria-label="章节">
+    <button type="button" data-goto="brands">品牌</button>
     <button type="button" data-goto="collection">产品</button>
     <button type="button" data-goto="craft">辅料</button>
     <button type="button" data-goto="film">视频</button>
@@ -519,6 +541,7 @@
 <nav class="ruler" aria-label="Page progress"><div class="ind"></div><span class="pct" aria-hidden="true">000%</span></nav>
 
 <nav class="wordrail" aria-label="Chapters">
+  <button class="rail-word" type="button" data-chapter="brands">BRANDS</button>
   <button class="rail-word" type="button" data-chapter="collection">PRODUCTS</button>
   <button class="rail-word" type="button" data-chapter="craft">CRAFT</button>
   <button class="rail-word" type="button" data-chapter="film">FILMS</button>
@@ -553,7 +576,7 @@
         </button>
         <button class="cta cta-b" type="button" data-goto="film">看片子</button>
       </div>
-      <p class="hud-row" aria-hidden="true"><span>实拍 + AI 生图</span><span class="d">◆</span><span>2026</span><span class="d">◆</span><span>Kingrest / GOGREEN</span></p>
+      <p class="hud-row" aria-hidden="true"><span>实拍 + AI 生图</span><span class="d">◆</span><span>2026</span><span class="d">◆</span><span>GOGREEN / HITIME / KINGREST</span></p>
     </div>
   </section>
 
@@ -563,6 +586,43 @@
       <span class="t">电热毯</span><span class="d">◆</span><span class="t">兔毛毯</span><span class="d">◆</span><span class="t">绗缝被</span><span class="d">◆</span><span class="t">毛巾</span><span class="d">◆</span><span class="t">磨毛布床单套件</span><span class="d">◆</span><span class="t">圣诞系列</span><span class="d">◆</span><span class="t">万圣毯</span><span class="d">◆</span>
     </div>
   </div>
+
+  <!-- 2 · brands -->
+  <section class="chap" id="brands">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" data-spine>先看品牌，<em>再看作品。</em></h2>
+        <div class="meta-strip"><span>01 / 品牌</span><span>2025 品牌线&#160;&#160;·&#160;&#160;<em>2026 新品</em></span></div>
+      </div>
+      <div class="bgate" data-sc-in data-sc-stagger="60">
+        <a class="brow" href="brand.html?b=gogreen" style="--accent:#439b44">
+          <span class="no">01</span>
+          <span class="bmain"><span class="bname">GOGREEN</span><span class="meta">2025 · 品牌线 · 床单套件 / 被套 / 被盖</span></span>
+          <span class="thumb"><img src="assets/covers/a25-008.webp" alt="GOGREEN 床品" loading="lazy"></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="brow" href="brand.html?b=hitime" style="--accent:#c1492f">
+          <span class="no">02</span>
+          <span class="bmain"><span class="bname">HITIME</span><span class="meta">2025 · 品牌线 · 被套 / 床单 / 被盖</span></span>
+          <span class="thumb"><img src="assets/covers/a25-126.webp" alt="HITIME 床品" loading="lazy"></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="brow" href="brand.html?b=kingrest" style="--accent:#a9853f">
+          <span class="no">03</span>
+          <span class="bmain"><span class="bname">KINGREST</span><span class="meta">2025 · 品牌线 · 床单套件 / 被套 / 被盖</span></span>
+          <span class="thumb"><img src="assets/covers/a25-203.webp" alt="KINGREST 床品" loading="lazy"></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="brow own" href="brand.html?b=own" style="--accent:#d8b56a">
+          <span class="no">04</span>
+          <span class="bmain"><span class="bname">2026 <em>新品</em></span><span class="meta">2026 · 电热毯 / 兔毛毯 / 绗缝被 / 毛巾</span></span>
+          <span class="thumb"><img src="assets/orbit-card/m011.webp" alt="2026 新品" loading="lazy"></span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+      <p class="bgate-more"><a href="library.html">全部作品 · 按品牌浏览 →</a></p>
+    </div>
+  </section>
 
   <!-- method -->
   <section class="method" aria-label="制作方法">
@@ -581,7 +641,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>按品类，<em>慢慢看。</em></h2>
-        <div class="meta-strip"><span>01 / 产品</span><span>2026 全年&#160;&#160;·&#160;&#160;<em>按产品</em>分类</span></div>
+        <div class="meta-strip"><span>02 / 产品</span><span>2026 全年&#160;&#160;·&#160;&#160;<em>按产品</em>分类</span></div>
       </div>
       <div class="grid" data-sc-in data-sc-stagger="60">
         <div class="gcell"><span>新品系列</span><span>01</span></div>
@@ -602,63 +662,55 @@
     </div>
   </section>
 
-  <!-- 3 · craft on kraft -->
+  <!-- 3 · craft: paper desk -->
   <section class="chap" id="craft" style="padding-top: 0;">
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>包装和吊牌，<em>也是作品。</em></h2>
-        <div class="meta-strip"><span>02 / 辅料</span><span>实物 · 认证 · 印刷稿</span></div>
+        <div class="meta-strip"><span>03 / 辅料</span><span>实物 · 认证 · 印刷稿</span></div>
       </div>
 
-      <div class="craft-lead" data-sc-in data-sc-stagger="80">
-        <figure class="craft-piece craft-main">
-          <div class="piece-img"><img src="assets/craft/giftbox.webp" width="1600" height="1600" alt="电热毯礼盒与电热毯实物" loading="lazy"></div>
-          <figcaption class="piece-cap"><b>电热毯礼盒</b><span>实物 / 礼盒与数显控制器</span></figcaption>
-        </figure>
-        <div class="craft-stack">
-          <figure class="craft-piece">
-            <div class="piece-img"><img src="assets/craft/controller.webp" width="1600" height="1600" alt="数显控制器特写" loading="lazy"></div>
-            <figcaption class="piece-cap"><b>数显控制器</b><span>6 档调温 · 定时</span></figcaption>
+      <div class="paperdesk" data-sc-in data-sc-stagger="50">
+        <div class="desk-head">
+          <b>印刷稿 / PRINT PROOFS</b>
+          <a href="accessories.html">全部辅料 →</a>
+        </div>
+        <div class="desk-grid">
+          <figure class="pd-card big">
+            <div class="paper"><img src="assets/craft/giftbox.webp" alt="电热毯礼盒与数显控制器" loading="lazy"></div>
+            <figcaption><b>电热毯礼盒</b><span>礼盒 / 数显控制器</span></figcaption>
           </figure>
-          <figure class="craft-piece">
-            <div class="piece-img"><img src="assets/craft/cert.webp" width="1400" height="574" alt="Intertek 认证与检测报告" loading="lazy"></div>
-            <figcaption class="piece-cap"><b>认证</b><span>Intertek · ETL · FCC</span></figcaption>
+          <figure class="pd-card">
+            <div class="paper"><img src="assets/acc/a25-021/01.webp" alt="绗缝被彩卡" loading="lazy"></div>
+            <figcaption><b>绗缝被彩卡</b><span>彩卡</span></figcaption>
+          </figure>
+          <figure class="pd-card">
+            <div class="paper"><img src="assets/acc/a25-028/01.webp" alt="儿童套件彩卡" loading="lazy"></div>
+            <figcaption><b>儿童套件彩卡</b><span>彩卡</span></figcaption>
+          </figure>
+          <figure class="pd-card">
+            <div class="paper"><img src="assets/acc/a25-002/01.webp" alt="枕套包装" loading="lazy"></div>
+            <figcaption><b>枕套包装</b><span>包装</span></figcaption>
+          </figure>
+          <figure class="pd-card">
+            <div class="paper"><img src="assets/acc/a25-065/01.webp" alt="水洗标" loading="lazy"></div>
+            <figcaption><b>水洗标</b><span>洗标</span></figcaption>
+          </figure>
+          <figure class="pd-card wide">
+            <div class="paper"><img src="assets/craft/cert.webp" alt="Intertek 认证" loading="lazy"></div>
+            <figcaption><b>Intertek 认证</b><span>检测报告</span></figcaption>
+          </figure>
+          <figure class="pd-card">
+            <div class="paper"><img src="assets/craft/controller.webp" alt="数显控制器" loading="lazy"></div>
+            <figcaption><b>数显控制器</b><span>6 档调温 · 定时</span></figcaption>
+          </figure>
+          <figure class="pd-card">
+            <div class="paper"><img src="assets/acc/a03-p2.webp" alt="纸盒刀版" loading="lazy"></div>
+            <figcaption><b>纸盒刀版</b><span>结构</span></figcaption>
           </figure>
         </div>
+        <div class="desk-foot"><span>现有素材示意</span><span>水洗标 / 彩卡持续补</span></div>
       </div>
-
-      <div class="proof-head">
-        <span>印刷稿 / PRINT PROOFS</span>
-        <a href="accessories.html">全部辅料 →</a>
-      </div>
-      <div class="proofs" data-sc-in data-sc-stagger="60">
-        <figure class="proof">
-          <div class="paper"><img src="assets/acc/a06-p1.webp" width="1400" height="934" alt="绗缝被彩卡" loading="lazy"></div>
-          <figcaption><b>绗缝被彩卡</b><span>牛皮纸 · 3 个尺寸</span></figcaption>
-        </figure>
-        <figure class="proof">
-          <div class="paper"><img src="assets/acc/a05-p1.webp" width="1400" height="1003" alt="纯色四件套彩卡" loading="lazy"></div>
-          <figcaption><b>纯色四件套彩卡</b><span>5 色 · 4 个尺寸</span></figcaption>
-        </figure>
-        <figure class="proof">
-          <div class="paper"><img src="assets/acc/a04-p1.webp" width="1400" height="1074" alt="电热毯纸盒刀模展开图" loading="lazy"></div>
-          <figcaption><b>电热毯纸盒</b><span>刀模 · 330 × 160 × 330</span></figcaption>
-        </figure>
-        <figure class="proof">
-          <div class="paper"><img src="assets/acc/a03-p2.webp" width="1400" height="1516" alt="凉感被包装盒展开图" loading="lazy"></div>
-          <figcaption><b>凉感被包装盒</b><span>牛皮纸刀模</span></figcaption>
-        </figure>
-        <figure class="proof">
-          <div class="paper"><img src="assets/acc/a02-p1.webp" width="1400" height="2253" alt="兔毛毯塑料袋展开示意" loading="lazy"></div>
-          <figcaption><b>兔毛毯塑料袋</b><span>40 × 70 · 展开示意</span></figcaption>
-        </figure>
-        <figure class="proof">
-          <div class="paper"><img src="assets/acc/a01-p2.webp" width="1400" height="1516" alt="Bamboo 纸盒展开图" loading="lazy"></div>
-          <figcaption><b>Bamboo 纸盒</b><span>100% 竹纤维 · 刀模</span></figcaption>
-        </figure>
-      </div>
-
-      <p class="craft-note">水洗标、吊牌和更多彩卡还在整理，补上后再入册。</p>
     </div>
   </section>
 
@@ -667,7 +719,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>品牌片讲气氛，<em>产品片讲卖点。</em></h2>
-        <div class="meta-strip"><span>03 / 视频</span><span>品牌 3 条 · 产品 3 条</span></div>
+        <div class="meta-strip"><span>04 / 视频</span><span>品牌 3 条 · 产品 3 条</span></div>
       </div>
 
       <div class="lab-row"><span>品牌片 / BRAND FILMS</span><span>AI 生成 · 9:16 · 循环静音</span></div>
@@ -737,17 +789,17 @@
     <div class="close-plate" data-sc-in data-sc-stagger="70">
       <p class="close-mark">视觉厅</p>
       <p class="close-line">主图、视频、辅料、买家秀，未完待续……</p>
-      <p class="close-fine">© 2026 视觉厅 · Kingrest / GOGREEN</p>
+      <p class="close-fine">© 2026 视觉厅 · GOGREEN / HITIME / KINGREST</p>
     </div>
     <footer class="foot"><span>视觉厅</span><a href="library.html" style="color:inherit">全部作品 →</a><span>Updated 2026.11.06</span></footer>
   </section>
 
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/SplitText.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
 <script src="assets/scrollcraft.js"></script>
 <script>
 (function () {
@@ -902,7 +954,8 @@
       var b = document.createElement("button");
       b.type = "button"; b.className = "oc"; b.dataset.i = i;
       b.setAttribute("aria-label", img[1]);
-      b.innerHTML = '<span class="oc-in"><img src="' + img[0] + '" alt="" loading="' + (i < 8 ? "eager" : "lazy") + '" decoding="async"' + (i < 4 ? ' fetchpriority="high"' : "") + '></span>';
+      var cardSrc = img[0].indexOf("assets/orbit/") === 0 ? img[0].replace("assets/orbit/", "assets/orbit-card/") : img[0];
+      b.innerHTML = '<span class="oc-in"><img src="' + cardSrc + '" data-full="' + img[0] + '" alt="" loading="' + (i < 8 ? "eager" : "lazy") + '" decoding="async"' + (i < 4 ? ' fetchpriority="high"' : "") + '></span>';
       orbitEl.appendChild(b);
       cards.push({ el: b, arm: i % ARMS, slot: Math.floor(i / ARMS),
         jY: 0, j: 0, h: 0, hold: 0, hov: 0, boost: 0, x: CX, y: CY, w: 100, hh: 60 });
@@ -941,6 +994,8 @@
   orbitEl.addEventListener("click", function (e) {
     var b = e.target.closest(".oc"); if (!b) return;
     var i = +b.dataset.i;
+    var im = b.querySelector("img");
+    if (im && im.dataset.full && !im.src.endsWith(im.dataset.full)) im.src = im.dataset.full;
     if (boostCard === i) boostOn = !boostOn;
     else { boostCard = i; boostOn = true; }
   });
@@ -1051,7 +1106,7 @@
 
   /* word rail: rest (vertical at the ruler) --scrub--> active (horizontal top-right)
      --scrub--> past (weakened high stack, never over the active word) */
-  var chapterEls = ["collection", "craft", "film", "end"].map(function (id) { return document.getElementById(id); });
+  var chapterEls = ["brands", "collection", "craft", "film", "end"].map(function (id) { return document.getElementById(id); });
   var railWords = Array.prototype.slice.call(document.querySelectorAll(".rail-word"));
   function restVars() { return { rotate: 90, top: window.innerHeight * 0.42, right: -6, fontSize: "clamp(1.5rem,2.4vw,2.1rem)", opacity: 0, letterSpacing: ".02em" }; }
   function activeVars() { return { rotate: 0, top: 92, right: 16, fontSize: "clamp(2.2rem,4vw,3.5rem)", opacity: 1, letterSpacing: "-.01em" }; }

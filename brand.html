@@ -11,12 +11,31 @@
 <style>
   .b-head{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.72fr); gap:clamp(20px,4vw,48px); align-items:end;
     padding:clamp(36px,7vh,72px) 0 clamp(18px,3vh,28px); }
-  .b-head .cover{ aspect-ratio:4/3; overflow:hidden; background:var(--ink2); border:1px solid var(--line2); order:2; }
-  .b-head .cover img{ width:100%; height:100%; object-fit:cover; }
+  .b-head .cover{ position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--ink2); border:1px solid var(--line2); order:2; }
+  .b-head .cover img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:var(--ink2); opacity:0; transition:opacity .9s ease; }
+  .b-head .cover img.on{ opacity:1; }
+  .b-head .cover .dots{ position:absolute; right:12px; bottom:12px; z-index:2; display:flex; gap:6px; }
+  .b-head .cover .dot{ width:22px; height:3px; border:0; padding:0; background:rgba(255,255,255,.42); cursor:pointer; }
+  .b-head .cover .dot.on{ background:#fff; }
   .b-head h1{ font-size:clamp(40px,8vw,76px); font-weight:400; letter-spacing:.12em; line-height:1; }
   .b-head .lede{ margin-top:16px; color:var(--soft); font-size:14px; line-height:2; max-width:30em; }
   .cats{ display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
   @media (max-width:760px){ .b-head{ grid-template-columns:1fr; } .b-head .cover{ order:0; } }
+  #filters { top: 49px; }
+  section.group { scroll-margin-top: 120px; }
+  .group-head h2 { font-family: var(--sans); }
+  .group-head .num { font-family: var(--sans); }
+  .card .cap { align-items: flex-start; }
+  .card .cap-name { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .card .cap b { font-weight: 400; line-height: 1.35; overflow-wrap: anywhere; }
+  .card .cap i { font-style: normal; max-width: 17em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--sans); font-size: 10px; letter-spacing: .04em; color: var(--muted); }
+  .card .cap em { flex: none; white-space: nowrap; }
+  @media (max-width:640px){ .card .cap i { max-width: 11em; } }
+  .card.tall .media { aspect-ratio: 1 / 1; }
+  .card .media img { object-fit: contain; background: var(--ink2); }
+  .pcard .ph { aspect-ratio: 1 / 1; }
+  .pcard .ph img { object-fit: contain; background: var(--ink2); }
+  .filter-note { margin: 0 0 18px; font-family: var(--sans); font-size: 11px; letter-spacing: .06em; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -42,10 +61,12 @@
 </div>
 
 <script src="assets/data/works.js"></script>
+<script src="assets/data/gogreen-selection.js"></script>
 <script src="assets/gallery.js"></script>
 <script>
 (function () {
   var W = window.WORKS || {};
+  function thumb(src) { return src && src.indexOf("assets/orbit/") === 0 ? src.replace("assets/orbit/", "assets/covers/") : src; }
   var key = new URLSearchParams(location.search).get("b");
   var brand = (W.brands || []).find(function (b) { return b.key === key; });
   var body = document.getElementById("body");
@@ -61,23 +82,56 @@
   var isOwn = brand.key === "own";
   var cats = brand.categories || [];
   var accIds = brand.acc || [];
-  var acc = (W.acc || []).filter(function (a) { return accIds.indexOf(a.id) > -1; });
+  var acc = (W.acc || []).filter(function (a) { return accIds.indexOf(a.id) > -1 && a.kind !== "三视图"; });
+
+  var SELECTION = brand.key === "gogreen" && window.GOGREEN_SELECTION ? window.GOGREEN_SELECTION : null;
+  var HIDE_SETS = { "a25-116": 1, "a25-117": 1 };
+  var CLEAN_COVERS = {
+    "a25-013": 1, "a25-014": 1, "a25-016": 1, "a25-019": 1, "a25-020": 1,
+    "a25-118": 1, "a25-119": 1, "a25-120": 1, "a25-125": 1,
+    "a25-162": 1, "a25-163": 1, "a25-164": 1, "a25-165": 1, "a25-166": 1,
+    "a25-167": 1, "a25-168": 1, "a25-169": 1, "a25-170": 1, "a25-171": 1,
+    "a25-172": 1, "a25-173": 1, "a25-174": 1, "a25-175": 1, "a25-176": 1
+  };
+  var allSets = brand.sets || [];
+  function selected(s) { return SELECTION && SELECTION.sets ? SELECTION.sets[s.id] : null; }
+  function excluded(s) { var r = selected(s); return r && r.exclude ? r.exclude : []; }
+  function kept(s) { var ex = excluded(s); return s.images.filter(function (p, i) { return ex.indexOf(i) === -1; }); }
+  var sets = isOwn ? [] : allSets.filter(function (s) {
+    return !HIDE_SETS[s.id] && kept(s).length > 0;
+  });
+  var shownCount = isOwn ? brand.count : sets.length;
+  var shownImages = isOwn ? brand.images : sets.reduce(function (a, s) { return a + kept(s).length; }, 0);
+  var TEXT_COVERS = { "a25-118": 1, "a25-119": 1, "a25-120": 1, "a25-125": 1 };
+  function coverFor(s) {
+    if (TEXT_COVERS[s.id] && CLEAN_COVERS[s.id]) return "assets/covers-clean/" + s.id + ".webp";
+    var r = selected(s), ks = kept(s);
+    if (r && r.cover && ks.indexOf(r.cover) > -1) return r.cover;
+    if (ks.length && ks.indexOf(s.cover) === -1) return ks[0];
+    return CLEAN_COVERS[s.id] ? "assets/covers-clean/" + s.id + ".webp" : thumb(s.cover);
+  }
+  var heroImgs = SELECTION && SELECTION.hero && SELECTION.hero.length ? SELECTION.hero.slice(0, 4) : [brand.cover];
+  var heroHtml = '<div class="cover">' + heroImgs.map(function (p, i) {
+    return '<img src="' + p + '" alt="' + brand.name + ' ' + (i + 1) + '" class="' + (i === 0 ? "on" : "") + '">';
+  }).join("") + (heroImgs.length > 1 ? '<div class="dots">' + heroImgs.map(function (_, i) {
+    return '<button type="button" class="dot' + (i === 0 ? " on" : "") + '" data-dot="' + i + '" aria-label="第 ' + (i + 1) + ' 张"></button>';
+  }).join("") + '</div>' : "") + '</div>';
 
   var html = '<header class="b-head"><div>' +
     '<div class="eyebrow">' + (isOwn ? "2026 · 新品" : "2025 · 品牌线") + '</div>' +
     '<h1>' + brand.name + '</h1>' +
-    '<div class="p-meta"><span><b>' + brand.count + '</b> 套</span><span><b>' + brand.images + '</b> 张主图</span>' +
+    '<div class="p-meta"><span><b>' + shownCount + '</b> 套</span><span><b>' + shownImages + '</b> 张主图</span>' +
     (acc.length ? '<span><b>' + acc.length + '</b> 份辅料</span>' : '') + '</div>' +
     '<p class="lede">' + (isOwn
       ? '2026 年的新品与节日系列，按产品品类分。点进去看整套主图、视频、买家秀和辅料。'
       : '2025 年 ' + brand.name + ' 品牌，按品类分。点开任意一套看完整主图。') + '</p>' +
-    '</div><div class="cover"><img src="' + brand.cover + '" alt="' + brand.name + '"></div></header>';
+    '</div>' + heroHtml + '</header>';
 
   if (isOwn) {
     var products = (W.products || []).filter(function (p) { return (brand.products || []).indexOf(p.key) > -1; });
     html += '<div class="label"><h2>品类</h2><span>' + products.length + ' 个</span></div><div class="pgrid">';
     products.forEach(function (p) {
-      var cover = p.sets.length ? p.sets[0].cover : "";
+      var cover = p.sets.length ? thumb(p.sets[0].cover) : "";
       if (!cover && p.ugc.length) {
         var u = (W.ugc || []).find(function (x) { return x.id === p.ugc[0]; });
         cover = u ? u.src : "";
@@ -99,11 +153,15 @@
     });
     html += '</div>';
   } else {
-    html += '<div class="filters" id="filters"><button class="chip" data-cat="全部" aria-pressed="true">全部 ' + brand.count + '</button>' +
-      cats.map(function (c) {
-        return '<button class="chip" data-cat="' + c.name + '" aria-pressed="false">' + c.name + ' ' + c.count + '</button>';
+    html += '<div class="filters" id="filters"><button class="chip" data-cat="all" aria-pressed="true">全部 ' + sets.length + '</button>' +
+      cats.map(function (c, i) {
+        var n = sets.filter(function (s) { return s.cat === c.name; }).length;
+        return '<button class="chip" data-cat="' + i + '" aria-pressed="false">' + c.name + ' ' + n + '</button>';
       }).join("") + '</div>';
-    html += '<div class="grid tall" id="sets"></div>';
+    var hidden = allSets.length - sets.length;
+    if (hidden) html += '<p class="filter-note">' + hidden + ' 套暂不展示（功能图或全部标记不要）。</p>';
+    html += '<div id="setsTop"></div>';
+    html += '<div id="sets"></div>';
   }
 
   if (acc.length) {
@@ -119,28 +177,86 @@
 
   body.innerHTML = html;
 
+  var heroEl = document.querySelector(".b-head .cover");
+  var heroPics = heroEl ? Array.prototype.slice.call(heroEl.querySelectorAll("img")) : [];
+  if (heroPics.length > 1) {
+    var heroIdx = 0, heroTimer = null;
+    var dots = Array.prototype.slice.call(heroEl.querySelectorAll(".dot"));
+    function showHero(i) {
+      heroIdx = (i + heroPics.length) % heroPics.length;
+      heroPics.forEach(function (im, j) { im.classList.toggle("on", j === heroIdx); });
+      dots.forEach(function (d, j) { d.classList.toggle("on", j === heroIdx); });
+    }
+    function startHero() {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      stopHero();
+      heroTimer = setInterval(function () { showHero(heroIdx + 1); }, 5000);
+    }
+    function stopHero() { if (heroTimer) clearInterval(heroTimer); heroTimer = null; }
+    dots.forEach(function (d) { d.addEventListener("click", function () { showHero(Number(d.dataset.dot)); startHero(); }); });
+    heroEl.addEventListener("mouseenter", stopHero);
+    heroEl.addEventListener("mouseleave", startHero);
+    startHero();
+  }
+
   if (isOwn) return;
 
-  var current = "全部";
-  var sets = brand.sets || [];
-  function paint() {
-    document.getElementById("sets").innerHTML = sets.filter(function (s) {
-      return current === "全部" || s.cat === current;
-    }).map(function (s) {
-      return '<button class="card tall" data-images=\'' + JSON.stringify(s.images) +
-        '\' data-title="' + brand.name + " · " + s.sku + '">' +
-        '<span class="media"><img src="' + s.cover + '" alt="' + s.sku + '" loading="lazy"></span>' +
-        '<span class="cap">' + s.cat + ' · ' + s.sku + '<em>' + s.count + ' 张</em></span></button>';
-    }).join("");
+  function shortTitle(sku) {
+    var s = String(sku || "").replace(/^[0-9]+[-–—]/, "");
+    s = s.split("/")[0].trim();
+    s = s.replace(/[(（].*$/, "").trim();
+    s = s.replace(/[-–—]\d+套$/, "").trim();
+    return s || String(sku || "");
   }
+  function subTitle(sku) {
+    var s = String(sku || "");
+    var p = s.split("/");
+    if (p.length > 1) {
+      var sub = p.slice(1).join(" / ").trim();
+      return /^\d+$/.test(sub) ? "款式 " + sub : sub;
+    }
+    var m = s.match(/[（(](.+)$/);
+    return m ? m[1].replace(/[）)]$/, "").trim() : "";
+  }
+
+  function renderGroups(filter) {
+    var html = "";
+    cats.forEach(function (c, i) {
+      if (filter !== "all" && String(i) !== String(filter)) return;
+      var arr = sets.filter(function (s) { return s.cat === c.name; });
+      if (!arr.length) return;
+      html += '<section class="group" id="cat-' + i + '">' +
+        '<div class="group-head"><h2>' + c.name + '</h2><span class="num">' + arr.length + ' 套</span></div>' +
+        '<div class="grid tall">' +
+        arr.map(function (s) {
+          var st = shortTitle(s.sku), sub = subTitle(s.sku);
+          return '<button class="card tall" data-images=\'' + JSON.stringify(kept(s)) +
+            '\' data-title="' + brand.name + " · " + s.sku + '" aria-label="' + brand.name + " · " + s.sku + '">' +
+            '<span class="media"><img src="' + coverFor(s) + '" alt="' + s.sku + '" loading="lazy"></span>' +
+            '<span class="cap"><span class="cap-name"><b>' + st + '</b>' + (sub ? '<i>' + sub + '</i>' : '') + '</span><em>' + kept(s).length + ' 张</em></span></button>';
+        }).join("") +
+        '</div></section>';
+    });
+    document.getElementById("sets").innerHTML = html;
+  }
+
+  function goTo(hash) {
+    var el = document.querySelector(hash);
+    if (!el) return;
+    var y = el.getBoundingClientRect().top + scrollY - 112;
+    scrollTo({ top: Math.max(0, y), behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   document.getElementById("filters").addEventListener("click", function (e) {
     var b = e.target.closest(".chip");
     if (!b) return;
-    current = b.dataset.cat;
     this.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === b)); });
-    paint();
+    var v = b.dataset.cat;
+    if (v === "all") { renderGroups("all"); goTo("#setsTop"); }
+    else { renderGroups(v); goTo("#cat-" + v); }
   });
-  paint();
+  renderGroups("all");
 })();
 </script>
 </body>
