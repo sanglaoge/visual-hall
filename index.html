@@ -4,7 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>视觉厅 · 2026 电商视觉</title>
-<meta name="description" content="视觉厅：2026 年电商视觉作品，产品主图、主图视频、印刷辅料与买家秀。">
+<meta name="description" content="视觉厅：2026 年电商视觉作品，产品主图、主图视频、印刷辅料与场景。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="视觉厅">
+<meta property="og:title" content="视觉厅 · 2026 电商视觉">
+<meta property="og:description" content="产品主图、视频、辅料与场景，按品牌看完整的电商视觉产出。">
+<meta property="og:image" content="https://sanglaoge.github.io/visual-hall/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://sanglaoge.github.io/visual-hall/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f2f1ee'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23101014' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,6 +102,24 @@
   html[data-theme="dark"] .theme-btn .i-sun { display: none; }
   html[data-theme="dark"] .theme-btn .i-moon { display: block; }
   @media (max-width: 899px) { .tabs { display: none; } }
+  .mobile-tabs { display: none; }
+  @media (max-width: 899px) {
+    .mobile-tabs {
+      display: flex; position: sticky; top: 48px; z-index: 45;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      background: color-mix(in oklab, var(--sc-canvas) 96%, transparent);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--hair);
+    }
+    .mobile-tabs button {
+      flex: 0 0 auto; border: 0; background: none; padding: 12px 14px;
+      font: 500 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sc-ink-soft); white-space: nowrap; cursor: pointer;
+    }
+    .mobile-tabs button:active { background: var(--sc-ink); color: var(--sc-canvas); }
+    .ruler { display: none; }
+  }
+  @media (max-width: 700px) { .hud-row { display: none; } }
 
   /* theme-aware logos: JS swaps src on toggle (syncThemeImgs) */
 
@@ -295,7 +322,7 @@
   /* chapters: plain flow, hairline grid */
   section[id] { scroll-margin-top: 64px; }
   html { scroll-padding-top: 64px; }
-  @media (max-width: 899px) { section[id] { scroll-margin-top: 56px; } html { scroll-padding-top: 56px; } }
+  @media (max-width: 899px) { section[id] { scroll-margin-top: 96px; } html { scroll-padding-top: 96px; } }
   .chap { padding: clamp(90px, 14vh, 170px) 0; }
   .wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
 
@@ -544,7 +571,10 @@
 
   @media (max-width: 900px) {
     .screening { grid-template-columns: 1fr; }
-    .screen-main { height: min(78vh, 620px); }
+    .screen-main { height: min(64vh, 560px); }
+    .playlist { display: flex; gap: 8px; overflow-x: auto; border-top: 0; padding: 10px 0 2px; scroll-snap-type: x proximity; }
+    .playlist-item { flex: 0 0 232px; grid-template-columns: 56px minmax(0,1fr); gap: 8px; padding: 6px; border: 1px solid var(--hair); scroll-snap-align: start; }
+    .pi-no { display: none; }
     .twocut { grid-template-columns: 1fr; }
     .cut.portrait { max-width: none; }
     .cut.portrait video { max-height: 560px; }
@@ -617,6 +647,15 @@
     </button>
   </div>
 </header>
+
+<nav class="mobile-tabs" aria-label="章节（手机）">
+  <button type="button" data-goto="brands">品牌</button>
+  <button type="button" data-goto="collection">产品</button>
+  <button type="button" data-goto="craft">辅料</button>
+  <button type="button" data-goto="film">视频</button>
+  <button type="button" data-goto="ugc">场景</button>
+  <button type="button" data-goto="process">流程</button>
+</nav>
 
 <nav class="ruler" aria-label="Page progress"><div class="ind"></div><span class="pct" aria-hidden="true">000%</span></nav>
 
@@ -711,7 +750,7 @@
         <div class="method-intro"><span>METHOD</span><b>怎么做的</b></div>
         <div class="method-item"><span class="m-no">01</span><h3>手机实拍</h3><p>实物、面料、控制器先拍清楚，留住真实纹理与细节。</p></div>
         <div class="method-item"><span class="m-no">02</span><h3>AI 生图</h3><p>Lovart 的 nano banana、GPT Image 2 系列模型补光、换景、搭氛围。</p></div>
-        <div class="method-item"><span class="m-no">03</span><h3>排版成稿</h3><p>按平台规格排版，主图、辅料、视频、买家秀成一套。</p></div>
+        <div class="method-item"><span class="m-no">03</span><h3>排版成稿</h3><p>按平台规格排版，主图、辅料、视频、场景成一套。</p></div>
       </div>
     </div>
   </section>
@@ -917,7 +956,7 @@
   <section class="close-sec" id="end">
     <div class="close-plate" data-sc-in data-sc-stagger="70">
       <p class="close-mark">视觉厅</p>
-      <p class="close-line">主图、视频、辅料、买家秀，未完待续……</p>
+      <p class="close-line">主图、视频、辅料、场景，未完待续……</p>
       <p class="close-fine">© 2026 视觉厅 · GOGREEN / HITIME / KINGREST</p>
     </div>
     <footer class="foot"><span>视觉厅</span><a href="library.html" style="color:inherit">全部作品 →</a><span>Updated 2026.11.08</span></footer>
@@ -946,9 +985,15 @@
     }
   }
   function scrollToEl(el) {
-    var off = innerWidth <= 899 ? 56 : 64;
+    var off = innerWidth <= 899 ? 96 : 64;
     var top = el.getBoundingClientRect().top + (window.scrollY || 0) - off;
-    if (lenis) lenis.scrollTo(top);
+    if (innerWidth <= 899) {
+      var html = document.documentElement, oldBehavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = "auto";
+      window.scrollTo(0, Math.max(0, top));
+      html.style.scrollBehavior = oldBehavior;
+      if (lenis) lenis.scrollTo(top, { immediate: true });
+    } else if (lenis) lenis.scrollTo(top);
     else window.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" });
   }
 

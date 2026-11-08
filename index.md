@@ -17,15 +17,17 @@
 
 | 项 | 状态 |
 |---|---|
-| 首页 | 🚧 品牌入口（编辑部索引）+ 纸样台包装 + 方法条已接入；视频 / 买家秀 / 流程待做 |
+| 首页 | ✅ 品牌入口、纸样台、视频放映室、场景接触印相、流程六工位 |
 | 品牌页 | ✅ 品类分组 + 吸顶筛选 + 短标题 + 干净封面；GOGREEN 78/685、HITIME 34/270、KINGREST 18/149；全站 209 套 / 1755 张 |
 | 选图工作台 | `review/brand.html?b=...` 三品牌通用；GOGREEN / HITIME / KINGREST 结果已应用 |
 | 审计 | ✅ `design-taste-frontend` 3.1/5；P0 5 项，报告 `review/audit-v3.md` |
 | P1 首批 | ✅ CTA→品牌门、品牌入口 LOGO+数量、辅料跳转、按品牌浏览；wordrail 隐藏、品牌页字体/LOGO/短标题 |
-| 首页三章 | ✅ 视频放映室、场景接触印相、流程六工位已接入；before/after 待实拍 |
+| 首页三章 | ✅ 视频放映室、场景接触印相、流程六工位；before/after 不做（无同角度原图） |
 | 性能 | ✅ 动效库本地化；orbit-card 640px；covers 700px；字体 3 家族（Google Fonts 仍外链） |
 | 原型 | `prototypes/brand-gate/`、`prototypes/packaging/` |
-| 发布 | ✅ 副本已提交并推送 `wip/2026-11-07-v3`；未合并、未发布 |
+| 手机端 | ✅ 390：章节导航、视频片单横向、ruler 隐藏、无横向溢出 |
+| 分享 | ✅ OG 分享卡 1200×630，6 个主页面已加 meta |
+| 发布 | ⏸ 待合并 `main` |
 
 ## 展厅结构
 

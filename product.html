@@ -16,7 +16,7 @@
     <a href="./">总览</a>
     <a href="videos.html">视频</a>
     <a href="accessories.html">辅料</a>
-    <a href="ugc.html">买家秀</a>
+    <a href="ugc.html">场景</a>
   </nav>
 </div>
 
@@ -60,7 +60,7 @@
   if (p.sets.length) meta.push("<b>" + p.sets.length + "</b> 套主图");
   if (shots) meta.push("<b>" + shots + "</b> 张");
   if (vids.length) meta.push("<b>" + vids.length + "</b> 条视频");
-  if (ugc.length) meta.push("<b>" + ugc.length + "</b> 张买家秀");
+  if (ugc.length) meta.push("<b>" + ugc.length + "</b> 张场景");
   if (acc.length) meta.push("<b>" + acc.length + "</b> 份辅料");
 
   var html = '<header class="p-head"><div>' +
@@ -92,7 +92,7 @@
   }
 
   if (ugc.length) {
-    html += '<div class="label"><h2>买家秀</h2><span>' + ugc.length + ' 张</span></div><div class="masonry">';
+    html += '<div class="label"><h2>场景</h2><span>' + ugc.length + ' 张</span></div><div class="masonry">';
     ugc.forEach(function (u) {
       html += '<button class="m-item" data-image="' + u.src + '" data-title="' + u.title + '">' +
         '<img src="' + u.src + '" alt="' + u.title + '" loading="lazy">' +

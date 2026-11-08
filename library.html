@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>全部作品 · 视觉厅</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="视觉厅">
+<meta property="og:title" content="全部作品 · 视觉厅">
+<meta property="og:description" content="GOGREEN / HITIME / KINGREST 与 2026 新品，209 套主图与 71 份辅料。">
+<meta property="og:image" content="https://sanglaoge.github.io/visual-hall/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://sanglaoge.github.io/visual-hall/library.html">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230f0f11'/%3E%3Cpath d='M16 20l16 26 16-26' stroke='%23f4f1ea' stroke-width='4' fill='none' stroke-linejoin='round'/%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("vh-theme");document.documentElement.setAttribute("data-theme",t||"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
 <link rel="stylesheet" href="assets/gallery.css">
@@ -71,7 +80,7 @@
     <a href="library.html" aria-current="page">全部作品</a>
     <a href="videos.html">视频</a>
     <a href="accessories.html">辅料</a>
-    <a href="ugc.html">买家秀</a>
+    <a href="ugc.html">场景</a>
   </nav>
 </div>
 
@@ -112,9 +121,9 @@
       <span class="tt"><b>辅料</b><span>包装盒 · 彩卡 · 贴纸 · 洗标</span></span>
     </a>
     <a class="tile" href="ugc.html">
-      <img src="assets/ugc/006.webp" alt="买家秀" loading="lazy">
+      <img src="assets/ugc/006.webp" alt="场景" loading="lazy">
       <span class="tv"></span>
-      <span class="tt"><b>买家秀</b><span>生活场景 · 面料特写</span></span>
+      <span class="tt"><b>场景</b><span>AI 场景合成 · 面料微距</span></span>
     </a>
   </div>
 
@@ -196,6 +205,7 @@
   var A = document.getElementById("stageA"), B = document.getElementById("stageB");
   var cap = document.getElementById("stageCap"), dots = document.getElementById("dots");
   var layers = [A, B], cur = 0, idx = Math.floor(Math.random() * hero.length);
+  A.src = hero[0]; B.src = hero[0];
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   dots.innerHTML = hero.slice(0, 5).map(function () { return "<i></i>"; }).join("");
