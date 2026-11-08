@@ -117,7 +117,6 @@
       color: var(--sc-ink-soft); white-space: nowrap; cursor: pointer;
     }
     .mobile-tabs button:active { background: var(--sc-ink); color: var(--sc-canvas); }
-    .ruler { display: none; }
   }
   @media (max-width: 700px) { .hud-row { display: none; } }
 
@@ -149,22 +148,23 @@
     font-variant-numeric: tabular-nums; color: var(--ruler-blue);
   }
   @media (max-width: 700px) { .ruler .num { display: none; } }
+  @media (max-width: 600px) { .ruler { display: none; } }
 
   /* the word rail: rest = vertical at the ruler edge, flight = scrubbed with
      the chapter, active = horizontal top-right, past = weakened high stack.
      The bg-coloured text stroke keeps words readable over photos. */
-  .wordrail { display: none; position: fixed; inset: 0; z-index: 35; pointer-events: none; }
+  .wordrail { position: fixed; inset: 0; z-index: 35; pointer-events: none; }
   .rail-word {
     position: absolute; top: 34vh; right: 4px; pointer-events: auto; cursor: pointer;
     background: none; border: 0; padding: 3px 2px; white-space: nowrap;
     font-family: var(--font-archivo); font-weight: 600; text-transform: uppercase;
     line-height: 1; color: var(--sc-ink);
-    -webkit-text-stroke: 2px var(--sc-canvas); paint-order: stroke fill;
+    -webkit-text-stroke: 4px var(--sc-canvas); paint-order: stroke fill;
     transition: color .4s var(--sc-ease-out);
   }
   .rail-word .sp-ch { display: inline-block; will-change: transform, opacity; }
   .rail-word:focus-visible { outline: 1px solid var(--sc-accent); outline-offset: 4px; }
-  @media (max-width: 899px) { .wordrail { display: none; } }
+  @media (max-width: 600px) { .wordrail { display: none; } }
 
   /* chapter titles (mobile / in-flow): sentence case display, serif-italic
      tail, one distinct claim per chapter */
@@ -294,31 +294,6 @@
   @keyframes tick { to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
 
-  /* method */
-  .method { border-bottom: 1px solid var(--hair); }
-  .method-grid { display: grid; grid-template-columns: .8fr 1fr 1fr 1fr; }
-  .method-intro {
-    display: flex; flex-direction: column; justify-content: center; gap: 8px;
-    padding: clamp(26px, 4.6vh, 46px) clamp(18px, 2.4vw, 30px) clamp(26px, 4.6vh, 46px) 0;
-    border-right: 1px solid var(--hair);
-  }
-  .method-intro span { font: 400 .62rem/1 var(--font-mono); letter-spacing: .22em; color: var(--ruler-blue); }
-  .method-intro b { font: 600 1.12rem/1.3 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
-  .method-item { padding: clamp(26px, 4.6vh, 46px) clamp(18px, 2.4vw, 30px); border-right: 1px solid var(--hair); }
-  .method-item:last-child { border-right: 0; }
-  .method-item .m-no { font: 400 .62rem/1 var(--font-mono); letter-spacing: .18em; color: var(--sc-ink-soft); }
-  .method-item h3 { margin: 10px 0 7px; font: 600 1rem/1.3 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
-  .method-item p { margin: 0; font-size: .82rem; line-height: 1.65; color: var(--sc-ink-soft); }
-  @media (max-width: 900px) {
-    .method-grid { grid-template-columns: 1fr 1fr; }
-    .method-intro { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--hair); padding-right: 0; }
-  }
-  @media (max-width: 600px) {
-    .method-grid { grid-template-columns: 1fr; }
-    .method-item { border-right: 0; border-bottom: 1px solid var(--hair); }
-    .method-item:last-child { border-bottom: 0; }
-  }
-
   /* chapters: plain flow, hairline grid */
   section[id] { scroll-margin-top: 64px; }
   html { scroll-padding-top: 64px; }
@@ -359,7 +334,7 @@
   }
   .brow.own .meta2 { color: rgba(244,241,234,.55); }
   .brow .thumb {
-    aspect-ratio: 16 / 10; overflow: hidden; background: var(--sc-surface);
+    aspect-ratio: 3 / 2; overflow: hidden; background: var(--sc-surface);
     border: 1px solid var(--hair);
   }
   .brow .thumb img {
@@ -523,29 +498,9 @@
   .lab-row:first-of-type { margin-top: 0; }
 
 
-  /* screening room */
-  .screening { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(280px, .8fr); gap: clamp(14px, 2.2vw, 26px); align-items: start; }
-  .screen-main { position: relative; height: clamp(420px, 68vh, 680px); background: #0a0a0c; border: 1px solid var(--hair); overflow: hidden; display: grid; place-items: center; }
-  .screen-main video { width: 100%; height: 100%; object-fit: contain; background: #0a0a0c; display: block; cursor: pointer; }
-  .screen-cap { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; color: #f4f1ea; background: linear-gradient(transparent, rgba(10,10,12,.8)); font: 400 .66rem/1.5 var(--font-mono); letter-spacing: .06em; }
-  .screen-cap b { font: 600 .86rem/1.4 var(--font-archivo); color: #fff; }
-  .playlist { display: grid; border-top: 1px solid var(--hair); }
-  .playlist-item { display: grid; grid-template-columns: 74px minmax(0,1fr) 28px; gap: 12px; align-items: center; padding: 8px 0; border: 0; border-bottom: 1px solid var(--hair); background: none; text-align: left; cursor: pointer; color: inherit; }
-  .pi-thumb { aspect-ratio: 1 / 1; overflow: hidden; background: var(--sc-surface); border: 1px solid var(--hair); }
-  .pi-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: .72; transition: opacity .3s; display: block; }
-  .playlist-item:hover .pi-thumb img, .playlist-item.on .pi-thumb img { opacity: 1; }
-  .pi-text { min-width: 0; }
-  .pi-text b { display: block; font: 600 .82rem/1.35 var(--font-archivo); letter-spacing: .01em; }
-  .pi-text i { display: block; margin-top: 3px; font: 400 .6rem/1.4 var(--font-mono); letter-spacing: .05em; color: var(--sc-ink-soft); font-style: normal; }
-  .pi-no { font: 400 .6rem/1 var(--font-mono); color: var(--sc-ink-soft); text-align: right; }
-  .playlist-item.on { background: var(--sc-surface); }
-  .playlist-item.on .pi-no { color: var(--sc-ink); }
-  .twocut { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(0,.75fr); gap: clamp(14px, 2.2vw, 26px); align-items: start; }
-  .cut { margin: 0; }
-  .cut .video-shell { position: relative; }
-  .cut video { width: 100%; height: auto; max-height: 360px; object-fit: cover; display: block; border-radius: 10px; border: 1px solid var(--hair); background: #0a0a0c; }
-  .cut.portrait { max-width: 340px; }
-  .cut.portrait video { aspect-ratio: 9 / 16; max-height: 420px; }
+  /* film rows */
+  .reel.brand { max-width: none; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  @media (max-width: 1100px) { .reel.brand { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
   /* scenes */
   .ugc-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; gap: 8px; }
@@ -570,14 +525,6 @@
   .process-tools span { color: var(--sc-ink); margin-right: 8px; }
 
   @media (max-width: 900px) {
-    .screening { grid-template-columns: 1fr; }
-    .screen-main { height: min(64vh, 560px); }
-    .playlist { display: flex; gap: 8px; overflow-x: auto; border-top: 0; padding: 10px 0 2px; scroll-snap-type: x proximity; }
-    .playlist-item { flex: 0 0 232px; grid-template-columns: 56px minmax(0,1fr); gap: 8px; padding: 6px; border: 1px solid var(--hair); scroll-snap-align: start; }
-    .pi-no { display: none; }
-    .twocut { grid-template-columns: 1fr; }
-    .cut.portrait { max-width: none; }
-    .cut.portrait video { max-height: 560px; }
     .ugc-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; }
     .process-line { grid-template-columns: repeat(2, 1fr); }
   }
@@ -743,18 +690,6 @@
     </div>
   </section>
 
-  <!-- method -->
-  <section class="method" aria-label="制作方法">
-    <div class="wrap">
-      <div class="method-grid">
-        <div class="method-intro"><span>METHOD</span><b>怎么做的</b></div>
-        <div class="method-item"><span class="m-no">01</span><h3>手机实拍</h3><p>实物、面料、控制器先拍清楚，留住真实纹理与细节。</p></div>
-        <div class="method-item"><span class="m-no">02</span><h3>AI 生图</h3><p>Lovart 的 nano banana、GPT Image 2 系列模型补光、换景、搭氛围。</p></div>
-        <div class="method-item"><span class="m-no">03</span><h3>排版成稿</h3><p>按平台规格排版，主图、辅料、视频、场景成一套。</p></div>
-      </div>
-    </div>
-  </section>
-
   <!-- 2 · collection -->
   <section class="chap" id="collection">
     <div class="wrap">
@@ -833,74 +768,75 @@
     </div>
   </section>
 
-  <!-- 4 · film: screening room -->
+  <!-- 4 · film: two rows -->
   <section class="chap" id="film" style="padding-top: 0;">
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>品牌片讲气氛，<em>产品片讲卖点。</em></h2>
-        <div class="meta-strip"><span>04 / 视频</span><span>8 条 · 竖版 5 / 横版 3</span></div>
+        <div class="meta-strip"><span>04 / 视频</span><span>8 条 · 横版 3 / 竖版 5</span></div>
       </div>
 
-      <div class="screening" data-sc-in data-sc-stagger="70">
-        <div class="screen-main">
-          <video id="mainFilm" src="assets/video/v03.mp4" poster="assets/video/v03.webp" width="720" height="1280" muted loop playsinline preload="metadata"></video>
-          <div class="screen-cap"><b id="mainTitle">兔毛毯场景</b><span id="mainMeta">AI 生成 · 9:16 · 0:47 · 循环静音</span></div>
-        </div>
-        <div class="playlist" id="playlist">
-          <button class="playlist-item on" type="button" data-src="assets/video/v03.mp4" data-poster="assets/video/v03.webp" data-title="兔毛毯场景" data-meta="AI 生成 · 9:16 · 0:47">
-            <span class="pi-thumb"><img src="assets/video/v03.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>兔毛毯场景</b><i>AI 生成 · 9:16</i></span><span class="pi-no">01</span>
-          </button>
-          <button class="playlist-item" type="button" data-src="assets/video/v01.mp4" data-poster="assets/video/v01.webp" data-title="梦境" data-meta="AI 生成 · 9:16 · 0:19">
-            <span class="pi-thumb"><img src="assets/video/v01.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>梦境</b><i>AI 生成 · 9:16</i></span><span class="pi-no">02</span>
-          </button>
-          <button class="playlist-item" type="button" data-src="assets/video/v02.mp4" data-poster="assets/video/v02.webp" data-title="温暖居室" data-meta="AI 生成 · 9:16 · 0:46">
-            <span class="pi-thumb"><img src="assets/video/v02.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>温暖居室</b><i>AI 生成 · 9:16</i></span><span class="pi-no">03</span>
-          </button>
-          <button class="playlist-item" type="button" data-src="assets/video/v04.mp4" data-poster="assets/video/v04.webp" data-title="电热毯 · TikTok 竖版" data-meta="代码生成 · 9:16 · 0:30">
-            <span class="pi-thumb"><img src="assets/video/v04.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>电热毯 · TikTok 竖版</b><i>代码生成 · 9:16</i></span><span class="pi-no">04</span>
-          </button>
-          <button class="playlist-item" type="button" data-src="assets/video/v05.mp4" data-poster="assets/video/v05.webp" data-title="电热毯 · 横版" data-meta="代码生成 · 16:9 · 0:30">
-            <span class="pi-thumb"><img src="assets/video/v05.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>电热毯 · 横版</b><i>代码生成 · 16:9</i></span><span class="pi-no">05</span>
-          </button>
-          <button class="playlist-item" type="button" data-src="assets/video/v06.mp4" data-poster="assets/video/v06.webp" data-title="兔毛毯 · 横版" data-meta="代码生成 · 16:9 · 0:25">
-            <span class="pi-thumb"><img src="assets/video/v06.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>兔毛毯 · 横版</b><i>代码生成 · 16:9</i></span><span class="pi-no">06</span>
-          </button>
-          <button class="playlist-item" type="button" data-src="assets/video/v07.mp4" data-poster="assets/video/v07.webp" data-title="兔毛毯 · 竖版" data-meta="代码生成 · 9:16 · 0:25">
-            <span class="pi-thumb"><img src="assets/video/v07.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>兔毛毯 · 竖版</b><i>代码生成 · 9:16</i></span><span class="pi-no">07</span>
-          </button>
-          <button class="playlist-item" type="button" data-src="assets/video/v08.mp4" data-poster="assets/video/v08.webp" data-title="绗缝被 · 横版" data-meta="代码生成 · 16:9 · 0:22">
-            <span class="pi-thumb"><img src="assets/video/v08.webp" alt="" loading="lazy"></span>
-            <span class="pi-text"><b>绗缝被 · 横版</b><i>代码生成 · 16:9</i></span><span class="pi-no">08</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="lab-row"><span>同片两版 / ONE FILM, TWO CUTS</span><span>16:9 上架版 + 9:16 投流版</span></div>
-      <div class="twocut" data-sc-in data-sc-stagger="80">
-        <figure class="cut">
+      <div class="lab-row"><span>产品片 / PRODUCT FILMS</span><span>16:9 横版 · 点击播放</span></div>
+      <div class="reel land product" data-sc-in data-sc-stagger="90">
+        <figure class="frame">
           <div class="video-shell">
             <video src="assets/video/v05.mp4" poster="assets/video/v05.webp" width="1280" height="720" muted loop playsinline preload="none"></video>
-            <button class="vid-play" type="button" aria-label="播放 电热毯 横版">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span>
-            </button>
+            <button class="vid-play" type="button" aria-label="播放 电热毯 横版"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
           </div>
-          <figcaption><b>电热毯 · 横版</b><span>16:9 · 上架版 · 0:30</span></figcaption>
+          <figcaption><b>电热毯 · 横版</b><span>卖点分镜 · 0:30</span></figcaption>
         </figure>
-        <figure class="cut portrait">
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v06.mp4" poster="assets/video/v06.webp" width="1280" height="720" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 兔毛毯 横版"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
+          </div>
+          <figcaption><b>兔毛毯 · 横版</b><span>面料与场景 · 0:25</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v08.mp4" poster="assets/video/v08.webp" width="1280" height="720" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 绗缝被 横版"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
+          </div>
+          <figcaption><b>绗缝被 · 横版</b><span>印花与厚度 · 0:22</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="lab-row"><span>品牌片 / BRAND FILMS</span><span>9:16 竖版 · 点击播放</span></div>
+      <div class="reel brand" data-sc-in data-sc-stagger="70">
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v01.mp4" poster="assets/video/v01.webp" width="720" height="1280" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 梦境"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
+          </div>
+          <figcaption><b>梦境</b><span>AI 生成 · 0:19</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v02.mp4" poster="assets/video/v02.webp" width="720" height="1280" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 温暖居室"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
+          </div>
+          <figcaption><b>温暖居室</b><span>有宠物的家 · 0:46</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v03.mp4" poster="assets/video/v03.webp" width="720" height="1280" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 兔毛毯场景"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
+          </div>
+          <figcaption><b>兔毛毯场景</b><span>村落晨雾 · 0:47</span></figcaption>
+        </figure>
+        <figure class="frame">
           <div class="video-shell">
             <video src="assets/video/v04.mp4" poster="assets/video/v04.webp" width="720" height="1280" muted loop playsinline preload="none"></video>
-            <button class="vid-play" type="button" aria-label="播放 电热毯 竖版">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span>
-            </button>
+            <button class="vid-play" type="button" aria-label="播放 电热毯 TikTok 竖版"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
           </div>
-          <figcaption><b>电热毯 · 竖版</b><span>9:16 · 投流版 · 0:30</span></figcaption>
+          <figcaption><b>电热毯 · TikTok</b><span>代码生成 · 0:30</span></figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="video-shell">
+            <video src="assets/video/v07.mp4" poster="assets/video/v07.webp" width="720" height="1280" muted loop playsinline preload="none"></video>
+            <button class="vid-play" type="button" aria-label="播放 兔毛毯 竖版"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6.5v11l9-5.5-9-5.5z" fill="currentColor" stroke="none"/></svg><span>PLAY</span></button>
+          </div>
+          <figcaption><b>兔毛毯 · 竖版</b><span>代码生成 · 0:25</span></figcaption>
         </figure>
       </div>
       <p class="film-more"><a href="videos.html">全部视频 →</a></p>
@@ -937,15 +873,15 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>一张图，<em>要过六道手。</em></h2>
-        <div class="meta-strip"><span>06 / 流程</span><span>流程示意 · 实拍持续补</span></div>
+        <div class="meta-strip"><span>06 / 流程</span><span>流程示意 · 图片待替换</span></div>
       </div>
       <div class="process-line" data-sc-in data-sc-stagger="60">
-        <figure class="station"><span class="s-no">01</span><img src="assets/main/m003/08.webp" alt="电热毯产品图" loading="lazy"><figcaption><b>选品</b><span>运营</span></figcaption></figure>
-        <figure class="station"><span class="s-no">02</span><img src="assets/craft/controller.webp" alt="数显控制器" loading="lazy"><figcaption><b>定稿</b><span>公司设计 + 工厂</span></figcaption></figure>
+        <figure class="station"><span class="s-no">01</span><img src="assets/main/m003/08.webp" alt="电热毯产品图" loading="lazy"><figcaption><b>调研</b><span>运营调研</span></figcaption></figure>
+        <figure class="station"><span class="s-no">02</span><img src="assets/craft/controller.webp" alt="数显控制器" loading="lazy"><figcaption><b>定稿</b><span>公司设计</span></figcaption></figure>
         <figure class="station"><span class="s-no">03</span><img src="assets/craft/giftbox.webp" alt="电热毯礼盒" loading="lazy"><figcaption><b>做辅料</b><span>我</span></figcaption></figure>
         <figure class="station"><span class="s-no">04</span><img src="assets/acc/a25-021/01.webp" alt="绗缝被彩卡" loading="lazy"><figcaption><b>大货</b><span>工厂</span></figcaption></figure>
         <figure class="station"><span class="s-no">05</span><img src="assets/ugc/006.webp" alt="兔毛毯场景拍摄" loading="lazy"><figcaption><b>拍摄</b><span>我</span></figcaption></figure>
-        <figure class="station"><span class="s-no">06</span><img src="assets/main/m003/02.webp" alt="AI 成稿" loading="lazy"><figcaption><b>成稿</b><span>我 + 摄影公司</span></figcaption></figure>
+        <figure class="station"><span class="s-no">06</span><img src="assets/main/m003/02.webp" alt="AI 成稿" loading="lazy"><figcaption><b>上传</b><span>我 + 运营</span></figcaption></figure>
       </div>
       <p class="process-tools"><span>工具</span>手机实拍 / Lovart nano banana / GPT Image 2 / Photoshop</p>
       <p class="film-more"><a href="library.html">全部作品 →</a></p>
@@ -1284,9 +1220,9 @@
      --scrub--> past (weakened high stack, never over the active word) */
   var chapterEls = ["brands", "collection", "craft", "film", "end"].map(function (id) { return document.getElementById(id); });
   var railWords = Array.prototype.slice.call(document.querySelectorAll(".rail-word"));
-  function restVars() { return { rotate: 90, top: window.innerHeight * 0.42, right: -4, fontSize: "12px", opacity: 0, letterSpacing: ".02em" }; }
-  function activeVars() { return { rotate: 0, top: 64, right: 18, fontSize: "13px", opacity: 0.92, letterSpacing: ".16em" }; }
-  function pastVars(i) { return { rotate: 0, top: 56 + i * 18, right: 18, fontSize: "11px", opacity: 0.18, letterSpacing: ".18em" }; }
+  function restVars() { return { rotate: 90, top: window.innerHeight * 0.42, right: -6, fontSize: "clamp(1.5rem,2.4vw,2.1rem)", opacity: 0, letterSpacing: ".02em" }; }
+  function activeVars() { return { rotate: 0, top: 92, right: 16, fontSize: "clamp(2.2rem,4vw,3.5rem)", opacity: 1, letterSpacing: "-.01em" }; }
+  function pastVars(i) { return { rotate: 0, top: 8 + i * 22, right: 16, fontSize: ".72rem", opacity: 0.22, letterSpacing: ".22em" }; }
   railWords.forEach(function (w) {
     w.addEventListener("click", function () { scrollToEl(chapterEls[railWords.indexOf(w)]); });
     if (window.gsap) gsap.set(w, restVars());
@@ -1347,33 +1283,19 @@
     });
   }
 
-  /* films */
-  var brandFilms = document.querySelectorAll(".reel.brand video");
-  if (reduce) brandFilms.forEach(function (v) { v.controls = true; });
-  else if ("IntersectionObserver" in window) {
-    var fio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { var p = e.target.play(); if (p && p.catch) p.catch(function () {}); }
-        else e.target.pause();
-      });
-    }, { threshold: 0.45 });
-    brandFilms.forEach(function (v) { fio.observe(v); });
-  }
-
-  /* product films: poster first, click to play with sound; one at a time */
-  var productFilms = document.querySelectorAll(".reel.product video");
-  productFilms.forEach(function (v) {
+  /* films: poster first, one playing at a time */
+  var filmVideos = Array.prototype.slice.call(document.querySelectorAll("#film video"));
+  filmVideos.forEach(function (v) {
     var shell = v.closest(".video-shell");
     var btn = shell ? shell.querySelector(".vid-play") : null;
     if (!btn) return;
     btn.addEventListener("click", function () {
-      productFilms.forEach(function (other) {
+      filmVideos.forEach(function (other) {
         if (other === v) return;
         var os = other.closest(".video-shell");
         other.pause(); other.controls = false; other.muted = true;
         if (os) os.classList.remove("playing");
       });
-      brandFilms.forEach(function (f) { f.pause(); });
       v.muted = false;
       v.controls = true;
       var p = v.play();
@@ -1386,59 +1308,6 @@
       v.currentTime = 0;
     });
   });
-
-  /* screening room: one playing at a time */
-  var mainFilm = document.getElementById("mainFilm");
-  if (mainFilm) {
-    var mainTitle = document.getElementById("mainTitle");
-    var mainMeta = document.getElementById("mainMeta");
-    var playlist = document.getElementById("playlist");
-    var cutFilms = Array.prototype.slice.call(document.querySelectorAll("#film .cut video"));
-    var solo = false;
-    function pauseOthers(except) {
-      [mainFilm].concat(cutFilms).forEach(function (v) { if (v !== except) v.pause(); });
-    }
-    playlist.addEventListener("click", function (e) {
-      var b = e.target.closest(".playlist-item"); if (!b) return;
-      solo = false;
-      pauseOthers(mainFilm);
-      mainFilm.src = b.dataset.src;
-      mainFilm.poster = b.dataset.poster;
-      mainFilm.load();
-      var p = mainFilm.play(); if (p && p.catch) p.catch(function () {});
-      mainTitle.textContent = b.dataset.title;
-      mainMeta.textContent = b.dataset.meta;
-      playlist.querySelectorAll(".playlist-item").forEach(function (x) { x.classList.toggle("on", x === b); });
-    });
-    mainFilm.addEventListener("click", function () {
-      solo = false;
-      if (mainFilm.paused) mainFilm.play().catch(function () {}); else mainFilm.pause();
-    });
-    cutFilms.forEach(function (v) {
-      var shell = v.closest(".video-shell");
-      var btn = shell ? shell.querySelector(".vid-play") : null;
-      if (!btn) return;
-      btn.addEventListener("click", function () {
-        solo = true;
-        pauseOthers(v);
-        v.muted = false; v.controls = true;
-        var p = v.play(); if (p && p.catch) p.catch(function () {});
-        shell.classList.add("playing");
-      });
-      v.addEventListener("ended", function () {
-        shell.classList.remove("playing");
-        v.controls = false; v.currentTime = 0;
-      });
-    });
-    if (!reduce && "IntersectionObserver" in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting && !solo) { var p = mainFilm.play(); if (p && p.catch) p.catch(function () {}); }
-          else if (!en.isIntersecting) mainFilm.pause();
-        });
-      }, { threshold: 0.35 }).observe(mainFilm);
-    }
-  }
 
   window.addEventListener("load", function () { layout(); ScrollTrigger.refresh(); buildRuler(); updateRuler(); });
   var rT;

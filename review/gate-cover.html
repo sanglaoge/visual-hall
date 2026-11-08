@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>品牌门封面 · 视觉厅</title>
+<style>
+  :root{--paper:#f2f1ee;--surface:#fbfaf7;--ink:#14120f;--muted:#676157;--line:rgba(20,18,15,.16);--green:#439b44}
+  *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 -apple-system,"PingFang SC","Hiragino Sans GB",sans-serif}
+  button{font:inherit;color:inherit} img{display:block}
+  .top{position:sticky;top:0;z-index:10;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 20px;background:rgba(242,241,238,.95);border-bottom:1px solid var(--line)}
+  .top b{font-size:15px;letter-spacing:.04em}.top .grow{flex:1}
+  .top button,.top a{border:1px solid var(--line);background:none;padding:7px 10px;text-decoration:none;cursor:pointer;font-size:12px}
+  .top button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .tabs{display:flex;gap:6px}.tabs a[aria-current]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .app{max-width:1320px;margin:0 auto;padding:18px 20px 60px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:22px;align-items:start}
+  .setlist{position:sticky;top:70px;max-height:calc(100vh - 92px);overflow:auto;border:1px solid var(--line);background:var(--surface)}
+  .setlist h2{margin:0;padding:10px 12px;border-bottom:1px solid var(--line);font-size:10px;letter-spacing:.16em;color:var(--muted)}
+  .setitem{display:flex;gap:8px;align-items:center;width:100%;border:0;border-bottom:1px solid rgba(20,18,15,.08);background:none;padding:7px 10px;text-align:left;cursor:pointer;font-size:11px}
+  .setitem img{width:38px;height:38px;object-fit:cover;flex:none;border:1px solid var(--line)}
+  .setitem.active{background:var(--ink);color:var(--paper)}
+  .main{min-width:0}
+  .head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:12px}
+  .head h1{margin:0;font-size:clamp(24px,4vw,42px);font-weight:600;letter-spacing:-.02em}
+  .head p{margin:6px 0 0;color:var(--muted);font-size:12px}
+  .preview{margin:18px 0 8px;aspect-ratio:3/2;background:#fff;border:1px solid var(--line);overflow:hidden}
+  .preview img{width:100%;height:100%;object-fit:cover}
+  .cap{font-size:12px;color:var(--muted);margin-bottom:14px}
+  .thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .thumb{position:relative;border:2px solid transparent;background:#fff;padding:0;cursor:pointer}
+  .thumb img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff}
+  .thumb.on{border-color:var(--green)}
+  .thumb span{position:absolute;left:6px;top:6px;background:rgba(20,18,15,.7);color:#fff;font-size:9px;padding:3px 5px}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 14px;font-size:12px;opacity:0;pointer-events:none;transition:.2s}
+  .toast.on{opacity:1}
+  @media (max-width:820px){.app{grid-template-columns:1fr;padding:14px}.setlist{display:none}.thumbs{grid-template-columns:repeat(2,1fr)}}
+</style>
+<header class="top">
+  <b>品牌门封面</b>
+  <span class="tabs">
+    <a href="?b=gogreen">GOGREEN</a>
+    <a href="?b=hitime">HITIME</a>
+    <a href="?b=kingrest">KINGREST</a>
+  </span>
+  <span class="grow"></span>
+  <button type="button" id="copyBtn">复制 JSON</button>
+  <button type="button" class="primary" id="exportBtn">导出 JSON</button>
+</header>
+<main class="app">
+  <aside class="setlist"><h2>套装 · 点击切换</h2><div id="setList"></div></aside>
+  <section class="main">
+    <div class="head"><div><h1 id="brandName">—</h1><p>选一张图作为首页品牌门的右侧封面；预览按 3:2 裁切。</p></div></div>
+    <div class="preview"><img id="previewImg" alt="封面预览"></div>
+    <div class="cap" id="cap">—</div>
+    <div class="thumbs" id="thumbs"></div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+<script src="../assets/data/works.js"></script>
+<script src="../assets/data/gogreen-selection.js"></script>
+<script src="../assets/data/hitime-selection.js"></script>
+<script src="../assets/data/kingrest-selection.js"></script>
+<script>
+(function(){
+  var qs=new URLSearchParams(location.search), key=(qs.get('b')||'gogreen').toLowerCase();
+  var W=window.WORKS||{}, brand=(W.brands||[]).find(function(b){return b.key===key;});
+  if(!brand){document.body.innerHTML='<p style="padding:40px">没有这个品牌</p>';return;}
+  var KEY='vh-gate-covers-v1', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+  var SELS={gogreen:window.GOGREEN_SELECTION,hitime:window.HITIME_SELECTION,kingrest:window.KINGREST_SELECTION};
+  var sel=SELS[key]||null;
+  var sets=(brand.sets||[]).filter(function(s){
+    if(key==='gogreen'&&(s.id==='a25-116'||s.id==='a25-117')) return false;
+    var ex=sel&&sel.sets&&sel.sets[s.id]?sel.sets[s.id].exclude||[]:[];
+    return s.images.some(function(_,i){return ex.indexOf(i)===-1;});
+  }); var cur=0;
+  var chosen=state[key]||brand.cover;
+  document.getElementById('brandName').textContent=brand.name;
+  document.querySelectorAll('.tabs a').forEach(function(a){
+    if(a.getAttribute('href')==='?b='+key) a.setAttribute('aria-current','page');
+  });
+  function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+  function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('on');},1500);}
+  function renderSets(){
+    document.getElementById('setList').innerHTML=sets.map(function(s,i){
+      return '<button class="setitem'+(i===cur?' active':'')+'" data-i="'+i+'"><img src="../'+s.cover+'" alt=""><span>'+s.id+' · '+s.cat+'</span></button>';
+    }).join('');
+  }
+  function renderPreview(){
+    document.getElementById('previewImg').src='../'+chosen;
+    document.getElementById('cap').textContent=chosen;
+  }
+  function renderThumbs(){
+    var s=sets[cur];
+    document.getElementById('thumbs').innerHTML=s.images.map(function(p,i){
+      return '<button class="thumb'+(p===chosen?' on':'')+'" data-p="'+p+'"><img src="../'+p+'" loading="lazy" alt=""><span>'+String(i+1).padStart(2,'0')+'</span></button>';
+    }).join('');
+  }
+  document.getElementById('setList').addEventListener('click',function(e){
+    var b=e.target.closest('.setitem'); if(!b) return;
+    cur=Number(b.dataset.i); renderSets(); renderThumbs();
+  });
+  document.getElementById('thumbs').addEventListener('click',function(e){
+    var b=e.target.closest('.thumb'); if(!b) return;
+    chosen=b.dataset.p; state[key]=chosen; save(); renderPreview(); renderThumbs(); toast('已设为 '+brand.name+' 封面');
+  });
+  function data(){return {gogreen:state.gogreen||null,hitime:state.hitime||null,kingrest:state.kingrest||null};}
+  document.getElementById('exportBtn').addEventListener('click',function(){
+    var blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download='gate-covers.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},800);toast('已导出 gate-covers.json');
+  });
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var txt=JSON.stringify(data());
+    if(navigator.clipboard) navigator.clipboard.writeText(txt).then(function(){toast('已复制');},function(){toast('复制失败，用导出');});
+    else toast('用导出 JSON');
+  });
+  renderSets();renderThumbs();renderPreview();
+})();
+</script>
+</html>
