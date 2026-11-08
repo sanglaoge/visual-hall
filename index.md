@@ -21,6 +21,7 @@
 | 品牌页 | ✅ 品类分组 + 吸顶筛选 + 短标题 + 干净封面；GOGREEN 78/685、HITIME 34/270、KINGREST 18/149；全站 209 套 / 1755 张 |
 | 选图工作台 | `review/brand.html?b=...` 三品牌通用；GOGREEN / HITIME / KINGREST 结果已应用 |
 | 审计 | ✅ `design-taste-frontend` 3.1/5；P0 5 项，报告 `review/audit-v3.md` |
+| P1 首批 | ✅ 首屏 CTA→品牌门、品牌入口 LOGO+数量、辅料跳转、按品牌浏览 |
 | 性能 | ✅ 动效库本地化；orbit-card 640px；covers 700px；字体 3 家族（Google Fonts 仍外链） |
 | 原型 | `prototypes/brand-gate/`、`prototypes/packaging/` |
 | 发布 | ✅ 副本已提交并推送 `wip/2026-11-07-v3`；未合并、未发布 |

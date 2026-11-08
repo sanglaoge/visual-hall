@@ -125,7 +125,7 @@
     '<div class="eyebrow">' + (isOwn ? "2026 · 新品" : "2025 · 品牌线") + '</div>' +
     '<h1>' + brand.name + '</h1>' +
     '<div class="p-meta"><span><b>' + shownCount + '</b> 套</span><span><b>' + shownImages + '</b> 张主图</span>' +
-    (acc.length ? '<span><b>' + acc.length + '</b> 份辅料</span>' : '') + '</div>' +
+    (acc.length ? '<a class="stat-jump" href="#acc"><b>' + acc.length + '</b> 份辅料 ↓</a>' : '') + '</div>' +
     '<p class="lede">' + (isOwn
       ? '2026 年的新品与节日系列，按产品品类分。点进去看整套主图、视频、买家秀和辅料。'
       : '2025 年 ' + brand.name + ' 品牌，按品类分。点开任意一套看完整主图。') + '</p>' +
@@ -169,7 +169,7 @@
   }
 
   if (acc.length) {
-    html += '<div class="label"><h2>辅料</h2><span>' + acc.length + ' 份</span></div><div class="agrid">';
+    html += '<div class="label" id="acc"><h2>辅料</h2><span>' + acc.length + ' 份</span></div><div class="agrid">';
     acc.forEach(function (a) {
       html += '<article class="acard"><div class="ph" data-image="' + a.preview + '" data-title="' + a.title + '">' +
         '<img src="' + a.preview + '" alt="' + a.title + '" loading="lazy"></div>' +
@@ -259,6 +259,19 @@
     var v = b.dataset.cat;
     if (v === "all") { renderGroups("all"); goTo("#setsTop"); }
     else { renderGroups(v); goTo("#cat-" + v); }
+  });
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest(".stat-jump");
+    if (!a) return;
+    e.preventDefault();
+    var el = document.getElementById("acc");
+    if (!el) return;
+    var html = document.documentElement, oldBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+    el.scrollIntoView();
+    window.scrollBy(0, -96);
+    html.style.scrollBehavior = oldBehavior;
+    history.replaceState(null, "", "#acc");
   });
   renderGroups("all");
 })();
