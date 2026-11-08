@@ -127,6 +127,8 @@
 
 <script src="assets/data/works.js"></script>
 <script src="assets/data/gogreen-selection.js"></script>
+<script src="assets/data/hitime-selection.js"></script>
+<script src="assets/data/kingrest-selection.js"></script>
 <script src="assets/gallery.js"></script>
 <script>
 (function () {
@@ -134,24 +136,31 @@
   var brands = W.brands || [];
   var hero = W.hero || [];
   var s = W.stats || {};
-  var SEL = window.GOGREEN_SELECTION || null;
+  function selectionFor(b) {
+    if (b.key === "gogreen") return window.GOGREEN_SELECTION || null;
+    if (b.key === "hitime") return window.HITIME_SELECTION || null;
+    if (b.key === "kingrest") return window.KINGREST_SELECTION || null;
+    return null;
+  }
   function filteredSets(b) {
     if (b.key === "own") return [];
-    if (b.key !== "gogreen" || !SEL) return b.sets || [];
+    var SEL = selectionFor(b);
+    if (!SEL) return b.sets || [];
     return (b.sets || []).filter(function (set) {
-      if (set.id === "a25-116" || set.id === "a25-117") return false;
+      if (b.key === "gogreen" && (set.id === "a25-116" || set.id === "a25-117")) return false;
       var ex = SEL.sets && SEL.sets[set.id] ? (SEL.sets[set.id].exclude || []) : [];
       return set.images.some(function (_, i) { return ex.indexOf(i) === -1; });
     });
   }
-  function keptCount(set) {
+  function keptCount(b, set) {
+    var SEL = selectionFor(b);
     if (!SEL || !SEL.sets || !SEL.sets[set.id]) return set.count;
     return set.images.length - (SEL.sets[set.id].exclude || []).length;
   }
   function bStats(b) {
     if (b.key === "own") return { sets: b.count, images: b.images };
     var ss = filteredSets(b);
-    return { sets: ss.length, images: ss.reduce(function (a, set) { return a + keptCount(set); }, 0) };
+    return { sets: ss.length, images: ss.reduce(function (a, set) { return a + keptCount(b, set); }, 0) };
   }
   var stats = brands.map(bStats);
   var totalSets = stats.reduce(function (a, x) { return a + x.sets; }, 0);

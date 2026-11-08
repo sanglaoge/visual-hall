@@ -9,27 +9,33 @@ raw = open(os.path.join(ROOT, "assets", "data", "works.js")).read()
 W = json.loads(re.sub(r"^window\.WORKS\s*=\s*|\s*;\s*$", "", raw))
 
 
-# v3 副本：GOGREEN 选图结果 + 去掉三视图
-selection_path = os.path.join(ROOT, "assets", "data", "gogreen-selection.json")
-SEL = json.load(open(selection_path)) if os.path.exists(selection_path) else None
+# v3 副本：品牌选图结果 + 去掉三视图
+SELS = {}
+for brand_key in ("gogreen", "hitime", "kingrest"):
+    path = os.path.join(ROOT, "assets", "data", brand_key + "-selection.json")
+    if os.path.exists(path):
+        SELS[brand_key] = json.load(open(path))
 HIDE = {"a25-116", "a25-117"}
 
 def kept_count(brand_key, s):
-    if brand_key != "gogreen" or not SEL:
+    sel = SELS.get(brand_key)
+    if not sel:
         return s["count"]
-    ex = (SEL.get("sets", {}).get(s["id"], {}) or {}).get("exclude", [])
+    ex = (sel.get("sets", {}).get(s["id"], {}) or {}).get("exclude", [])
     return len(s["images"]) - len(ex)
 
 def visible_sets(brand):
     rows = []
     for s in brand.get("sets", []):
-        if brand["key"] == "gogreen" and (s["id"] in HIDE or kept_count(brand["key"], s) <= 0):
+        if kept_count(brand["key"], s) <= 0:
+            continue
+        if brand["key"] == "gogreen" and s["id"] in HIDE:
             continue
         rows.append((s, kept_count(brand["key"], s)))
     return rows
 
 
-L = ["# 作品清单", "", "> 本文件由 `scripts/manifest.py` 依据 `assets/data/works.js` 生成，手改会被覆盖。", "", "> v3 副本：GOGREEN 按 `gogreen-selection.json` 排除图片；三视图不列入辅料。", "",
+L = ["# 作品清单", "", "> 本文件由 `scripts/manifest.py` 依据 `assets/data/works.js` 生成，手改会被覆盖。", "", "> v3 副本：GOGREEN / HITIME 按 `*-selection.json` 排除图片；三视图不列入辅料。", "",
      "## 品牌与年份", "", "| 品牌 | 年份 | 套 | 张 | 辅料 |", "|---|---|---|---|---|"]
 amap = {}
 for a in W["acc"]:

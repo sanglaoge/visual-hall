@@ -62,6 +62,8 @@
 
 <script src="assets/data/works.js"></script>
 <script src="assets/data/gogreen-selection.js"></script>
+<script src="assets/data/hitime-selection.js"></script>
+<script src="assets/data/kingrest-selection.js"></script>
 <script src="assets/gallery.js"></script>
 <script>
 (function () {
@@ -84,7 +86,9 @@
   var accIds = brand.acc || [];
   var acc = (W.acc || []).filter(function (a) { return accIds.indexOf(a.id) > -1 && a.kind !== "三视图"; });
 
-  var SELECTION = brand.key === "gogreen" && window.GOGREEN_SELECTION ? window.GOGREEN_SELECTION : null;
+  var SELECTION = brand.key === "gogreen" ? (window.GOGREEN_SELECTION || null)
+    : brand.key === "hitime" ? (window.HITIME_SELECTION || null)
+    : brand.key === "kingrest" ? (window.KINGREST_SELECTION || null) : null;
   var HIDE_SETS = { "a25-116": 1, "a25-117": 1 };
   var CLEAN_COVERS = {
     "a25-013": 1, "a25-014": 1, "a25-016": 1, "a25-019": 1, "a25-020": 1,
@@ -110,7 +114,7 @@
     if (ks.length && ks.indexOf(s.cover) === -1) return ks[0];
     return CLEAN_COVERS[s.id] ? "assets/covers-clean/" + s.id + ".webp" : thumb(s.cover);
   }
-  var heroImgs = SELECTION && SELECTION.hero && SELECTION.hero.length ? SELECTION.hero.slice(0, 4) : [brand.cover];
+  var heroImgs = SELECTION && SELECTION.hero && SELECTION.hero.length ? SELECTION.hero.slice(0, 5) : [brand.cover];
   var heroHtml = '<div class="cover">' + heroImgs.map(function (p, i) {
     return '<img src="' + p + '" alt="' + brand.name + ' ' + (i + 1) + '" class="' + (i === 0 ? "on" : "") + '">';
   }).join("") + (heroImgs.length > 1 ? '<div class="dots">' + heroImgs.map(function (_, i) {

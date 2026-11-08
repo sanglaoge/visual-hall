@@ -18,8 +18,8 @@
 | 项 | 状态 |
 |---|---|
 | 首页 | 🚧 品牌入口（编辑部索引）+ 纸样台包装 + 方法条已接入；视频 / 买家秀 / 流程待做 |
-| 品牌页 | ✅ 品类分组 + 吸顶筛选 + 短标题 + 干净封面；GOGREEN 78 套 / 685 张（2 套功能图 + 1 套全删暂隐） |
-| 选图工作台 | `review/gogreen.html`：81 套逐套标封面 / 轮播 / 不要，导出 JSON；结果已应用 |
+| 品牌页 | ✅ 品类分组 + 吸顶筛选 + 短标题 + 干净封面；GOGREEN 78/685、HITIME 34/270、KINGREST 18/149；全站 209 套 / 1755 张 |
+| 选图工作台 | `review/brand.html?b=...` 三品牌通用；GOGREEN / HITIME / KINGREST 结果已应用 |
 | 性能 | ✅ 动效库本地化；orbit-card 640px；covers 700px；字体 3 家族（Google Fonts 仍外链） |
 | 原型 | `prototypes/brand-gate/`、`prototypes/packaging/` |
 | 发布 | ✅ 副本已提交并推送 `wip/2026-11-07-v3`；未合并、未发布 |
@@ -30,7 +30,7 @@
 |---|---|---|
 | 首页 `index.html` | scroll-craft 滚动站：星系首屏 → 品牌入口 → 方法条 → 2026 产品 → 包装 → 视频 | — |
 | 全部作品 `library.html` | 品牌墙：GOGREEN / HITIME / KINGREST / 2026 新品 | 4 个品牌 |
-| 品牌页 `brand.html?b=key` | 品类分组 + 吸顶筛选 + 整套主图 + 辅料 | 2025 三家 133 套（GOGREEN 显示 79） |
+| 品牌页 `brand.html?b=key` | 品类分组 + 吸顶筛选 + 整套主图 + 辅料 | 显示 130 套（GOGREEN 78 / HITIME 34 / KINGREST 18） |
 | 产品页 `product.html?p=key` | 2026 自有品类的整套主图，附视频 / 买家秀 / 辅料 | 79 套 / 651 张 |
 | 视频页 `videos.html` | 首屏自动播 + 按产品分组，点开即播 | 8 条 |
 | 辅料页 `accessories.html` | 按品牌 + 类型筛选，点开看印刷展开图 | 71 份（不含三视图） |
