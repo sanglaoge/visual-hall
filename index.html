@@ -186,7 +186,9 @@
   @keyframes cometflow { to { stroke-dashoffset: -100; } }
   @media (prefers-reduced-motion: reduce) { .comet { animation: none; stroke-dasharray: none; opacity: 0; } }
 
-  .orbit { position: absolute; inset: 0; z-index: 1; }
+  .orbit { position: absolute; inset: 0; z-index: 1;
+    -webkit-mask-image: radial-gradient(ellipse 52% 46% at 50% 52%, transparent 0 60%, #000 86%);
+    mask-image: radial-gradient(ellipse 52% 46% at 50% 52%, transparent 0 60%, #000 86%); }
   .oc {
     position: absolute; left: 0; top: 0; width: 200px; height: 200px;
     padding: 0; background: none; border: 0; cursor: zoom-in; display: block;
@@ -205,15 +207,21 @@
     display: flex; flex-direction: column; align-items: center; text-align: center;
     pointer-events: none;
     background: radial-gradient(ellipse at center,
-      color-mix(in oklab, var(--sc-canvas) 60%, transparent) 0%,
-      color-mix(in oklab, var(--sc-canvas) 50%, transparent) 52%,
-      transparent 80%);
+      color-mix(in oklab, var(--sc-canvas) 84%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 68%, transparent) 54%,
+      transparent 88%);
   }
   html[data-theme="dark"] .hero-center {
     background: radial-gradient(ellipse at center,
-      color-mix(in oklab, var(--sc-canvas) 86%, transparent) 0%,
-      color-mix(in oklab, var(--sc-canvas) 78%, transparent) 52%,
-      transparent 86%);
+      color-mix(in oklab, var(--sc-canvas) 94%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 86%, transparent) 54%,
+      transparent 92%);
+  }
+  @media (max-width: 700px) {
+    .orbit {
+      -webkit-mask-image: radial-gradient(ellipse 72% 54% at 50% 54%, transparent 0 62%, #000 88%);
+      mask-image: radial-gradient(ellipse 72% 54% at 50% 54%, transparent 0 62%, #000 88%);
+    }
   }
   .wm-row { position: relative; width: 100%; }
   .wm-scrim {
@@ -293,6 +301,9 @@
   }
 
   /* chapters: plain flow, hairline grid */
+  section[id] { scroll-margin-top: 64px; }
+  html { scroll-padding-top: 64px; }
+  @media (max-width: 899px) { section[id] { scroll-margin-top: 56px; } html { scroll-padding-top: 56px; } }
   .chap { padding: clamp(90px, 14vh, 170px) 0; }
   .wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(20px, 4vw, 56px); }
 
@@ -362,6 +373,11 @@
   .cell .lab b { font: 600 .95rem/1.4 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
   .cell .lab > span { text-align: right; }
   @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .cell .lab { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .cell .lab b { white-space: nowrap; }
+    .cell .lab > span { text-align: left; }
+  }
 
   /* craft: proof desk */
   .paperdesk {
@@ -645,7 +661,7 @@
       </div>
       <div class="grid" data-sc-in data-sc-stagger="60">
         <div class="gcell"><span>新品系列</span><span>01</span></div>
-        <figure class="cell "><a class="ph" href="product.html?p=electric-blanket"><img src="assets/main/m003/01.webp" width="1200" height="1200" alt="电热毯" loading="lazy"></a><figcaption class="lab"><b>电热毯</b><span>5 套 · 深蓝 / 卡其 / 灰 / 粉 / 白</span></figcaption></figure>
+        <figure class="cell "><a class="ph" href="product.html?p=electric-blanket"><img src="assets/main/m003/08.webp" width="1200" height="1200" alt="电热毯" loading="lazy"></a><figcaption class="lab"><b>电热毯</b><span>5 套 · 深蓝 / 卡其 / 灰 / 粉 / 白</span></figcaption></figure>
         <figure class="cell "><a class="ph" href="product.html?p=rabbit"><img src="assets/main/m006/01.webp" width="1200" height="1200" alt="单面橡筋兔毛毯" loading="lazy"></a><figcaption class="lab"><b>单面橡筋兔毛毯</b><span>5 套 · 棕 / 灰 / 粉 / 雾蓝</span></figcaption></figure>
         <figure class="cell"><a class="ph" href="product.html?p=rabbit"><img src="assets/main/m010/01.webp" width="1200" height="1200" alt="单面橡筋兔毛毯 雾蓝" loading="lazy"></a><figcaption class="lab"><b>单面橡筋兔毛毯</b><span>雾蓝 · 8 张</span></figcaption></figure>
         <figure class="cell "><a class="ph" href="product.html?p=quilt"><img src="assets/main/m011/01.webp" width="1200" height="1200" alt="全涤印花绗缝被" loading="lazy"></a><figcaption class="lab"><b>全涤印花绗缝被</b><span>4 套 · 波西米亚 / 粉 / 红</span></figcaption></figure>
@@ -817,8 +833,10 @@
     }
   }
   function scrollToEl(el) {
-    if (lenis) lenis.scrollTo(el, { offset: 0 });
-    else el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    var off = innerWidth <= 899 ? 56 : 64;
+    var top = el.getBoundingClientRect().top + (window.scrollY || 0) - off;
+    if (lenis) lenis.scrollTo(top);
+    else window.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" });
   }
 
   /* ruler */
@@ -965,7 +983,7 @@
     W = hero.clientWidth; H = hero.clientHeight; CX = W / 2; CY = H / 2;
     var phone = W < 700;
     ARMS = phone ? 3 : 6;
-    CARD_N = phone ? 14 : 28;
+    CARD_N = phone ? 10 : 28;
     TURNS = phone ? 0.9 : 0.85;
     RMAXF = phone ? 0.8 : 0.7;
     var halfDiag = Math.hypot(W, H) / 2;
@@ -1005,6 +1023,8 @@
     var th = thetaBirth + j * (thetaExit - thetaBirth);
     var ang = th + c.arm * Math.PI * 2 / ARMS + spin;
     var r = C * th;
+    var rMin = (W < 700 ? 0.32 : 0.30) * Math.min(W, H);
+    if (r < rMin) r = rMin;
     var x = CX + r * Math.cos(ang), y = CY + r * Math.sin(ang);
     if (wobble) {
       x += 6 * (1 - c.hold) * Math.sin(t * 0.0016 + 2.399 * n);

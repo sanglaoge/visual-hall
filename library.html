@@ -34,13 +34,13 @@
   .bcard .ph{ aspect-ratio:4/3; overflow:hidden; }
   .bcard .ph img{ width:100%; height:100%; object-fit:cover; opacity:.86; transition:opacity .5s, transform .9s cubic-bezier(.2,.7,.2,1); }
   .bcard:hover .ph img{ opacity:1; transform:scale(1.035); }
-  .bcard .veil{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,10,12,0) 18%, rgba(10,10,12,.32) 52%, rgba(10,10,12,.9) 100%); }
+  .bcard .veil{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,10,12,.55) 0%, rgba(10,10,12,.18) 30%, rgba(10,10,12,.92) 100%); }
   .bcard .txt{ position:absolute; inset:auto 0 0 0; padding:clamp(18px,2.6vw,28px); color:#f4f1ea; text-shadow:0 1px 12px rgba(0,0,0,.45); }
-  .bcard .yr{ font-family:var(--sans); font-size:11px; letter-spacing:.28em; color:rgba(244,241,234,.62); }
+  .bcard .yr{ font-family:var(--sans); font-size:11px; letter-spacing:.28em; color:rgba(244,241,234,.92); }
   .bcard h2{ margin-top:8px; font-size:clamp(28px,4.6vw,44px); font-weight:400; letter-spacing:.12em; }
-  .bcard .num{ display:block; margin-top:8px; font-family:var(--sans); font-size:12px; letter-spacing:.12em; color:rgba(244,241,234,.78); }
-  .bcard .cats{ display:block; margin-top:10px; font-family:var(--sans); font-size:11px; letter-spacing:.1em; color:rgba(244,241,234,.55); line-height:1.9; }
-  .bcard .go{ position:absolute; top:clamp(16px,2.4vw,24px); right:clamp(16px,2.4vw,24px); color:#f4f1ea; font-family:var(--sans); font-size:11px; letter-spacing:.18em; opacity:.9; text-shadow:0 1px 10px rgba(0,0,0,.55); transition:opacity .3s; }
+  .bcard .num{ display:block; margin-top:8px; font-family:var(--sans); font-size:12px; letter-spacing:.12em; color:rgba(244,241,234,.92); }
+  .bcard .cats{ display:block; margin-top:10px; font-family:var(--sans); font-size:11px; letter-spacing:.1em; color:rgba(244,241,234,.82); line-height:1.9; }
+  .bcard .go{ position:absolute; top:clamp(16px,2.4vw,24px); right:clamp(16px,2.4vw,24px); color:#f4f1ea; font-family:var(--sans); font-size:11px; letter-spacing:.18em; background:rgba(10,10,12,.55); padding:6px 8px; opacity:.95; text-shadow:0 1px 10px rgba(0,0,0,.55); transition:opacity .3s; }
   .bcard:hover .go{ opacity:1; }
 
   .tri{ display:grid; gap:clamp(10px,1.6vw,16px); grid-template-columns:repeat(3,1fr); }
@@ -166,7 +166,7 @@
   var totalSets = stats.reduce(function (a, x) { return a + x.sets; }, 0);
   var totalImages = stats.reduce(function (a, x) { return a + x.images; }, 0);
 
-  document.getElementById("bCount").textContent = brands.length + " 个品牌 / 年份";
+  document.getElementById("bCount").textContent = "3 个品牌 + 2026 新品";
   document.getElementById("counts").innerHTML =
     "<span><b>" + totalSets + "</b> 套主图</span>" +
     "<span><b>" + totalImages + "</b> 张</span>" +
@@ -180,8 +180,9 @@
       return c.name + " " + n;
     });
     var cats = cs.slice(0, 4).join(" · ") + (cs.length > 4 ? " · 另 " + (cs.length - 4) + " 类" : "");
+    var cover = b.key === "own" ? "assets/orbit-card/m011.webp" : b.cover;
     return '<a class="bcard" href="brand.html?b=' + b.key + '">' +
-      '<div class="ph"><img src="' + b.cover + '" alt="' + b.name + '" loading="lazy"></div>' +
+      '<div class="ph"><img src="' + cover + '" alt="' + b.name + '" loading="lazy"></div>' +
       '<span class="veil"></span>' +
       '<span class="go">进入 →</span>' +
       '<span class="txt"><span class="yr">' + (b.year || "") + (b.year === 2025 ? " · 品牌线" : " · 新品") + '</span>' +
