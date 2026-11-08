@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>选图工作台 · 视觉厅副本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2f1ee; --surface:#fbfaf7; --ink:#14120f; --muted:#676157;
+    --line:rgba(20,18,15,.16); --green:#439b44; --red:#b23b2e; --gold:#a9853f;
+    --sans:"Archivo",system-ui,-apple-system,"PingFang SC",sans-serif;
+    --mono:"Geist Mono",ui-monospace,"SF Mono",monospace;
+    --serif:"Instrument Serif",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html,body{overflow-x:clip}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}
+  button{font:inherit;color:inherit}
+  img{display:block}
+  .top{
+    position:sticky;top:0;z-index:60;background:rgba(242,241,238,.94);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  }
+  .top-in{max-width:1560px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .top .brand{font:600 14px/1 var(--sans);letter-spacing:.06em}
+  .top .brand span{font:400 9px/1 var(--mono);letter-spacing:.18em;color:var(--muted);margin-left:8px}
+  .top .stat{font:500 10px/1 var(--mono);letter-spacing:.08em;color:var(--muted)}
+  .top .stat b{color:var(--ink);font-weight:500}
+  .top .grow{flex:1}
+  .top button{
+    border:1px solid var(--line);background:none;padding:8px 11px;cursor:pointer;
+    font:500 10px/1 var(--mono);letter-spacing:.08em;
+  }
+  .top button:hover{border-color:var(--ink)}
+  .top button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .app{max-width:1560px;margin:0 auto;padding:22px 24px 60px;display:grid;grid-template-columns:250px minmax(0,1fr) 300px;gap:24px;align-items:start}
+  .setlist{position:sticky;top:82px;max-height:calc(100vh - 104px);overflow:auto;border:1px solid var(--line);background:var(--surface)}
+  .setlist-head{padding:12px 12px 10px;border-bottom:1px solid var(--line);font:500 9px/1.4 var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+  .setitem{width:100%;display:flex;align-items:center;gap:8px;padding:9px 11px;border:0;border-bottom:1px solid rgba(20,18,15,.08);background:none;text-align:left;cursor:pointer;font-size:11px;line-height:1.3}
+  .setitem:hover{background:rgba(20,18,15,.04)}
+  .setitem.active{background:var(--ink);color:var(--paper)}
+  .setitem .id{font:400 9px/1 var(--mono);letter-spacing:.06em;color:var(--muted);flex:none}
+  .setitem.active .id{color:rgba(242,241,238,.6)}
+  .setitem .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .setitem .dot{width:6px;height:6px;border-radius:50%;flex:none;background:transparent}
+  .setitem .dot.c{background:var(--green)}
+  .setitem.active .dot.c{background:#9bd59b}
+  .setitem .warn{font:400 9px/1 var(--mono);color:var(--red);flex:none}
+  .main{min-width:0}
+  .set-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}
+  .set-head .kicker{font:500 10px/1 var(--mono);letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+  .set-head h1{margin:12px 0 0;font-size:clamp(2rem,4.4vw,3.6rem);line-height:.95;letter-spacing:-.05em;font-weight:600}
+  .set-head h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--muted);letter-spacing:-.02em}
+  .set-head .meta{font:500 10px/1.6 var(--mono);letter-spacing:.06em;color:var(--muted);margin-top:12px}
+  .navbtns{display:flex;gap:6px;flex:none}
+  .navbtns button{border:1px solid var(--line);background:none;padding:9px 12px;cursor:pointer;font:500 10px/1 var(--mono)}
+  .navbtns button:hover{border-color:var(--ink)}
+  .mobile-select{display:none;width:100%;border:1px solid var(--line);background:var(--surface);padding:10px;font:500 11px/1.3 var(--sans);margin-bottom:14px}
+  .images{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .imgcard{position:relative;border:1px solid var(--line);background:#fff;display:flex;flex-direction:column;min-width:0}
+  .imgcard.excluded{opacity:.42}
+  .imgcard .ph{position:relative;aspect-ratio:1/1;display:grid;place-items:center;background:#fff;padding:8px}
+  .imgcard .ph img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .imgcard .idx{position:absolute;z-index:2;top:8px;left:8px;background:rgba(20,18,15,.72);color:#fff;padding:4px 6px;font:500 9px/1 var(--mono)}
+  .imgcard .tags{position:absolute;z-index:2;right:8px;top:8px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;max-width:80%}
+  .imgcard .tag{background:var(--green);color:#fff;padding:4px 6px;font:500 8px/1 var(--mono);letter-spacing:.06em}
+  .imgcard .tag.hero{background:var(--gold)}
+  .imgcard .tag.ex{background:var(--red)}
+  .imgcard .acts{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--line)}
+  .imgcard .acts button{border:0;border-right:1px solid var(--line);background:none;padding:8px 4px;font:500 9px/1 var(--mono);cursor:pointer}
+  .imgcard .acts button:last-child{border-right:0}
+  .imgcard .acts button:hover{background:rgba(20,18,15,.05)}
+  .imgcard .acts button.on{background:var(--ink);color:var(--paper)}
+  .imgcard .acts button.danger.on{background:var(--red);color:#fff}
+  .empty{padding:30px;border:1px dashed var(--line);font:400 12px/1.6 var(--mono);color:var(--muted)}
+  .side{position:sticky;top:82px}
+  .side .box{border:1px solid var(--line);background:var(--surface);padding:14px}
+  .side h2{margin:0 0 4px;font:500 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+  .side .note{margin:0 0 12px;font:400 10px/1.5 var(--mono);color:var(--muted)}
+  .slots{display:grid;gap:8px}
+  .slot{position:relative;aspect-ratio:4/3;background:#e4ded4;border:1px solid var(--line);overflow:hidden;display:grid;place-items:center}
+  .slot img{width:100%;height:100%;object-fit:cover}
+  .slot .n{font:500 9px/1 var(--mono);color:var(--muted);letter-spacing:.1em}
+  .slot .rm{position:absolute;top:4px;right:4px;z-index:2;border:0;background:rgba(20,18,15,.72);color:#fff;width:22px;height:22px;cursor:pointer;font:500 13px/1 var(--mono)}
+  .slot .cd{position:absolute;left:5px;bottom:5px;background:rgba(20,18,15,.72);color:#fff;padding:3px 5px;font:500 8px/1 var(--mono)}
+  .coverbox{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  .coverbox .cover{aspect-ratio:1/1;background:#fff;border:1px solid var(--line);display:grid;place-items:center;padding:8px}
+  .coverbox .cover img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .coverbox .cap{margin-top:8px;font:400 10px/1.5 var(--mono);color:var(--muted)}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:100;background:var(--ink);color:var(--paper);padding:11px 16px;font:500 11px/1 var(--mono);letter-spacing:.04em;opacity:0;pointer-events:none;transition:opacity .2s}
+  .toast.on{opacity:1}
+  @media (max-width:1180px){
+    .app{grid-template-columns:minmax(0,1fr) 290px}
+    .setlist{display:none}
+    .mobile-select{display:block}
+  }
+  @media (max-width:820px){
+    .app{grid-template-columns:1fr;padding:16px;gap:18px}
+    .side{position:static}
+    .images{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .top-in{padding:12px 16px;gap:10px}
+    .top .stat{display:none}
+    .set-head{align-items:flex-start}
+    .set-head h1{font-size:clamp(1.8rem,9vw,2.7rem)}
+    .navbtns button{padding:8px 9px}
+    .side .slots{grid-template-columns:repeat(5,1fr);overflow-x:auto}
+    .slot .n{font-size:8px}
+    .slot .rm{width:18px;height:18px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><b id="brandName">选图</b> <span>REVIEW DESK</span></div>
+    <div class="stat">封面 <b id="coverCount">0</b>/<span id="setTotal">0</span></div>
+    <div class="stat">轮播 <b id="heroCount">0</b>/5</div>
+    <div class="stat">删除 <b id="excludeCount">0</b> 张</div>
+    <div class="grow"></div>
+    <button type="button" id="resetBtn">重置</button>
+    <button type="button" id="copyBtn">复制 JSON</button>
+    <button type="button" class="primary" id="exportBtn">导出 JSON</button>
+  </div>
+</header>
+
+<main class="app">
+  <aside class="setlist" aria-label="套图列表">
+    <div class="setlist-head" id="setlistHead">套图 · 点击切换</div>
+    <div id="setList"></div>
+  </aside>
+
+  <section class="main">
+    <select class="mobile-select" id="mobileSelect" aria-label="选择套图"></select>
+    <div class="set-head">
+      <div>
+        <div class="kicker" id="setKicker"></div>
+        <h1 id="setTitle"></h1>
+        <div class="meta" id="setMeta"></div>
+      </div>
+      <div class="navbtns">
+        <button type="button" id="hideSetBtn">整套不要</button>
+        <button type="button" id="prevBtn">← 上一套</button>
+        <button type="button" id="nextBtn">下一套 →</button>
+      </div>
+    </div>
+    <div class="images" id="images"></div>
+  </section>
+
+  <aside class="side">
+    <div class="box">
+      <h2>品牌右侧轮播 · 5 张</h2>
+      <p class="note">4:3 裁切预览；点图片下方「轮播」加入。</p>
+      <div class="slots" id="slots"></div>
+      <div class="coverbox">
+        <h2>当前封面</h2>
+        <div class="cover" id="coverPreview"></div>
+        <div class="cap" id="coverCap">未选，默认用第一张。</div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="../assets/data/works.js"></script>
+<script>
+(function(){
+  var qs = new URLSearchParams(location.search);
+  var key = (qs.get("b") || "gogreen").toLowerCase();
+  var brand = (window.WORKS.brands || []).find(function(b){ return b.key === key; });
+  if (!brand) { document.body.innerHTML = '<p style="padding:40px">没有这个品牌</p>'; return; }
+  var KEY = "vh-" + key + "-review-v1";
+  var sets = (brand.sets || []).slice();
+  document.title = brand.name + " 选图工作台 · 视觉厅副本";
+  document.getElementById("brandName").textContent = brand.name + " 选图";
+  document.getElementById("setTotal").textContent = sets.length;
+  document.getElementById("setlistHead").textContent = sets.length + " 套 · 点击切换";
+  var state = { sets: {}, hero: [] };
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || "null");
+    if (saved && saved.sets) state = saved;
+  } catch(e) {}
+  if (!state.sets) state.sets = {};
+  if (!state.hero) state.hero = [];
+
+  var cur = 0;
+  var listEl = document.getElementById("setList");
+  var mobileEl = document.getElementById("mobileSelect");
+  var imagesEl = document.getElementById("images");
+  var slotsEl = document.getElementById("slots");
+  var toastEl = document.getElementById("toast");
+
+  function src(p){ return "../" + p; }
+  function rec(id){
+    if (!state.sets[id]) state.sets[id] = { exclude: [], cover: null };
+    if (!state.sets[id].exclude) state.sets[id].exclude = [];
+    return state.sets[id];
+  }
+  function shortTitle(sku){
+    var s = String(sku || "").replace(/^[0-9]+[-–—]/, "");
+    s = s.split("/")[0].trim();
+    s = s.replace(/[(（].*$/, "").trim();
+    s = s.replace(/[-–—]\d+套$/, "").trim();
+    return s || String(sku || "");
+  }
+  function subTitle(sku){
+    var s = String(sku || "");
+    var p = s.split("/");
+    if (p.length > 1) {
+      var sub = p.slice(1).join(" / ").trim();
+      return /^\d+$/.test(sub) ? "款式 " + sub : sub;
+    }
+    var m = s.match(/[（(](.+)$/);
+    return m ? m[1].replace(/[）)]$/, "").trim() : "";
+  }
+  function effectiveCover(s){
+    var r = rec(s.id);
+    if (r.cover) return r.cover;
+    for (var i=0; i<s.images.length; i++) if (r.exclude.indexOf(i) === -1) return s.images[i];
+    return s.cover;
+  }
+  function save(){
+    localStorage.setItem(KEY, JSON.stringify(state));
+    refreshCounts();
+  }
+  function refreshCounts(){
+    var c=0, ex=0;
+    sets.forEach(function(s){
+      var r=rec(s.id);
+      if (r.cover) c++;
+      ex += r.exclude.length;
+    });
+    document.getElementById("coverCount").textContent = c;
+    document.getElementById("excludeCount").textContent = ex;
+    document.getElementById("heroCount").textContent = state.hero.length;
+  }
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function(){ toastEl.classList.remove("on"); }, 1600);
+  }
+  function renderList(){
+    listEl.innerHTML = sets.map(function(s,i){
+      var r=rec(s.id);
+      var active=i===cur ? " active":"";
+      var dot=r.cover ? " c":"";
+      var warn=(key==="gogreen"&&(s.id==="a25-116"||s.id==="a25-117")) ? '<span class="warn">功能图</span>' : '';
+      return '<button type="button" class="setitem'+active+'" data-i="'+i+'">'+
+        '<span class="id">'+s.id+'</span><span class="dot'+dot+'"></span>'+
+        '<span class="t">'+shortTitle(s.sku)+'</span>'+warn+'</button>';
+    }).join("");
+    mobileEl.innerHTML = sets.map(function(s,i){
+      return '<option value="'+i+'"'+(i===cur?' selected':'')+'>'+s.id+' · '+shortTitle(s.sku)+'</option>';
+    }).join("");
+    var act=listEl.querySelector(".active");
+    if (act) act.scrollIntoView({block:"nearest"});
+  }
+  function renderSet(){
+    var s=sets[cur], r=rec(s.id);
+    document.getElementById("setKicker").textContent = brand.name + " / " + String(cur+1).padStart(2,"0") + " OF " + sets.length;
+    document.getElementById("hideSetBtn").textContent = r.exclude.length === s.images.length ? "恢复整套" : "整套不要";
+    document.getElementById("setTitle").innerHTML = shortTitle(s.sku);
+    document.getElementById("setMeta").textContent = s.cat + " · " + s.count + " 张 · " + (subTitle(s.sku) || s.id);
+    imagesEl.innerHTML = s.images.map(function(p,i){
+      var isEx=r.exclude.indexOf(i)>-1;
+      var isCov=effectiveCover(s)===p && !isEx;
+      var hi=state.hero.indexOf(p);
+      var tags="";
+      if (isCov) tags+='<span class="tag">封面</span>';
+      if (hi>-1) tags+='<span class="tag hero">轮播 '+(hi+1)+'</span>';
+      if (isEx) tags+='<span class="tag ex">不要</span>';
+      return '<figure class="imgcard'+(isEx?' excluded':'')+'">'+
+        '<div class="ph"><img src="'+src(p)+'" alt="'+s.id+' 图 '+(i+1)+'" loading="lazy"><span class="idx">'+String(i+1).padStart(2,"0")+'</span><span class="tags">'+tags+'</span></div>'+
+        '<div class="acts">'+
+          '<button type="button" data-act="cover" data-i="'+i+'" class="'+(isCov?'on':'')+'">封面</button>'+
+          '<button type="button" data-act="hero" data-i="'+i+'" class="'+(hi>-1?'on':'')+'">轮播</button>'+
+          '<button type="button" data-act="exclude" data-i="'+i+'" class="danger '+(isEx?'on':'')+'">不要</button>'+
+        '</div></figure>';
+    }).join("");
+    renderSlots();
+    renderCover();
+    renderList();
+    refreshCounts();
+  }
+  function renderSlots(){
+    slotsEl.innerHTML = Array.from({length:5},function(_,i){
+      var p=state.hero[i];
+      if (!p) return '<div class="slot"><span class="n">0'+(i+1)+'</span></div>';
+      return '<div class="slot"><img src="'+src(p)+'" alt="轮播 '+(i+1)+'"><button type="button" class="rm" data-rm="'+i+'" aria-label="移除">×</button><span class="cd">0'+(i+1)+'</span></div>';
+    }).join("");
+  }
+  function renderCover(){
+    var s=sets[cur], p=effectiveCover(s), r=rec(s.id);
+    var el=document.getElementById("coverPreview");
+    el.innerHTML = '<img src="'+src(p)+'" alt="当前封面">';
+    document.getElementById("coverCap").textContent = r.cover ? "已指定：" + p.split("/").pop() : "未指定，默认用第一张干净图。";
+  }
+  function go(i){
+    cur = Math.max(0, Math.min(sets.length-1, i));
+    renderSet();
+  }
+  listEl.addEventListener("click", function(e){
+    var b=e.target.closest(".setitem"); if(!b) return;
+    go(Number(b.dataset.i));
+  });
+  mobileEl.addEventListener("change", function(){ go(Number(mobileEl.value)); });
+  imagesEl.addEventListener("click", function(e){
+    var b=e.target.closest("[data-act]"); if(!b) return;
+    var s=sets[cur], r=rec(s.id), i=Number(b.dataset.i), p=s.images[i], act=b.dataset.act;
+    if (act === "cover") {
+      r.cover = p;
+      r.exclude = r.exclude.filter(function(x){ return x !== i; });
+      toast("已设为封面");
+    } else if (act === "exclude") {
+      if (r.exclude.indexOf(i) > -1) r.exclude = r.exclude.filter(function(x){ return x !== i; });
+      else {
+        r.exclude.push(i);
+        if (r.cover === p) r.cover = null;
+        state.hero = state.hero.filter(function(x){ return x !== p; });
+      }
+      toast(r.exclude.indexOf(i)>-1 ? "已标记不要" : "已恢复");
+    } else if (act === "hero") {
+      if (r.exclude.indexOf(i) > -1) { toast("这张已标记不要"); return; }
+      var hi=state.hero.indexOf(p);
+      if (hi > -1) state.hero.splice(hi,1);
+      else {
+        if (state.hero.length >= 5) { toast("轮播最多 5 张"); return; }
+        state.hero.push(p);
+      }
+    }
+    save(); renderSet();
+  });
+  slotsEl.addEventListener("click", function(e){
+    var b=e.target.closest("[data-rm]"); if(!b) return;
+    state.hero.splice(Number(b.dataset.rm),1); save(); renderSlots(); refreshCounts();
+  });
+  document.getElementById("hideSetBtn").addEventListener("click", function(){
+    var s=sets[cur], r=rec(s.id);
+    if (r.exclude.length === s.images.length) {
+      r.exclude = [];
+      toast("已恢复整套");
+    } else {
+      r.exclude = s.images.map(function(_,i){ return i; });
+      r.cover = null;
+      state.hero = state.hero.filter(function(x){ return s.images.indexOf(x) === -1; });
+      toast("整套已标记不要");
+    }
+    save(); renderSet();
+  });
+  document.getElementById("prevBtn").addEventListener("click", function(){ go(cur-1); });
+  document.getElementById("nextBtn").addEventListener("click", function(){ go(cur+1); });
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if (!confirm("清空所有封面、删除和轮播选择？")) return;
+    state={sets:{},hero:[]}; save(); renderSet();
+  });
+  function exportData(){
+    var out={brand:key, exportedAt:new Date().toISOString(), hero:state.hero.slice(), sets:{}};
+    sets.forEach(function(s){
+      var r=rec(s.id);
+      out.sets[s.id]={cover:effectiveCover(s), exclude:r.exclude.slice()};
+    });
+    return out;
+  }
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    var data=JSON.stringify(exportData(),null,2);
+    var blob=new Blob([data],{type:"application/json"});
+    var a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=key+"-selection.json"; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+    toast("已导出 " + key + "-selection.json");
+  });
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var data=JSON.stringify(exportData());
+    if (navigator.clipboard) navigator.clipboard.writeText(data).then(function(){toast("JSON 已复制");},function(){toast("复制失败，用导出");});
+    else toast("用导出 JSON");
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT" || e.target.tagName === "TEXTAREA") return;
+    if (e.key === "ArrowLeft") go(cur-1);
+    if (e.key === "ArrowRight") go(cur+1);
+  });
+  renderSet();
+})();
+</script>
+</body>
+</html>
