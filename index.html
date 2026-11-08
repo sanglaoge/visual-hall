@@ -186,9 +186,7 @@
   @keyframes cometflow { to { stroke-dashoffset: -100; } }
   @media (prefers-reduced-motion: reduce) { .comet { animation: none; stroke-dasharray: none; opacity: 0; } }
 
-  .orbit { position: absolute; inset: 0; z-index: 1;
-    -webkit-mask-image: radial-gradient(ellipse 52% 46% at 50% 52%, transparent 0 60%, #000 86%);
-    mask-image: radial-gradient(ellipse 52% 46% at 50% 52%, transparent 0 60%, #000 86%); }
+  .orbit { position: absolute; inset: 0; z-index: 1; }
   .oc {
     position: absolute; left: 0; top: 0; width: 200px; height: 200px;
     padding: 0; background: none; border: 0; cursor: zoom-in; display: block;
@@ -207,21 +205,15 @@
     display: flex; flex-direction: column; align-items: center; text-align: center;
     pointer-events: none;
     background: radial-gradient(ellipse at center,
-      color-mix(in oklab, var(--sc-canvas) 84%, transparent) 0%,
-      color-mix(in oklab, var(--sc-canvas) 68%, transparent) 54%,
-      transparent 88%);
+      color-mix(in oklab, var(--sc-canvas) 60%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 50%, transparent) 52%,
+      transparent 80%);
   }
   html[data-theme="dark"] .hero-center {
     background: radial-gradient(ellipse at center,
-      color-mix(in oklab, var(--sc-canvas) 94%, transparent) 0%,
-      color-mix(in oklab, var(--sc-canvas) 86%, transparent) 54%,
-      transparent 92%);
-  }
-  @media (max-width: 700px) {
-    .orbit {
-      -webkit-mask-image: radial-gradient(ellipse 72% 54% at 50% 54%, transparent 0 62%, #000 88%);
-      mask-image: radial-gradient(ellipse 72% 54% at 50% 54%, transparent 0 62%, #000 88%);
-    }
+      color-mix(in oklab, var(--sc-canvas) 86%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 78%, transparent) 52%,
+      transparent 86%);
   }
   .wm-row { position: relative; width: 100%; }
   .wm-scrim {
@@ -983,7 +975,7 @@
     W = hero.clientWidth; H = hero.clientHeight; CX = W / 2; CY = H / 2;
     var phone = W < 700;
     ARMS = phone ? 3 : 6;
-    CARD_N = phone ? 10 : 28;
+    CARD_N = phone ? 14 : 28;
     TURNS = phone ? 0.9 : 0.85;
     RMAXF = phone ? 0.8 : 0.7;
     var halfDiag = Math.hypot(W, H) / 2;
@@ -1023,8 +1015,6 @@
     var th = thetaBirth + j * (thetaExit - thetaBirth);
     var ang = th + c.arm * Math.PI * 2 / ARMS + spin;
     var r = C * th;
-    var rMin = (W < 700 ? 0.32 : 0.30) * Math.min(W, H);
-    if (r < rMin) r = rMin;
     var x = CX + r * Math.cos(ang), y = CY + r * Math.sin(ang);
     if (wobble) {
       x += 6 * (1 - c.hold) * Math.sin(t * 0.0016 + 2.399 * n);
