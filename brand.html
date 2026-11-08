@@ -110,7 +110,7 @@
   function coverFor(s) {
     if (TEXT_COVERS[s.id] && CLEAN_COVERS[s.id]) return "assets/covers-clean/" + s.id + ".webp";
     var r = selected(s), ks = kept(s);
-    if (r && r.cover && ks.indexOf(r.cover) > -1) return r.cover;
+    if (r && r.cover && ks.indexOf(r.cover) > -1) return "assets/covers-selected/" + s.id + ".webp";
     if (ks.length && ks.indexOf(s.cover) === -1) return ks[0];
     return CLEAN_COVERS[s.id] ? "assets/covers-clean/" + s.id + ".webp" : thumb(s.cover);
   }
