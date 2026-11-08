@@ -24,6 +24,7 @@
 | `rooms/` | 旧四厅页面，已被上面替代（待删） |
 | `builds/` | 深度案例（当前 `kingrest-showcase/`，scroll-craft 独立站） |
 | `prototypes/` `assets/vendor/` `assets/covers/` `assets/orbit-card/` `assets/covers-clean/` `assets/brand-logos/` | v3 方向稿、自托管动效库、列表封面 700px、首屏卡 640px、无文案封面、品牌 LOGO |
+| `review/gogreen.html` `assets/data/gogreen-selection.*` | GOGREEN 选图工作台，导出 JSON 后由 `scripts/manifest.py` 应用 |
 | `assets/` | 站点产物：`main/` `video/` `ugc/` `acc/` `orbit/` + `data/works.js`（brands / sets2025 / products / acc）+ 共用 `gallery.css/js` + `scrollcraft.css/js`（引擎，勿按项目改） |
 | `scripts/build-gallery.py` | 源素材 → 上站产物，幂等可重跑；⚠️ 旧目录路径，待重写 |
 | `scripts/manifest.py` | 读 `assets/data/works.js` 生成 `作品清单.md` |
