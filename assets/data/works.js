@@ -269,7 +269,8 @@ window.WORKS = {
     }
    ],
    "videos": [
-    "v08"
+    "v08",
+    "v09"
    ],
    "ugc": [
     "u001",
@@ -1506,6 +1507,17 @@ window.WORKS = {
    "src": "assets/video/v08.mp4",
    "poster": "assets/video/v08.webp",
    "long": "横",
+   "dur": 22.0
+  },
+  {
+   "id": "v09",
+   "title": "绗缝被 · 竖版",
+   "tag": "代码生成 / 竖版",
+   "note": "印花与厚度竖屏重排",
+   "product": "quilt",
+   "src": "assets/video/v09.mp4",
+   "poster": "assets/video/v09.webp",
+   "long": "竖",
    "dur": 22.0
   }
  ],
