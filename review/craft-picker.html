@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首页辅料展示 · 视觉厅</title>
+<style>
+  :root{--paper:#f2f1ee;--surface:#fbfaf7;--ink:#14120f;--muted:#676157;--line:rgba(20,18,15,.16);--green:#439b44;--red:#b23b2e}
+  *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 -apple-system,"PingFang SC","Hiragino Sans GB",sans-serif}
+  button{font:inherit;color:inherit} img{display:block}
+  .top{position:sticky;top:0;z-index:20;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 20px;background:rgba(242,241,238,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top b{font-size:15px;letter-spacing:.04em}.top .grow{flex:1}.top .stat{font-size:12px;color:var(--muted)}
+  .top button{border:1px solid var(--line);background:none;padding:7px 10px;cursor:pointer;font-size:12px}
+  .top button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;padding:12px 20px 0}
+  .chip{border:1px solid var(--line);background:none;padding:5px 10px;border-radius:999px;cursor:pointer;font-size:11px}
+  .chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding:14px 20px 80px;max-width:1500px;margin:0 auto}
+  .card{position:relative;border:2px solid transparent;background:var(--surface);cursor:pointer;text-align:left;padding:0;overflow:hidden}
+  .card.on{border-color:var(--green)}
+  .card img{width:100%;aspect-ratio:4/3;object-fit:contain;background:#fff}
+  .meta{padding:8px 9px 10px}
+  .meta b{display:block;font-size:12px;line-height:1.35;font-weight:600}
+  .meta span{display:block;margin-top:3px;font-size:10px;color:var(--muted)}
+  .badge{position:absolute;top:6px;right:6px;background:var(--green);color:#fff;font-size:10px;padding:3px 6px;display:none}
+  .card.on .badge{display:block}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 14px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:50}
+  .toast.on{opacity:1}
+  @media (max-width:1100px){.grid{grid-template-columns:repeat(4,1fr)}}
+  @media (max-width:760px){.grid{grid-template-columns:repeat(2,1fr);padding:12px 12px 90px}.top{padding:10px 12px}.chips{padding:10px 12px 0}}
+</style>
+<header class="top">
+  <b>首页辅料展示</b><span class="stat">选 8 件 · 已选 <b id="count">0</b>/8</span>
+  <span class="grow"></span>
+  <button type="button" id="copyBtn">复制 JSON</button>
+  <button type="button" class="primary" id="exportBtn">导出 JSON</button>
+</header>
+<div class="chips" id="chips"></div>
+<main class="grid" id="grid"></main>
+<div class="toast" id="toast"></div>
+<script src="../assets/data/works.js"></script>
+<script>
+(function(){
+  var W=window.WORKS||{}, KEY='vh-craft-picks-v1', MAX=8;
+  var CRAFT=[
+    {id:'craft-giftbox',brand:'2026 新品',kind:'实物',title:'电热毯礼盒',src:'assets/craft/giftbox.webp'},
+    {id:'craft-controller',brand:'2026 新品',kind:'实物',title:'数显控制器',src:'assets/craft/controller.webp'},
+    {id:'craft-cert',brand:'2026 新品',kind:'认证',title:'Intertek 认证',src:'assets/craft/cert.webp'}
+  ];
+  var items=CRAFT.concat((W.acc||[]).filter(function(a){return a.kind!=='三视图';}).map(function(a){
+    return {id:a.id,brand:a.brand||'2026 新品',kind:a.kind,title:a.title,src:a.preview};
+  }));
+  var DEFAULT=['craft-giftbox','a25-021','a25-028','a25-002','a25-065','craft-cert','craft-controller','a03'];
+  var picked={};
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved&&saved.length) saved.forEach(function(id){picked[id]=1;});}catch(e){}
+  if(!Object.keys(picked).length) DEFAULT.forEach(function(id){picked[id]=1;});
+  var brand='全部';
+  var brands=['全部'];
+  items.forEach(function(x){if(brands.indexOf(x.brand)<0)brands.push(x.brand);});
+  function save(){localStorage.setItem(KEY,JSON.stringify(Object.keys(picked)));}
+  function toast(msg){var el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove('on');},1500);}
+  function paint(){
+    document.getElementById('chips').innerHTML=brands.map(function(b){return '<button class="chip'+(b===brand?' on':'')+'" data-b="'+b+'">'+b+'</button>';}).join('');
+    document.getElementById('grid').innerHTML=items.filter(function(x){return brand==='全部'||x.brand===brand;}).map(function(x){
+      return '<button class="card'+(picked[x.id]?' on':'')+'" data-id="'+x.id+'"><span class="badge">已选</span><img src="../'+x.src+'" loading="lazy" alt=""><span class="meta"><b>'+x.title+'</b><span>'+x.brand+' · '+x.kind+'</span></span></button>';
+    }).join('');
+    document.getElementById('count').textContent=Object.keys(picked).length;
+  }
+  document.getElementById('chips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;brand=b.dataset.b;paint();});
+  document.getElementById('grid').addEventListener('click',function(e){
+    var b=e.target.closest('.card');if(!b)return;
+    var id=b.dataset.id;
+    if(picked[id]) delete picked[id];
+    else {
+      if(Object.keys(picked).length>=MAX){toast('最多选 8 件，先取消一件');return;}
+      picked[id]=1;
+    }
+    save();paint();
+  });
+  function data(){
+    return Object.keys(picked).map(function(id){return items.filter(function(x){return x.id===id;})[0];}).filter(Boolean);
+  }
+  document.getElementById('exportBtn').addEventListener('click',function(){
+    var blob=new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download='craft-selection.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},800);toast('已导出 craft-selection.json');
+  });
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var txt=JSON.stringify(data());
+    if(navigator.clipboard) navigator.clipboard.writeText(txt).then(function(){toast('已复制');},function(){toast('复制失败，用导出');});
+    else toast('用导出 JSON');
+  });
+  paint();
+})();
+</script>
+</html>
