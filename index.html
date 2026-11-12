@@ -397,10 +397,17 @@
   }
   .desk-head b { font: 600 1.2rem/1.2 var(--font-archivo); letter-spacing: .01em; }
   .desk-head a { color: #241a10; text-decoration: none; border-bottom: 1px solid rgba(36, 26, 16, .4); padding-bottom: 3px; }
+  .desk-section { padding: clamp(18px,2.6vw,30px) 0; }
+  .desk-section + .desk-section { border-top: 1px solid rgba(36, 26, 16, .28); }
+  .desk-section-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; font: 400 .64rem/1.3 var(--font-mono); letter-spacing: .1em; color: rgba(36, 26, 16, .7); }
+  .desk-brand { font: 600 1rem/1 var(--font-archivo); letter-spacing: .02em; color: #241a10; }
+  .desk-logo { height: 22px; width: auto; display: block; }
+  .desk-section .pd-card .paper { padding: clamp(6px, 1vw, 12px); }
+
   .desk-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(12px, 1.8vw, 22px); }
   .pd-card { grid-column: span 3; margin: 0; display: flex; flex-direction: column; }
   .pd-card.big { grid-column: span 6; grid-row: span 2; }
-  .pd-card.wide { grid-column: span 6; }
+  .pd-card.wide { grid-column: span 12; }
   .pd-card .paper {
     display: grid; place-items: center; padding: clamp(8px, 1.2vw, 16px);
     background: #fbf8f0; flex: 1; min-height: 160px;
@@ -497,24 +504,6 @@
   }
   .lab-row:first-of-type { margin-top: 0; }
 
-
-  /* craft series rows */
-  .craft-series { border-top: 1px solid var(--hair); }
-  .craft-row { padding: clamp(20px,3vh,32px) 0; border-bottom: 1px solid var(--hair); }
-  .craft-row-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
-  .craft-brand { font: 600 .9rem/1 var(--font-archivo); letter-spacing: .02em; }
-  .craft-logo { height: 20px; width: auto; display: block; }
-  .craft-count { font: 400 .64rem/1 var(--font-mono); letter-spacing: .12em; color: var(--sc-ink-soft); }
-  .craft-strip { display: flex; gap: 8px; align-items: flex-start; }
-  .craft-item { flex: var(--ar) 1 0; min-width: 0; margin: 0; }
-  .craft-item img { width: 100%; height: auto; display: block; border: 1px solid var(--hair); background: #fff; }
-  .craft-item figcaption { padding-top: 7px; }
-  .craft-item b { display: block; font: 600 .78rem/1.35 var(--font-archivo); letter-spacing: .01em; }
-  .craft-item span { display: block; margin-top: 2px; font: 400 .6rem/1.4 var(--font-mono); letter-spacing: .05em; color: var(--sc-ink-soft); }
-  @media (max-width: 700px) {
-    .craft-strip { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
-    .craft-item { flex: 0 0 44vw; }
-  }
 
   /* film rows */
   .reel.brand { max-width: none; grid-template-columns: repeat(6, minmax(0, 1fr)); }
@@ -741,51 +730,128 @@
         <h2 class="sec-title" data-spine>包装和吊牌，<em>也是作品。</em></h2>
         <div class="meta-strip"><span>03 / 辅料</span><span>2026 新品 + 三品牌 · 24 件</span></div>
       </div>
-      <div class="craft-series" data-sc-in data-sc-stagger="50">
-        <section class="craft-row">
-          <div class="craft-row-head"><span class="craft-brand">2026 新品</span><span class="craft-count">6 件</span></div>
-          <div class="craft-strip">
-            <figure class="craft-item" style="--ar:1.02"><img src="assets/acc-trim/craft-giftbox.webp" alt="电热毯礼盒" loading="lazy"><figcaption><b>电热毯礼盒</b><span>礼盒 · 控制器</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:0.93"><img src="assets/acc-trim/a26-001.webp" alt="凉感被洗标" loading="lazy"><figcaption><b>凉感被洗标</b><span>品牌标 · 水洗标</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.02"><img src="assets/acc-trim/a04.webp" alt="电热毯纸盒" loading="lazy"><figcaption><b>电热毯纸盒</b><span>包装盒</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.4"><img src="assets/acc-trim/a05.webp" alt="纯色四件套彩卡" loading="lazy"><figcaption><b>纯色四件套彩卡</b><span>彩卡</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.5"><img src="assets/acc-trim/a06.webp" alt="绗缝被彩卡" loading="lazy"><figcaption><b>绗缝被彩卡</b><span>彩卡</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.0"><img src="assets/acc-trim/craft-controller.webp" alt="数显控制器" loading="lazy"><figcaption><b>数显控制器</b><span>6 档调温 · 定时</span></figcaption></figure>
+      <div class="paperdesk" data-sc-in data-sc-stagger="50">
+        <div class="desk-head">
+          <b>印刷稿 / PRINT PROOFS</b>
+          <a href="accessories.html">全部辅料 →</a>
+        </div>
+        <section class="desk-section">
+          <div class="desk-section-head"><span class="desk-brand">2026 新品</span><span>6 件</span></div>
+          <div class="desk-grid">
+            <figure class="pd-card big">
+              <div class="paper"><img src="assets/acc-trim/craft-giftbox.webp" alt="电热毯礼盒" loading="lazy"></div>
+              <figcaption><b>电热毯礼盒</b><span>礼盒 · 控制器</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a26-001.webp" alt="凉感被洗标" loading="lazy"></div>
+              <figcaption><b>凉感被洗标</b><span>品牌标 · 水洗标</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a04.webp" alt="电热毯纸盒" loading="lazy"></div>
+              <figcaption><b>电热毯纸盒</b><span>包装盒</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a05.webp" alt="纯色四件套彩卡" loading="lazy"></div>
+              <figcaption><b>纯色四件套彩卡</b><span>彩卡</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/craft-controller.webp" alt="数显控制器" loading="lazy"></div>
+              <figcaption><b>数显控制器</b><span>6 档调温 · 定时</span></figcaption>
+            </figure>
+            <figure class="pd-card wide">
+              <div class="paper"><img src="assets/acc-trim/a06.webp" alt="绗缝被彩卡" loading="lazy"></div>
+              <figcaption><b>绗缝被彩卡</b><span>彩卡</span></figcaption>
+            </figure>
           </div>
         </section>
-        <section class="craft-row">
-          <div class="craft-row-head"><img class="craft-logo" src="assets/brand-logos/gogreen-horizontal.png" alt="GOGREEN"><span class="craft-count">6 件</span></div>
-          <div class="craft-strip">
-            <figure class="craft-item" style="--ar:0.7"><img src="assets/acc-trim/a25-065.webp" alt="全涤洗标" loading="lazy"><figcaption><b>全涤洗标</b><span>毯子专用</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.1"><img src="assets/acc-trim/a25-002.webp" alt="防水枕套包装" loading="lazy"><figcaption><b>防水枕套包装</b><span>全棉汗布 · 2pack</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.23"><img src="assets/acc-trim/a25-060.webp" alt="万圣毯彩卡" loading="lazy"><figcaption><b>万圣毯彩卡</b><span>色号</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:0.85"><img src="assets/acc-trim/a25-055.webp" alt="飞机盒刀版" loading="lazy"><figcaption><b>飞机盒刀版</b><span>结构</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.4"><img src="assets/acc-trim/a25-021.webp" alt="笠高 topper 彩卡" loading="lazy"><figcaption><b>笠高 topper 彩卡</b><span>22×16</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.37"><img src="assets/acc-trim/a25-028.webp" alt="儿童套件彩卡" loading="lazy"><figcaption><b>儿童套件彩卡</b><span>21×15.3</span></figcaption></figure>
+        <section class="desk-section">
+          <div class="desk-section-head"><img class="desk-logo" src="assets/brand-logos/gogreen-horizontal.png" alt="GOGREEN"><span>6 件</span></div>
+          <div class="desk-grid">
+            <figure class="pd-card big">
+              <div class="paper"><img src="assets/acc-trim/a25-002.webp" alt="防水枕套包装" loading="lazy"></div>
+              <figcaption><b>防水枕套包装</b><span>全棉汗布 · 2pack</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-065.webp" alt="全涤洗标" loading="lazy"></div>
+              <figcaption><b>全涤洗标</b><span>毯子专用</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-060.webp" alt="万圣毯彩卡" loading="lazy"></div>
+              <figcaption><b>万圣毯彩卡</b><span>色号</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-055.webp" alt="飞机盒刀版" loading="lazy"></div>
+              <figcaption><b>飞机盒刀版</b><span>结构</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-028.webp" alt="儿童套件彩卡" loading="lazy"></div>
+              <figcaption><b>儿童套件彩卡</b><span>21×15.3</span></figcaption>
+            </figure>
+            <figure class="pd-card wide">
+              <div class="paper"><img src="assets/acc-trim/a25-021.webp" alt="笠高 topper 彩卡" loading="lazy"></div>
+              <figcaption><b>笠高 topper 彩卡</b><span>22×16</span></figcaption>
+            </figure>
           </div>
         </section>
-        <section class="craft-row">
-          <div class="craft-row-head"><img class="craft-logo" src="assets/brand-logos/Hitime-primary.png" alt="HITIME"><span class="craft-count">6 件</span></div>
-          <div class="craft-strip">
-            <figure class="craft-item" style="--ar:1.39"><img src="assets/acc-trim/a25-069.webp" alt="狗垫彩卡" loading="lazy"><figcaption><b>狗垫彩卡</b><span>18×25</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.25"><img src="assets/acc-trim/a25-081.webp" alt="床笠彩卡" loading="lazy"><figcaption><b>床笠彩卡</b><span>30×24</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.21"><img src="assets/acc-trim/a25-074.webp" alt="竹涤套件彩卡" loading="lazy"><figcaption><b>竹涤套件彩卡</b><span>彩卡</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.09"><img src="assets/acc-trim/a25-080.webp" alt="防水枕套彩卡" loading="lazy"><figcaption><b>防水枕套彩卡</b><span>2pack</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.3"><img src="assets/acc-trim/a25-086.webp" alt="万圣毯彩卡" loading="lazy"><figcaption><b>万圣毯彩卡</b><span>色号</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.17"><img src="assets/acc-trim/a25-088.webp" alt="圣诞被套彩卡" loading="lazy"><figcaption><b>圣诞被套彩卡</b><span>色号</span></figcaption></figure>
+        <section class="desk-section">
+          <div class="desk-section-head"><img class="desk-logo" src="assets/brand-logos/Hitime-primary.png" alt="HITIME"><span>6 件</span></div>
+          <div class="desk-grid">
+            <figure class="pd-card big">
+              <div class="paper"><img src="assets/acc-trim/a25-081.webp" alt="床笠彩卡" loading="lazy"></div>
+              <figcaption><b>床笠彩卡</b><span>30×24</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-069.webp" alt="狗垫彩卡" loading="lazy"></div>
+              <figcaption><b>狗垫彩卡</b><span>18×25</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-074.webp" alt="竹涤套件彩卡" loading="lazy"></div>
+              <figcaption><b>竹涤套件彩卡</b><span>彩卡</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-080.webp" alt="防水枕套彩卡" loading="lazy"></div>
+              <figcaption><b>防水枕套彩卡</b><span>2pack</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-088.webp" alt="圣诞被套彩卡" loading="lazy"></div>
+              <figcaption><b>圣诞被套彩卡</b><span>色号</span></figcaption>
+            </figure>
+            <figure class="pd-card wide">
+              <div class="paper"><img src="assets/acc-trim/a25-086.webp" alt="万圣毯彩卡" loading="lazy"></div>
+              <figcaption><b>万圣毯彩卡</b><span>色号</span></figcaption>
+            </figure>
           </div>
         </section>
-        <section class="craft-row">
-          <div class="craft-row-head"><img class="craft-logo" src="assets/brand-logos/Kingrest-dark.png" alt="KINGREST"><span class="craft-count">6 件</span></div>
-          <div class="craft-strip">
-            <figure class="craft-item" style="--ar:1.33"><img src="assets/acc-trim/a25-093.webp" alt="套件包装 01" loading="lazy"><figcaption><b>套件包装 01</b><span>印刷稿</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.32"><img src="assets/acc-trim/a25-098.webp" alt="枕套彩卡 4pack" loading="lazy"><figcaption><b>枕套彩卡 4pack</b><span>25×19</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.33"><img src="assets/acc-trim/a25-094.webp" alt="套件包装 02" loading="lazy"><figcaption><b>套件包装 02</b><span>印刷稿</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.33"><img src="assets/acc-trim/a25-095.webp" alt="套件包装 03" loading="lazy"><figcaption><b>套件包装 03</b><span>印刷稿</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.09"><img src="assets/acc-trim/a25-097.webp" alt="枕套彩卡 2pack" loading="lazy"><figcaption><b>枕套彩卡 2pack</b><span>24×22</span></figcaption></figure>
-            <figure class="craft-item" style="--ar:1.33"><img src="assets/acc-trim/a25-096.webp" alt="套件包装 04" loading="lazy"><figcaption><b>套件包装 04</b><span>印刷稿</span></figcaption></figure>
+        <section class="desk-section">
+          <div class="desk-section-head"><img class="desk-logo" src="assets/brand-logos/Kingrest-dark.png" alt="KINGREST"><span>6 件</span></div>
+          <div class="desk-grid">
+            <figure class="pd-card big">
+              <div class="paper"><img src="assets/acc-trim/a25-093.webp" alt="套件包装 01" loading="lazy"></div>
+              <figcaption><b>套件包装 01</b><span>印刷稿</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-094.webp" alt="套件包装 02" loading="lazy"></div>
+              <figcaption><b>套件包装 02</b><span>印刷稿</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-095.webp" alt="套件包装 03" loading="lazy"></div>
+              <figcaption><b>套件包装 03</b><span>印刷稿</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-097.webp" alt="枕套彩卡 2pack" loading="lazy"></div>
+              <figcaption><b>枕套彩卡 2pack</b><span>24×22</span></figcaption>
+            </figure>
+            <figure class="pd-card ">
+              <div class="paper"><img src="assets/acc-trim/a25-096.webp" alt="套件包装 04" loading="lazy"></div>
+              <figcaption><b>套件包装 04</b><span>印刷稿</span></figcaption>
+            </figure>
+            <figure class="pd-card wide">
+              <div class="paper"><img src="assets/acc-trim/a25-098.webp" alt="枕套彩卡 4pack" loading="lazy"></div>
+              <figcaption><b>枕套彩卡 4pack</b><span>25×19</span></figcaption>
+            </figure>
           </div>
         </section>
+        <div class="desk-foot"><span>2026 新品 6 件 · 三品牌各 6 件</span><span>包装 / 彩卡 / 洗标 / 刀版</span></div>
       </div>
     </div>
   </section>
