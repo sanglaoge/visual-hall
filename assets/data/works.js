@@ -3051,6 +3051,24 @@ window.WORKS = {
    "images": [
     "assets/acc/a06-p1.webp"
    ]
+  },
+  {
+   "id": "a26-001",
+   "title": "凉感被洗标套件",
+   "kind": "洗标",
+   "brand": "GOGREEN",
+   "year": 2026,
+   "cat": "凉感被洗标",
+   "preview": "assets/acc/a26-001/02.webp",
+   "images": [
+    "assets/acc/a26-001/01.webp",
+    "assets/acc/a26-001/02.webp",
+    "assets/acc/a26-001/03.webp",
+    "assets/acc/a26-001/04.webp"
+   ],
+   "type": "WEBP",
+   "product": null,
+   "die": null
   }
  ],
  "hero": [
@@ -4758,7 +4776,8 @@ window.WORKS = {
     "a25-060",
     "a25-061",
     "a25-065",
-    "a25-066"
+    "a25-066",
+    "a26-001"
    ],
    "cover": "assets/orbit/a25-008.webp",
    "count": 81,
