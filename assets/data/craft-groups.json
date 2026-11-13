@@ -109,24 +109,6 @@
    "src": "assets/acc-trim/a25-061.webp",
    "group": "GOGREEN",
    "ar": 1.2
-  },
-  {
-   "id": "a25-034",
-   "brand": "GOGREEN",
-   "kind": "贴纸",
-   "title": "3.pdf",
-   "src": "assets/acc-trim/a25-034.webp",
-   "group": "GOGREEN",
-   "ar": 2.0
-  },
-  {
-   "id": "a25-032",
-   "brand": "GOGREEN",
-   "kind": "贴纸",
-   "title": "1.pdf",
-   "src": "assets/acc-trim/a25-032.webp",
-   "group": "GOGREEN",
-   "ar": 2.0
   }
  ],
  "HITIME": [
@@ -167,15 +149,6 @@
    "ar": 1.35
   },
   {
-   "id": "a25-077",
-   "brand": "HITIME",
-   "kind": "贴纸",
-   "title": "-02",
-   "src": "assets/acc-trim/a25-077.webp",
-   "group": "HITIME",
-   "ar": 1.35
-  },
-  {
    "id": "a25-068",
    "brand": "HITIME",
    "kind": "彩卡",
@@ -183,15 +156,6 @@
    "src": "assets/acc-trim/a25-068.webp",
    "group": "HITIME",
    "ar": 1.0
-  },
-  {
-   "id": "a25-076",
-   "brand": "HITIME",
-   "kind": "贴纸",
-   "title": "-01",
-   "src": "assets/acc-trim/a25-076.webp",
-   "group": "HITIME",
-   "ar": 1.35
   },
   {
    "id": "a25-085",
@@ -241,15 +205,6 @@
    "ar": 1.33
   },
   {
-   "id": "a25-096",
-   "brand": "KINGREST",
-   "kind": "包装",
-   "title": "04.pdf",
-   "src": "assets/acc-trim/a25-096.webp",
-   "group": "KINGREST",
-   "ar": 1.33
-  },
-  {
    "id": "a25-099",
    "brand": "KINGREST",
    "kind": "彩卡",
@@ -257,15 +212,6 @@
    "src": "assets/acc-trim/a25-099.webp",
    "group": "KINGREST",
    "ar": 1.37
-  },
-  {
-   "id": "a25-100",
-   "brand": "KINGREST",
-   "kind": "彩卡",
-   "title": "ingrest 全棉缎面医院床笠",
-   "src": "assets/acc-trim/a25-100.webp",
-   "group": "KINGREST",
-   "ar": 1.25
   },
   {
    "id": "a25-101",
