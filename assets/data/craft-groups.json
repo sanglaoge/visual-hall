@@ -5,6 +5,7 @@
    "brand": "2026 新品",
    "kind": "包装盒",
    "title": "凉感被包装盒",
+   "caption": "包装盒",
    "src": "assets/acc-trim/a03.webp",
    "group": "2026",
    "ar": 0.9
@@ -14,6 +15,7 @@
    "brand": "2026 新品",
    "kind": "实物",
    "title": "电热毯礼盒",
+   "caption": "礼盒 · 控制器",
    "src": "assets/acc-trim/craft-giftbox.webp",
    "group": "2026",
    "ar": 1.02
@@ -23,6 +25,7 @@
    "brand": "2026 新品",
    "kind": "认证",
    "title": "Intertek 认证",
+   "caption": "检测报告",
    "src": "assets/acc-trim/craft-cert.webp",
    "group": "2026",
    "ar": 2.44
@@ -32,6 +35,7 @@
    "brand": "2026 新品",
    "kind": "彩卡",
    "title": "纯色四件套彩卡",
+   "caption": "彩卡",
    "src": "assets/acc-trim/a05.webp",
    "group": "2026",
    "ar": 1.4
@@ -40,7 +44,8 @@
    "id": "a26-001",
    "brand": "GOGREEN",
    "kind": "洗标",
-   "title": "凉感被洗标套件",
+   "title": "凉感被洗标",
+   "caption": "品牌标 · 水洗标",
    "src": "assets/acc-trim/a26-001.webp",
    "group": "2026",
    "ar": 0.93
@@ -50,6 +55,7 @@
    "brand": "2026 新品",
    "kind": "彩卡",
    "title": "绗缝被彩卡",
+   "caption": "彩卡",
    "src": "assets/acc-trim/a06.webp",
    "group": "2026",
    "ar": 1.5
@@ -60,90 +66,80 @@
    "id": "a25-002",
    "brand": "GOGREEN",
    "kind": "包装",
-   "title": "全棉汗布-防水枕套-2pack-24x22cm",
+   "title": "防水枕套包装",
+   "caption": "全棉汗布 · 2pack",
    "src": "assets/acc-trim/a25-002.webp",
    "group": "GOGREEN",
    "ar": 1.1
   },
   {
-   "id": "a25-060",
-   "brand": "GOGREEN",
-   "kind": "彩卡",
-   "title": "万圣毯子彩卡色号",
-   "src": "assets/acc-trim/a25-060.webp",
-   "group": "GOGREEN",
-   "ar": 1.23
-  },
-  {
    "id": "a25-055",
    "brand": "GOGREEN",
    "kind": "刀版",
-   "title": "X20X7飞机盒刀版(打印)",
+   "title": "飞机盒刀版",
+   "caption": "结构",
    "src": "assets/acc-trim/a25-055.webp",
    "group": "GOGREEN",
    "ar": 0.85
   },
   {
-   "id": "a25-028",
+   "id": "a25-031",
    "brand": "GOGREEN",
    "kind": "彩卡",
-   "title": "儿童套件彩卡(打印21x15.3cm",
-   "src": "assets/acc-trim/a25-028.webp",
+   "title": "竹涤套件彩卡",
+   "caption": "16.5×20",
+   "src": "assets/acc-trim/a25-031.webp",
+   "group": "GOGREEN",
+   "ar": 0.83
+  },
+  {
+   "id": "a25-045",
+   "brand": "GOGREEN",
+   "kind": "彩卡",
+   "title": "毛巾彩卡",
+   "caption": "包装",
+   "src": "assets/acc-trim/a25-045.webp",
    "group": "GOGREEN",
    "ar": 1.37
   },
   {
-   "id": "a25-007",
-   "brand": "GOGREEN",
-   "kind": "包装",
-   "title": "竹棉汗布-防水枕套-2pack-24x22cm",
-   "src": "assets/acc-trim/a25-007.webp",
-   "group": "GOGREEN",
-   "ar": 1.1
-  },
-  {
-   "id": "a25-061",
+   "id": "a25-013",
    "brand": "GOGREEN",
    "kind": "彩卡",
-   "title": "圣诞彩卡色号",
-   "src": "assets/acc-trim/a25-061.webp",
+   "title": "Topper 彩卡",
+   "caption": "22×16",
+   "src": "assets/acc-trim/a25-013.webp",
    "group": "GOGREEN",
-   "ar": 1.2
+   "ar": 1.4
   }
  ],
  "HITIME": [
   {
-   "id": "a25-069",
-   "brand": "HITIME",
-   "kind": "彩卡",
-   "title": "itime狗垫子彩卡25x18cm（打印",
-   "src": "assets/acc-trim/a25-069.webp",
-   "group": "HITIME",
-   "ar": 1.39
-  },
-  {
    "id": "a25-081",
    "brand": "HITIME",
    "kind": "彩卡",
-   "title": "itime-全涤汗布防水床笠30x24cm（打印",
+   "title": "床笠彩卡",
+   "caption": "30×24",
    "src": "assets/acc-trim/a25-081.webp",
    "group": "HITIME",
    "ar": 1.25
   },
   {
-   "id": "a25-074",
+   "id": "a25-069",
    "brand": "HITIME",
    "kind": "彩卡",
-   "title": "竹涤套件彩卡",
-   "src": "assets/acc-trim/a25-074.webp",
+   "title": "狗垫彩卡",
+   "caption": "18×25",
+   "src": "assets/acc-trim/a25-069.webp",
    "group": "HITIME",
-   "ar": 1.21
+   "ar": 1.39
   },
   {
    "id": "a25-082",
    "brand": "HITIME",
    "kind": "彩卡",
-   "title": "毛巾彩卡22x16cm",
+   "title": "毛巾彩卡",
+   "caption": "22×16",
    "src": "assets/acc-trim/a25-082.webp",
    "group": "HITIME",
    "ar": 1.35
@@ -152,19 +148,21 @@
    "id": "a25-068",
    "brand": "HITIME",
    "kind": "彩卡",
-   "title": "itime-床桥彩卡14.2x14.2cm（打印",
+   "title": "床桥彩卡",
+   "caption": "14.2×14.2",
    "src": "assets/acc-trim/a25-068.webp",
    "group": "HITIME",
    "ar": 1.0
   },
   {
-   "id": "a25-085",
+   "id": "a25-074",
    "brand": "HITIME",
-   "kind": "贴纸",
-   "title": "被芯 贴纸",
-   "src": "assets/acc-trim/a25-085.webp",
+   "kind": "彩卡",
+   "title": "竹涤套件彩卡",
+   "caption": "彩卡",
+   "src": "assets/acc-trim/a25-074.webp",
    "group": "HITIME",
-   "ar": 1.94
+   "ar": 1.21
   }
  ],
  "KINGREST": [
@@ -172,7 +170,8 @@
    "id": "a25-093",
    "brand": "KINGREST",
    "kind": "包装",
-   "title": "01.pdf",
+   "title": "套件包装 01",
+   "caption": "印刷稿",
    "src": "assets/acc-trim/a25-093.webp",
    "group": "KINGREST",
    "ar": 1.33
@@ -181,46 +180,41 @@
    "id": "a25-098",
    "brand": "KINGREST",
    "kind": "彩卡",
-   "title": "Pack-25x19cm（打印",
+   "title": "枕套彩卡 4pack",
+   "caption": "25×19",
    "src": "assets/acc-trim/a25-098.webp",
    "group": "KINGREST",
    "ar": 1.32
   },
   {
-   "id": "a25-094",
-   "brand": "KINGREST",
-   "kind": "包装",
-   "title": "02.pdf",
-   "src": "assets/acc-trim/a25-094.webp",
-   "group": "KINGREST",
-   "ar": 1.33
-  },
-  {
-   "id": "a25-095",
-   "brand": "KINGREST",
-   "kind": "包装",
-   "title": "03.pdf",
-   "src": "assets/acc-trim/a25-095.webp",
-   "group": "KINGREST",
-   "ar": 1.33
-  },
-  {
    "id": "a25-099",
    "brand": "KINGREST",
    "kind": "彩卡",
-   "title": "ingrest 全棉缎条枕头-彩卡22x16cm(打印",
+   "title": "枕头彩卡",
+   "caption": "22×16",
    "src": "assets/acc-trim/a25-099.webp",
    "group": "KINGREST",
    "ar": 1.37
   },
   {
-   "id": "a25-101",
+   "id": "a25-096",
+   "brand": "KINGREST",
+   "kind": "包装",
+   "title": "套件包装 04",
+   "caption": "印刷稿",
+   "src": "assets/acc-trim/a25-096.webp",
+   "group": "KINGREST",
+   "ar": 1.33
+  },
+  {
+   "id": "a25-100",
    "brand": "KINGREST",
    "kind": "彩卡",
-   "title": "ingrest菠萝格毛巾彩卡 16x22cm",
-   "src": "assets/acc-trim/a25-101.webp",
+   "title": "医院床笠彩卡",
+   "caption": "彩卡",
+   "src": "assets/acc-trim/a25-100.webp",
    "group": "KINGREST",
-   "ar": 0.73
+   "ar": 1.25
   }
  ]
 }
