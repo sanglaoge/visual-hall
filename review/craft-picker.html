@@ -29,7 +29,7 @@
   @media (max-width:760px){.grid{grid-template-columns:repeat(2,1fr);padding:12px 12px 100px}.top{padding:10px 12px}.groups{padding:10px 12px 0}}
 </style>
 <header class="top">
-  <b>首页辅料 · 分品牌</b><span class="stat">2026 固定 6 · 三品牌各 5</span>
+  <b>首页辅料 · 分品牌</b><span class="stat">四段统一 5 件</span>
   <span class="grow"></span>
   <button type="button" id="copyBtn">复制 JSON</button>
   <button type="button" class="primary" id="exportBtn">导出 JSON</button>
@@ -40,7 +40,7 @@
 <script src="../assets/data/works.js"></script>
 <script>
 (function(){
-  var W=window.WORKS||{}, KEY='vh-craft-groups-v3', LIMIT={'2026':6,'GOGREEN':5,'HITIME':5,'KINGREST':5};
+  var W=window.WORKS||{}, KEY='vh-craft-groups-v4', LIMIT={'2026':5,'GOGREEN':5,'HITIME':5,'KINGREST':5};
   var CRAFT=[
     {id:'craft-giftbox',brand:'2026 新品',kind:'实物',title:'电热毯礼盒',src:'assets/craft/giftbox.webp',group:'2026'},
     {id:'craft-controller',brand:'2026 新品',kind:'实物',title:'数显控制器',src:'assets/craft/controller.webp',group:'2026'},
@@ -51,7 +51,7 @@
   }));
   var GROUPS=[['2026','2026 新品'],['GOGREEN','GOGREEN'],['HITIME','HITIME'],['KINGREST','KINGREST']];
   var DEFAULT={
-    '2026':['a03','craft-giftbox','craft-cert','a05','a26-001','a06'],
+    '2026':['craft-giftbox','a03','a05','a26-001','a06'],
     'GOGREEN':['a25-002','a25-055','a25-031','a25-045','a25-013'],
     'HITIME':['a25-081','a25-069','a25-082','a25-068','a25-074'],
     'KINGREST':['a25-093','a25-098','a25-099','a25-096','a25-100']
@@ -78,7 +78,7 @@
   document.getElementById('groups').addEventListener('click',function(e){var b=e.target.closest('.group');if(!b)return;cur=b.dataset.g;paint();});
   document.getElementById('grid').addEventListener('click',function(e){
     var b=e.target.closest('.card');if(!b)return;
-    if(cur==='2026'){toast('2026 先保持 6 件不动');return;}
+    if(cur==='2026'){toast('2026 已定 5 件，暂不调整');return;}
     var id=b.dataset.id, arr=picked[cur], i=arr.indexOf(id);
     if(i>-1) arr.splice(i,1);
     else { if(arr.length>=LIMIT[cur]){toast(groupLabel(cur)+' 最多 '+LIMIT[cur]+' 件，先取消一件');return;} arr.push(id); }

@@ -1,16 +1,6 @@
 {
  "2026": [
   {
-   "id": "a03",
-   "brand": "2026 新品",
-   "kind": "包装盒",
-   "title": "凉感被包装盒",
-   "caption": "包装盒",
-   "src": "assets/acc-trim/a03.webp",
-   "group": "2026",
-   "ar": 0.9
-  },
-  {
    "id": "craft-giftbox",
    "brand": "2026 新品",
    "kind": "实物",
@@ -21,14 +11,14 @@
    "ar": 1.02
   },
   {
-   "id": "craft-cert",
+   "id": "a03",
    "brand": "2026 新品",
-   "kind": "认证",
-   "title": "Intertek 认证",
-   "caption": "检测报告",
-   "src": "assets/acc-trim/craft-cert.webp",
+   "kind": "包装盒",
+   "title": "凉感被包装盒",
+   "caption": "包装盒",
+   "src": "assets/acc-trim/a03.webp",
    "group": "2026",
-   "ar": 2.44
+   "ar": 0.9
   },
   {
    "id": "a05",
