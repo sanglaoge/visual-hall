@@ -29,7 +29,7 @@
   @media (max-width:760px){.grid{grid-template-columns:repeat(2,1fr);padding:12px 12px 100px}.top{padding:10px 12px}.groups{padding:10px 12px 0}}
 </style>
 <header class="top">
-  <b>首页辅料 · 分品牌</b><span class="stat">每组 6-8 件</span>
+  <b>首页辅料 · 分品牌</b><span class="stat">2026 固定 6 · 三品牌各 5</span>
   <span class="grow"></span>
   <button type="button" id="copyBtn">复制 JSON</button>
   <button type="button" class="primary" id="exportBtn">导出 JSON</button>
@@ -40,7 +40,7 @@
 <script src="../assets/data/works.js"></script>
 <script>
 (function(){
-  var W=window.WORKS||{}, KEY='vh-craft-groups-v2', MAX=8, MIN=6;
+  var W=window.WORKS||{}, KEY='vh-craft-groups-v3', LIMIT={'2026':6,'GOGREEN':5,'HITIME':5,'KINGREST':5};
   var CRAFT=[
     {id:'craft-giftbox',brand:'2026 新品',kind:'实物',title:'电热毯礼盒',src:'assets/craft/giftbox.webp',group:'2026'},
     {id:'craft-controller',brand:'2026 新品',kind:'实物',title:'数显控制器',src:'assets/craft/controller.webp',group:'2026'},
@@ -52,9 +52,9 @@
   var GROUPS=[['2026','2026 新品'],['GOGREEN','GOGREEN'],['HITIME','HITIME'],['KINGREST','KINGREST']];
   var DEFAULT={
     '2026':['a03','craft-giftbox','craft-cert','a05','a26-001','a06'],
-    'GOGREEN':['a25-002','a25-060','a25-055','a25-028','a25-007','a25-061'],
-    'HITIME':['a25-081','a25-069','a25-074','a25-082','a25-068','a25-085'],
-    'KINGREST':['a25-093','a25-098','a25-094','a25-095','a25-099','a25-101']
+    'GOGREEN':['a25-002','a25-060','a25-055','a25-028','a25-061'],
+    'HITIME':['a25-081','a25-069','a25-074','a25-082','a25-068'],
+    'KINGREST':['a25-093','a25-098','a25-095','a25-099','a25-101']
   };
   var picked={}, cur='2026';
   try{
@@ -68,7 +68,7 @@
   function groupLabel(g){var hit=GROUPS.filter(function(x){return x[0]===g;})[0];return hit?hit[1]:g;}
   function paint(){
     document.getElementById('groups').innerHTML=GROUPS.map(function(g){
-      return '<button class="group'+(g[0]===cur?' on':'')+'" data-g="'+g[0]+'">'+g[1]+' '+picked[g[0]].length+'/8</button>';
+      return '<button class="group'+(g[0]===cur?' on':'')+'" data-g="'+g[0]+'">'+g[1]+' '+picked[g[0]].length+'/'+LIMIT[g[0]]+'</button>';
     }).join('');
     document.getElementById('grid').innerHTML=items.filter(function(x){return x.group===cur;}).map(function(x){
       var on=picked[cur].indexOf(x.id)>-1;
@@ -78,9 +78,10 @@
   document.getElementById('groups').addEventListener('click',function(e){var b=e.target.closest('.group');if(!b)return;cur=b.dataset.g;paint();});
   document.getElementById('grid').addEventListener('click',function(e){
     var b=e.target.closest('.card');if(!b)return;
+    if(cur==='2026'){toast('2026 先保持 6 件不动');return;}
     var id=b.dataset.id, arr=picked[cur], i=arr.indexOf(id);
     if(i>-1) arr.splice(i,1);
-    else { if(arr.length>=MAX){toast(groupLabel(cur)+' 最多 8 件，先取消一件');return;} arr.push(id); }
+    else { if(arr.length>=LIMIT[cur]){toast(groupLabel(cur)+' 最多 '+LIMIT[cur]+' 件，先取消一件');return;} arr.push(id); }
     save();paint();
   });
   function data(){
@@ -89,9 +90,9 @@
     return out;
   }
   function validate(){
-    for(var i=0;i<GROUPS.length;i++){var g=GROUPS[i],n=picked[g[0]].length;
-      if(n<MIN){toast(g[1]+' 还差 '+(MIN-n)+' 件');return false;}
-      if(n>MAX){toast(g[1]+' 超过 8 件');return false;}}
+    for(var i=0;i<GROUPS.length;i++){var g=GROUPS[i],n=picked[g[0]].length,lim=LIMIT[g[0]];
+      if(n<lim){toast(g[1]+' 还差 '+(lim-n)+' 件');return false;}
+      if(n>lim){toast(g[1]+' 超过 '+lim+' 件');return false;}}
     return true;
   }
   document.getElementById('exportBtn').addEventListener('click',function(){
