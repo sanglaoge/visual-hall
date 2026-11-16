@@ -119,7 +119,6 @@
     }
     .mobile-tabs button:active { background: var(--sc-ink); color: var(--sc-canvas); }
   }
-  @media (max-width: 700px) { .hud-row { display: none; } }
 
   /* theme-aware logos: JS swaps src on toggle (syncThemeImgs) */
 
@@ -251,12 +250,12 @@
   .wordmark {
     position: relative; display: flex; flex-direction: column; align-items: center;
     gap: clamp(4px, 0.9vw, 10px); font-family: var(--font-archivo); font-weight: 700;
-    font-size: clamp(2.1rem, 5vw, 4.5rem); line-height: 0.96; letter-spacing: -.015em;
+    font-size: clamp(2rem, 4.6vw, 4.1rem); line-height: 0.96; letter-spacing: -.015em;
     text-transform: uppercase; color: var(--sc-ink); white-space: nowrap;
   }
   .hero-h1 {
     position: relative; margin: 24px 0 0; font-family: var(--font-archivo); font-weight: 600;
-    font-size: clamp(1.25rem, 2.1vw, 1.6rem); letter-spacing: -.02em; color: var(--sc-ink);
+    font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.02em; color: var(--sc-ink);
   }
   .hero-h1 em { font-family: var(--font-serifit); font-style: italic; font-weight: 400; color: var(--sc-ink-soft); }
   .hero-copy {
@@ -282,6 +281,7 @@
     color: var(--sc-ink-soft);
   }
   .hud-row .d { color: var(--ruler-blue); font-size: .45rem; }
+  @media (max-width: 700px) { .hud-row { display: none; } }
 
   /* the ticker: product conveyor */
   .ticker { border-block: 1px solid var(--hair); padding: 16px 0; overflow: clip; }
@@ -701,7 +701,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>先看品牌，<em>再看作品。</em></h2>
-        <div class="meta-strip"><span>01 / 品牌</span><span>2025 品牌线&#160;&#160;·&#160;&#160;<em>2026 新品</em></span></div>
+        <div class="meta-strip"><span>2025 品牌线</span><span><em>2026 新品</em></span></div>
       </div>
       <div class="bgate" data-sc-in data-sc-stagger="60">
         <a class="brow" href="brand.html?b=gogreen" style="--accent:#439b44">
@@ -738,7 +738,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>按品类，<em>慢慢看。</em></h2>
-        <div class="meta-strip"><span>02 / 产品</span><span>2026 新品 + 节日系列&#160;&#160;·&#160;&#160;<em>按产品</em>分类</span></div>
+        <div class="meta-strip"><span>2026 新品 + 节日系列</span><span><em>按产品</em>分类</span></div>
       </div>
       <div class="grid" data-sc-in data-sc-stagger="60">
         <div class="gcell"><span>新品系列</span><span>01</span></div>
@@ -764,7 +764,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>包装和吊牌，<em>也是作品。</em></h2>
-        <div class="meta-strip"><span>03 / 辅料</span><span>2026 新品 + 三品牌 · 共 20 件</span></div>
+        <div class="meta-strip"><span>2026 新品 + 三品牌</span><span>共 20 件</span></div>
       </div>
       <div class="paperdesk" data-sc-in data-sc-stagger="50">
         <div class="desk-head">
@@ -809,7 +809,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>品牌故事 &amp; <em>产品介绍。</em></h2>
-        <div class="meta-strip"><span>04 / 视频</span><span>9 条 · 横版 3 / 竖版 6</span></div>
+        <div class="meta-strip"><span>横版 3 / 竖版 6</span><span>9 条</span></div>
       </div>
 
       <div class="lab-row"><span>横版片 / LANDSCAPE FILMS</span><span>16:9 · 点击播放</span></div>
@@ -891,7 +891,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>用起来，<em>是什么感觉。</em></h2>
-        <div class="meta-strip"><span>05 / 场景</span><span>AI 场景 · 面料实拍</span></div>
+        <div class="meta-strip"><span>AI 场景</span><span>面料实拍</span></div>
       </div>
       <div class="ugc-grid" data-sc-in data-sc-stagger="50">
         <a class="big" href="ugc.html"><img src="assets/opt/ugc/001.webp" alt="绗缝被卧室场景" loading="lazy"><span>绗缝被 · 卧室</span></a>
@@ -916,7 +916,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>一张图，<em>要过六道手。</em></h2>
-        <div class="meta-strip"><span>06 / 流程</span><span>六步 · 运营到上架</span></div>
+        <div class="meta-strip"><span>六步</span><span>运营到上架</span></div>
       </div>
       <div class="process-line" data-sc-in data-sc-stagger="60">
         <figure class="station"><span class="s-no">01</span><img src="assets/opt/process/01.webp" alt="调研：运营看竞品与趋势" loading="lazy"><figcaption><span class="st-top"><b>调研</b><span>运营</span></span><span class="st-desc">调研市场，拍板开发哪款产品</span></figcaption></figure>
