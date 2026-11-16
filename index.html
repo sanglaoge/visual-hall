@@ -538,11 +538,11 @@
   .ugc-note { margin: 16px 0 0; font: 400 .72rem/1.7 var(--font-mono); letter-spacing: .06em; color: var(--sc-ink-soft); }
 
   /* process */
-  .process-line { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
-  .station { margin: 0; background: var(--sc-canvas); position: relative; }
-  .station img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  .process-line { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 34px); }
+  .station { margin: 0; background: none; position: relative; }
+  .station img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border: 1px solid var(--hair); }
   .station .s-no { position: absolute; top: 8px; left: 8px; z-index: 2; padding: 4px 6px; background: rgba(12,10,8,.56); color: #fff; font: 500 .56rem/1 var(--font-mono); letter-spacing: .12em; }
-  .station figcaption { display: grid; gap: 5px; padding: 10px 12px 12px; font: 400 .64rem/1.5 var(--font-mono); letter-spacing: .06em; color: var(--sc-ink-soft); }
+  .station figcaption { display: grid; gap: 5px; padding: 11px 2px 0; font: 400 .64rem/1.5 var(--font-mono); letter-spacing: .06em; color: var(--sc-ink-soft); }
   .st-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
   .st-desc { font-size: .68rem; line-height: 1.65; letter-spacing: .03em; color: var(--sc-ink-soft); }
   .station figcaption b { font: 600 .84rem/1.4 var(--font-archivo); color: var(--sc-ink); }
@@ -898,15 +898,15 @@
     <div class="wrap">
       <div class="sec-head">
         <h2 class="sec-title" data-spine>一张图，<em>要过六道手。</em></h2>
-        <div class="meta-strip"><span>06 / 流程</span><span>流程示意 · 图片待替换</span></div>
+        <div class="meta-strip"><span>06 / 流程</span><span>六步 · 运营到上架</span></div>
       </div>
       <div class="process-line" data-sc-in data-sc-stagger="60">
-        <figure class="station"><span class="s-no">01</span><img src="assets/main/m003/08.webp" alt="调研" loading="lazy"><figcaption><span class="st-top"><b>调研</b><span>运营</span></span><span class="st-desc">调研市场，拍板开发哪款产品</span></figcaption></figure>
-        <figure class="station"><span class="s-no">02</span><img src="assets/craft/controller.webp" alt="印花设计" loading="lazy"><figcaption><span class="st-top"><b>印花设计</b><span>公司设计部</span></span><span class="st-desc">按产品要求提供印花设计</span></figcaption></figure>
-        <figure class="station"><span class="s-no">03</span><img src="assets/craft/giftbox.webp" alt="效果图" loading="lazy"><figcaption><span class="st-top"><b>效果图</b><span>我</span></span><span class="st-desc">拿印花做床品效果图</span></figcaption></figure>
-        <figure class="station"><span class="s-no">04</span><img src="assets/acc/a25-021/01.webp" alt="打样" loading="lazy"><figcaption><span class="st-top"><b>打样</b><span>工厂 · 产前样</span></span><span class="st-desc">生产产前样，交运营确认</span></figcaption></figure>
-        <figure class="station"><span class="s-no">05</span><img src="assets/ugc/006.webp" alt="AI 作图" loading="lazy"><figcaption><span class="st-top"><b>AI 作图</b><span>我</span></span><span class="st-desc">拿小样做 AI 视觉：主图 / 附图 / A+ / 包装辅料</span></figcaption></figure>
-        <figure class="station"><span class="s-no">06</span><img src="assets/main/m003/02.webp" alt="上架开卖" loading="lazy"><figcaption><span class="st-top"><b>上架开卖</b><span>运营</span></span><span class="st-desc">完成上架，进入销售</span></figcaption></figure>
+        <figure class="station"><span class="s-no">01</span><img src="assets/process/01.webp" alt="调研：运营看竞品与趋势" loading="lazy"><figcaption><span class="st-top"><b>调研</b><span>运营</span></span><span class="st-desc">调研市场，拍板开发哪款产品</span></figcaption></figure>
+        <figure class="station"><span class="s-no">02</span><img src="assets/process/02.webp" alt="印花设计：设计部提供的印花稿" loading="lazy"><figcaption><span class="st-top"><b>印花设计</b><span>公司设计部</span></span><span class="st-desc">按产品要求提供印花设计</span></figcaption></figure>
+        <figure class="station"><span class="s-no">03</span><img src="assets/process/03.webp" alt="效果图：印花套用到床品" loading="lazy"><figcaption><span class="st-top"><b>效果图</b><span>我</span></span><span class="st-desc">拿印花做床品效果图</span></figcaption></figure>
+        <figure class="station"><span class="s-no">04</span><img src="assets/process/04.webp" alt="打样：工厂产前样" loading="lazy"><figcaption><span class="st-top"><b>打样</b><span>工厂 · 产前样</span></span><span class="st-desc">生产产前样，交运营确认</span></figcaption></figure>
+        <figure class="station"><span class="s-no">05</span><img src="assets/process/05.webp" alt="AI 作图：主图、附图与 A+ 排版" loading="lazy"><figcaption><span class="st-top"><b>AI 作图</b><span>我</span></span><span class="st-desc">拿小样做 AI 视觉：主图 / 附图 / A+ / 包装辅料</span></figcaption></figure>
+        <figure class="station"><span class="s-no">06</span><img src="assets/process/06.webp" alt="上架开卖：运营后台与商品列表" loading="lazy"><figcaption><span class="st-top"><b>上架开卖</b><span>运营</span></span><span class="st-desc">完成上架，进入销售</span></figcaption></figure>
       </div>
       <p class="process-tools"><span>交接</span>运营 → 公司设计部 → 我 → 工厂 → 我 → 运营</p>
       <p class="process-tools"><span>工具</span>手机实拍 / Lovart nano banana / GPT Image 2 / Photoshop</p>
