@@ -388,21 +388,23 @@
   .paperdesk {
     background: #b3906b url("assets/texture-kraft.webp") center / 620px repeat;
     background-blend-mode: multiply;
-    color: #241a10; padding: clamp(24px, 4vw, 46px);
+    color: #f6f0e4; padding: clamp(24px, 4vw, 46px);
   }
   .desk-head {
     display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-    border-bottom: 1px solid rgba(36, 26, 16, .32); padding-bottom: 12px;
+    border-bottom: 1px solid rgba(246, 240, 228, .32); padding-bottom: 12px;
     margin-bottom: clamp(20px, 3vw, 32px);
     font: 500 10px/1.3 var(--font-mono); letter-spacing: .16em; text-transform: uppercase;
   }
   .desk-head b { font: 600 1.2rem/1.2 var(--font-archivo); letter-spacing: .01em; }
-  .desk-head a { color: #241a10; text-decoration: none; border-bottom: 1px solid rgba(36, 26, 16, .4); padding-bottom: 3px; }
+  .desk-head a { color: #f6f0e4; text-decoration: none; border-bottom: 1px solid rgba(246, 240, 228, .45); padding-bottom: 3px; }
   .desk-section { padding: clamp(18px,2.6vw,30px) 0; }
-  .desk-section + .desk-section { border-top: 1px solid rgba(36, 26, 16, .28); }
-  .desk-section-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; font: 400 .64rem/1.3 var(--font-mono); letter-spacing: .1em; color: rgba(36, 26, 16, .88); }
-  .desk-brand { font: 600 1rem/1 var(--font-archivo); letter-spacing: .02em; color: #241a10; }
-  .desk-logo { height: 24px; width: auto; display: block; }
+  .desk-section + .desk-section { border-top: 1px solid rgba(246, 240, 228, .24); }
+  .desk-section-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; font: 400 .64rem/1.3 var(--font-mono); letter-spacing: .1em; color: rgba(246, 240, 228, .9); }
+  .desk-brand { font: 600 1rem/1 var(--font-archivo); letter-spacing: .02em; color: #f6f0e4; }
+  .desk-logo { height: 24px; width: auto; display: block; background: #fbf8f0; padding: 4px 8px; }
+  .desk-logo.logo-hitime { height: 36px; }
+  .desk-logo.logo-kingrest { height: 40px; }
   .desk-section .pd-card .paper { padding: clamp(6px, 1vw, 12px); }
 
   .desk-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: stretch; gap: clamp(12px, 1.8vw, 22px); }
@@ -427,13 +429,13 @@
   .pd-card .paper img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
   .pd-card figcaption {
     display: flex; justify-content: space-between; gap: 10px; padding: 9px 2px 0;
-    font: 400 .66rem/1.5 var(--font-mono); color: rgba(36, 26, 16, .88);
+    font: 400 .66rem/1.5 var(--font-mono); color: rgba(246, 240, 228, .9);
   }
-  .pd-card figcaption b { font: 600 .82rem/1.3 var(--font-archivo); color: #241a10; }
+  .pd-card figcaption b { font: 600 .82rem/1.3 var(--font-archivo); color: #f6f0e4; }
   .desk-foot {
     margin-top: clamp(22px, 3vw, 34px); display: flex; justify-content: space-between; gap: 16px;
-    border-top: 1px solid rgba(36, 26, 16, .32); padding-top: 12px;
-    font: 400 .66rem/1.5 var(--font-mono); color: rgba(36, 26, 16, .85);
+    border-top: 1px solid rgba(246, 240, 228, .26); padding-top: 12px;
+    font: 400 .66rem/1.5 var(--font-mono); color: rgba(246, 240, 228, .88);
   }
   @media (max-width: 860px) {
     .desk-grid.five { grid-template-rows: none; }
@@ -783,14 +785,14 @@
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-045.webp" alt="毛巾彩卡" loading="lazy"></div><figcaption><b>毛巾彩卡</b><span>包装</span></figcaption></figure>
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-013.webp" alt="Topper 彩卡" loading="lazy"></div><figcaption><b>Topper 彩卡</b><span>22×16</span></figcaption></figure>
         </div></section>
-        <section class="desk-section"><div class="desk-section-head"><img class="desk-logo" src="assets/brand-logos/Hitime-primary.png" alt="HITIME"><span>5 件</span></div><div class="desk-grid five">
+        <section class="desk-section"><div class="desk-section-head"><img class="desk-logo logo-hitime" src="assets/brand-logos/Hitime-primary.png" alt="HITIME"><span>5 件</span></div><div class="desk-grid five">
           <figure class="pd-card big"><div class="paper"><img src="assets/acc-trim/a25-081.webp" alt="床笠彩卡" loading="lazy"></div><figcaption><b>床笠彩卡</b><span>30×24</span></figcaption></figure>
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-069.webp" alt="狗垫彩卡" loading="lazy"></div><figcaption><b>狗垫彩卡</b><span>18×25</span></figcaption></figure>
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-082.webp" alt="毛巾彩卡" loading="lazy"></div><figcaption><b>毛巾彩卡</b><span>22×16</span></figcaption></figure>
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-068.webp" alt="床桥彩卡" loading="lazy"></div><figcaption><b>床桥彩卡</b><span>14.2×14.2</span></figcaption></figure>
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-074.webp" alt="竹涤套件彩卡" loading="lazy"></div><figcaption><b>竹涤套件彩卡</b><span>彩卡</span></figcaption></figure>
         </div></section>
-        <section class="desk-section"><div class="desk-section-head"><img class="desk-logo" src="assets/brand-logos/Kingrest-dark.png" alt="KINGREST"><span>5 件</span></div><div class="desk-grid five flip">
+        <section class="desk-section"><div class="desk-section-head"><img class="desk-logo logo-kingrest" src="assets/brand-logos/Kingrest-dark.png" alt="KINGREST"><span>5 件</span></div><div class="desk-grid five flip">
           <figure class="pd-card big"><div class="paper"><img src="assets/acc-trim/a25-093.webp" alt="套件包装 01" loading="lazy"></div><figcaption><b>套件包装 01</b><span>印刷稿</span></figcaption></figure>
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-098.webp" alt="枕套彩卡 4pack" loading="lazy"></div><figcaption><b>枕套彩卡 4pack</b><span>25×19</span></figcaption></figure>
           <figure class="pd-card"><div class="paper"><img src="assets/acc-trim/a25-099.webp" alt="枕头彩卡" loading="lazy"></div><figcaption><b>枕头彩卡</b><span>22×16</span></figcaption></figure>
