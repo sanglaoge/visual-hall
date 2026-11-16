@@ -484,6 +484,9 @@
   .frame figcaption b { font: 600 .88rem/1.4 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
   .frame figcaption span { text-align: right; }
   .reel.land .video-shell video { aspect-ratio: 16 / 9; border-radius: 12px; }
+  .reel.brand .frame figcaption { display: grid; gap: 2px; align-items: start; }
+  .reel.brand .frame figcaption b { font-size: .84rem; }
+  .reel.brand .frame figcaption span { text-align: left; font-size: .66rem; }
   .vid-play {
     position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 10px;
@@ -794,11 +797,11 @@
   <section class="chap" id="film" style="padding-top: 0;">
     <div class="wrap">
       <div class="sec-head">
-        <h2 class="sec-title" data-spine>品牌片讲气氛，<em>产品片讲卖点。</em></h2>
+        <h2 class="sec-title" data-spine>横版讲卖点，<em>竖版讲气氛。</em></h2>
         <div class="meta-strip"><span>04 / 视频</span><span>9 条 · 横版 3 / 竖版 6</span></div>
       </div>
 
-      <div class="lab-row"><span>产品片 / PRODUCT FILMS</span><span>16:9 横版 · 点击播放</span></div>
+      <div class="lab-row"><span>横版片 / LANDSCAPE FILMS</span><span>16:9 · 点击播放</span></div>
       <div class="reel land product" data-sc-in data-sc-stagger="90">
         <figure class="frame">
           <div class="video-shell">
@@ -823,7 +826,7 @@
         </figure>
       </div>
 
-      <div class="lab-row"><span>品牌片 / BRAND FILMS</span><span>9:16 竖版 · 点击播放</span></div>
+      <div class="lab-row"><span>竖版片 / PORTRAIT FILMS</span><span>9:16 · 点击播放</span></div>
       <div class="reel brand" data-sc-in data-sc-stagger="70">
         <figure class="frame">
           <div class="video-shell">
