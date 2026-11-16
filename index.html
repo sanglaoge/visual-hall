@@ -636,6 +636,8 @@
   <button class="rail-word" type="button" data-chapter="collection">PRODUCTS</button>
   <button class="rail-word" type="button" data-chapter="craft">PACKAGING</button>
   <button class="rail-word" type="button" data-chapter="film">FILMS</button>
+  <button class="rail-word" type="button" data-chapter="ugc">FEEDBACK</button>
+  <button class="rail-word" type="button" data-chapter="process">PROCESS</button>
   <button class="rail-word" type="button" data-chapter="end">FIN</button>
 </nav>
 
@@ -1244,13 +1246,13 @@
 
   /* word rail: rest (vertical at the ruler) --scrub--> active (horizontal top-right)
      --scrub--> past (weakened high stack, never over the active word) */
-  var chapterEls = ["brands", "collection", "craft", "film", "end"].map(function (id) { return document.getElementById(id); });
   var railWords = Array.prototype.slice.call(document.querySelectorAll(".rail-word"));
+  var chapterEls = railWords.map(function (w) { return document.getElementById(w.getAttribute("data-chapter")); });
   function restVars() { return { rotate: 90, top: window.innerHeight * 0.42, right: -6, fontSize: "clamp(1.5rem,2.4vw,2.1rem)", opacity: 0, letterSpacing: ".02em" }; }
   function activeVars() { return { rotate: 0, top: 92, right: 16, fontSize: "clamp(2.2rem,4vw,3.5rem)", opacity: 1, letterSpacing: "-.01em" }; }
   function pastVars(i) { return { rotate: 0, top: 8 + i * 22, right: 16, fontSize: ".72rem", opacity: 0.22, letterSpacing: ".22em" }; }
   railWords.forEach(function (w) {
-    w.addEventListener("click", function () { scrollToEl(chapterEls[railWords.indexOf(w)]); });
+    w.addEventListener("click", function () { scrollToEl(document.getElementById(w.getAttribute("data-chapter"))); });
     if (window.gsap) gsap.set(w, restVars());
   });
   document.querySelectorAll("[data-goto]").forEach(function (b) {
@@ -1288,8 +1290,9 @@
   function updateSpy() {
     var y = (window.scrollY || 0) + innerHeight * 0.4;
     var cur = -1;
-    spySecs.forEach(function (s, i) { if (s.offsetTop <= y) cur = i; });
-    tabBtns.forEach(function (b, i) { b.classList.toggle("active", i === cur); });
+    spySecs.forEach(function (s, i) { if (s && s.offsetTop <= y) cur = i; });
+    var curID = cur > -1 && spySecs[cur] ? spySecs[cur].id : "";
+    tabBtns.forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-goto") === curID); });
   }
   updateSpy();
   if (lenis) lenis.on("scroll", updateSpy);
