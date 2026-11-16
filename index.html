@@ -377,7 +377,14 @@
   }
   .cell .lab b { font: 600 .95rem/1.4 var(--font-archivo); letter-spacing: .01em; color: var(--sc-ink); }
   .cell .lab > span { text-align: right; }
-  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .gcell { grid-column: 1 / -1; }
+    .cell .ph { padding: 10px; }
+    .cell .lab { padding: 10px 12px 12px; }
+    .cell .lab > span { display: none; }
+    .cell .lab b { font-size: .82rem; white-space: normal; line-height: 1.35; }
+  }
   @media (max-width: 600px) {
     .cell .lab { flex-direction: column; align-items: flex-start; gap: 4px; }
     .cell .lab b { white-space: nowrap; }
@@ -1109,7 +1116,14 @@
       b.type = "button"; b.className = "oc"; b.dataset.i = i;
       b.setAttribute("aria-label", img[1]);
       var cardSrc = img[0].indexOf("assets/orbit/") === 0 ? img[0].replace("assets/orbit/", "assets/orbit-card/") : img[0];
-      b.innerHTML = '<span class="oc-in"><img src="' + cardSrc + '" data-full="' + img[0] + '" alt="" loading="' + (i < 8 ? "eager" : "lazy") + '" decoding="async"' + (i < 4 ? ' fetchpriority="high"' : "") + '></span>';
+      // The 1600 orbit files are soft upscales. Use the sharper 1200 main cover
+      // for the click-to-zoom state; orbit paths stay as logical keys for thumbs.
+      var fullSrc = img[0].replace(/^assets\/orbit\/(m\d+)\.webp$/, "assets/main/$1/01.webp");
+      b.innerHTML = '<span class="oc-in"><img src="' + cardSrc + '" data-full="' + fullSrc + '" alt="" loading="' + (i < 8 ? "eager" : "lazy") + '" decoding="async"' + (i < 4 ? ' fetchpriority="high"' : "") + '></span>';
+      b.addEventListener("pointerenter", function () {
+        var im = b.querySelector("img");
+        if (im && im.dataset.full && !im.src.endsWith(im.dataset.full)) { var pre = new Image(); pre.src = im.dataset.full; }
+      });
       orbitEl.appendChild(b);
       cards.push({ el: b, arm: i % ARMS, slot: Math.floor(i / ARMS),
         jY: 0, j: 0, h: 0, hold: 0, hov: 0, boost: 0, x: CX, y: CY, w: 100, hh: 60 });
